@@ -4,7 +4,7 @@
 <!ENTITY author    "Onyx">
 <!ENTITY version   "2026.06.26b">
 <!ENTITY launch    "Settings/ThemeUI">
-<!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/themeUI/main/themeui.plg">
+<!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.12" icon="fa-palette" support="https://github.com/Onyxdigital-dev/ThemeUI">
 
