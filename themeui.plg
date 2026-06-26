@@ -1,0 +1,530 @@
+<?xml version='1.0' standalone='yes'?>
+<!DOCTYPE PLUGIN [
+<!ENTITY name      "themeui">
+<!ENTITY author    "Onyx">
+<!ENTITY version   "2026.06.26">
+<!ENTITY launch    "Settings/ThemeUI">
+<!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/themeUI/main/themeui.plg">
+]>
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.12" icon="fa-palette" support="https://github.com/Onyxdigital-dev/ThemeUI">
+
+<CHANGES>
+## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.26
+- Initial release
+- Bundled themes: Catppuccin Mocha, Nord, Dracula, Gruvbox Dark
+- Custom CSS override textarea
+- Enable/Disable toggle
+- Color swatch previews in settings
+</CHANGES>
+
+<!-- Pre-install: wipe previous version and create directories -->
+<FILE Run="/bin/bash">
+<INLINE>
+rm -rf /usr/local/emhttp/plugins/&name;
+mkdir -p /usr/local/emhttp/plugins/&name;/themes
+mkdir -p /boot/config/plugins/&name;
+exit 0
+</INLINE>
+</FILE>
+
+<!-- ===== THEME CSS FILES ===== -->
+
+<FILE Name="/usr/local/emhttp/plugins/&name;/themes/catppuccin-mocha.css">
+<INLINE>
+<![CDATA[
+/* Catppuccin Mocha for Unraid 7.2+
+   https://github.com/catppuccin/catppuccin
+   Base=#1e1e2e  Mantle=#181825  Crust=#11111b
+   Text=#cdd6f4  Peach=#fab387  Red=#f38ba8  Blue=#89b4fa */
+:root {
+    --text-color: #cdd6f4;
+    --blockquote-text-color: #bac2de;
+    --alt-text-color: #6c7086;
+    --disabled-text-color: #585b70;
+    --inverse-text-color: #1e1e2e;
+    --link-text-color: #89b4fa;
+
+    --background-color: #1e1e2e;
+    --opac-background-color: #1e1e2edd;
+    --mild-background-color: #181825;
+    --usage-bar-background-color: #45475a;
+    --usage-bar-used-background-color: #585b70;
+    --usage-disk-background-color: #313244;
+    --inverse-background-color: #cdd6f4;
+    --radio-background-color: #313244;
+    --dashboard-background-color: #181825;
+    --dashboard-title-action-color: rgba(205, 214, 244, 0.1);
+    --dashboard-icon-color: #181825;
+
+    --border-color: #313244;
+    --disabled-border-color: #45475a;
+    --input-border-color: #6c7086;
+    --disabled-input-border-color: #45475a;
+    --textarea-border-color: #45475a;
+    --inverse-border-color: rgba(205, 214, 244, 0.25);
+    --table-border-color: #313244;
+    --table-background-color: #181825;
+    --table-header-background-color: #181825;
+    --hover-table-row-background-color: rgba(205, 214, 244, 0.05);
+
+    --footer-text: #cdd6f4;
+    --footer-background-color: #181825;
+    --small-shadow: 0 0 3px #11111b;
+    --hr-color: #313244;
+    --checkbox-color: #313244;
+    --checkbox-hover-color: #45475a;
+
+    --brand-orange: #fab387;
+    --brand-red: #f38ba8;
+
+    --header-text-color: #cdd6f4;
+    --header-background-color: #11111b;
+    --title-header-background-color: #181825;
+
+    --scrollbar-color: #585b70;
+    --scrollbar-hover-color: #6c7086;
+
+    --bg-opacity-10: rgba(205, 214, 244, 0.1);
+    --bg-opacity-30: rgba(205, 214, 244, 0.3);
+
+    --button-text-color: #fab387;
+    --button-border: none;
+    --button-background:
+        linear-gradient(90deg, #f38ba8 0, #fab387) 0 0 no-repeat,
+        linear-gradient(90deg, #f38ba8 0, #fab387) 0 100% no-repeat,
+        linear-gradient(0deg, #f38ba8 0, #f38ba8) 0 100% no-repeat,
+        linear-gradient(0deg, #fab387 0, #fab387) 100% 100% no-repeat;
+    --button-background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
+    --hover-button-border: #89b4fa;
+    --hover-button-text-color: #1e1e2e;
+    --hover-button-background: linear-gradient(90deg, #f38ba8 0, #fab387);
+
+    --input-bg-color: transparent;
+    --focus-input-bg-color: #181825;
+    --shade-bg-color: #181825;
+}
+]]>
+</INLINE>
+</FILE>
+
+<FILE Name="/usr/local/emhttp/plugins/&name;/themes/nord.css">
+<INLINE>
+<![CDATA[
+/* Nord for Unraid 7.2+
+   https://www.nordtheme.com/
+   Polar Night: #2e3440 #3b4252 #434c5e #4c566a
+   Snow Storm:  #d8dee9 #e5e9f0 #eceff4
+   Frost:       #8fbcbb #88c0d0 #81a1c1 #5e81ac
+   Aurora:      #bf616a #d08770 #ebcb8b #a3be8c #b48ead */
+:root {
+    --text-color: #eceff4;
+    --blockquote-text-color: #e5e9f0;
+    --alt-text-color: #7b88a1;
+    --disabled-text-color: #616e88;
+    --inverse-text-color: #2e3440;
+    --link-text-color: #88c0d0;
+
+    --background-color: #2e3440;
+    --opac-background-color: #2e3440dd;
+    --mild-background-color: #3b4252;
+    --usage-bar-background-color: #434c5e;
+    --usage-bar-used-background-color: #4c566a;
+    --usage-disk-background-color: #3b4252;
+    --inverse-background-color: #eceff4;
+    --radio-background-color: #3b4252;
+    --dashboard-background-color: #3b4252;
+    --dashboard-title-action-color: rgba(236, 239, 244, 0.1);
+    --dashboard-icon-color: #3b4252;
+
+    --border-color: #4c566a;
+    --disabled-border-color: #434c5e;
+    --input-border-color: #7b88a1;
+    --disabled-input-border-color: #434c5e;
+    --textarea-border-color: #4c566a;
+    --inverse-border-color: rgba(236, 239, 244, 0.25);
+    --table-border-color: #3b4252;
+    --table-background-color: #3b4252;
+    --table-header-background-color: #3b4252;
+    --hover-table-row-background-color: rgba(236, 239, 244, 0.05);
+
+    --footer-text: #eceff4;
+    --footer-background-color: #3b4252;
+    --small-shadow: 0 0 3px #1e222a;
+    --hr-color: #3b4252;
+    --checkbox-color: #3b4252;
+    --checkbox-hover-color: #434c5e;
+
+    --brand-orange: #d08770;
+    --brand-red: #bf616a;
+
+    --header-text-color: #eceff4;
+    --header-background-color: #242933;
+    --title-header-background-color: #3b4252;
+
+    --scrollbar-color: #4c566a;
+    --scrollbar-hover-color: #616e88;
+
+    --bg-opacity-10: rgba(236, 239, 244, 0.1);
+    --bg-opacity-30: rgba(236, 239, 244, 0.3);
+
+    --button-text-color: #d08770;
+    --button-border: none;
+    --button-background:
+        linear-gradient(90deg, #bf616a 0, #d08770) 0 0 no-repeat,
+        linear-gradient(90deg, #bf616a 0, #d08770) 0 100% no-repeat,
+        linear-gradient(0deg, #bf616a 0, #bf616a) 0 100% no-repeat,
+        linear-gradient(0deg, #d08770 0, #d08770) 100% 100% no-repeat;
+    --button-background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
+    --hover-button-border: #88c0d0;
+    --hover-button-text-color: #2e3440;
+    --hover-button-background: linear-gradient(90deg, #bf616a 0, #d08770);
+
+    --input-bg-color: transparent;
+    --focus-input-bg-color: #3b4252;
+    --shade-bg-color: #3b4252;
+}
+]]>
+</INLINE>
+</FILE>
+
+<FILE Name="/usr/local/emhttp/plugins/&name;/themes/dracula.css">
+<INLINE>
+<![CDATA[
+/* Dracula for Unraid 7.2+
+   https://draculatheme.com/
+   Background: #282a36   Current Line: #44475a   Foreground: #f8f8f2
+   Comment: #6272a4   Cyan: #8be9fd   Orange: #ffb86c
+   Pink: #ff79c6   Purple: #bd93f9   Red: #ff5555 */
+:root {
+    --text-color: #f8f8f2;
+    --blockquote-text-color: #e0e0da;
+    --alt-text-color: #6272a4;
+    --disabled-text-color: #6272a4;
+    --inverse-text-color: #282a36;
+    --link-text-color: #8be9fd;
+
+    --background-color: #282a36;
+    --opac-background-color: #282a36dd;
+    --mild-background-color: #21222c;
+    --usage-bar-background-color: #44475a;
+    --usage-bar-used-background-color: #6272a4;
+    --usage-disk-background-color: #44475a;
+    --inverse-background-color: #f8f8f2;
+    --radio-background-color: #44475a;
+    --dashboard-background-color: #21222c;
+    --dashboard-title-action-color: rgba(248, 248, 242, 0.1);
+    --dashboard-icon-color: #21222c;
+
+    --border-color: #44475a;
+    --disabled-border-color: #6272a4;
+    --input-border-color: #6272a4;
+    --disabled-input-border-color: #44475a;
+    --textarea-border-color: #44475a;
+    --inverse-border-color: rgba(248, 248, 242, 0.25);
+    --table-border-color: #44475a;
+    --table-background-color: #21222c;
+    --table-header-background-color: #21222c;
+    --hover-table-row-background-color: rgba(248, 248, 242, 0.05);
+
+    --footer-text: #f8f8f2;
+    --footer-background-color: #21222c;
+    --small-shadow: 0 0 3px #191a21;
+    --hr-color: #44475a;
+    --checkbox-color: #44475a;
+    --checkbox-hover-color: #6272a4;
+
+    --brand-orange: #ffb86c;
+    --brand-red: #ff5555;
+
+    --header-text-color: #f8f8f2;
+    --header-background-color: #191a21;
+    --title-header-background-color: #21222c;
+
+    --scrollbar-color: #44475a;
+    --scrollbar-hover-color: #6272a4;
+
+    --bg-opacity-10: rgba(248, 248, 242, 0.1);
+    --bg-opacity-30: rgba(248, 248, 242, 0.3);
+
+    --button-text-color: #ffb86c;
+    --button-border: none;
+    --button-background:
+        linear-gradient(90deg, #ff5555 0, #ffb86c) 0 0 no-repeat,
+        linear-gradient(90deg, #ff5555 0, #ffb86c) 0 100% no-repeat,
+        linear-gradient(0deg, #ff5555 0, #ff5555) 0 100% no-repeat,
+        linear-gradient(0deg, #ffb86c 0, #ffb86c) 100% 100% no-repeat;
+    --button-background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
+    --hover-button-border: #bd93f9;
+    --hover-button-text-color: #282a36;
+    --hover-button-background: linear-gradient(90deg, #ff5555 0, #ffb86c);
+
+    --input-bg-color: transparent;
+    --focus-input-bg-color: #21222c;
+    --shade-bg-color: #21222c;
+}
+]]>
+</INLINE>
+</FILE>
+
+<FILE Name="/usr/local/emhttp/plugins/&name;/themes/gruvbox-dark.css">
+<INLINE>
+<![CDATA[
+/* Gruvbox Dark for Unraid 7.2+
+   https://github.com/morhetz/gruvbox
+   bg0_h: #1d2021  bg0: #282828  bg1: #3c3836  bg2: #504945
+   fg: #ebdbb2   orange: #fe8019   red: #fb4934   blue: #83a598 */
+:root {
+    --text-color: #ebdbb2;
+    --blockquote-text-color: #d5c4a1;
+    --alt-text-color: #928374;
+    --disabled-text-color: #7c6f64;
+    --inverse-text-color: #282828;
+    --link-text-color: #83a598;
+
+    --background-color: #282828;
+    --opac-background-color: #282828dd;
+    --mild-background-color: #32302f;
+    --usage-bar-background-color: #504945;
+    --usage-bar-used-background-color: #665c54;
+    --usage-disk-background-color: #3c3836;
+    --inverse-background-color: #ebdbb2;
+    --radio-background-color: #3c3836;
+    --dashboard-background-color: #32302f;
+    --dashboard-title-action-color: rgba(235, 219, 178, 0.1);
+    --dashboard-icon-color: #32302f;
+
+    --border-color: #3c3836;
+    --disabled-border-color: #504945;
+    --input-border-color: #665c54;
+    --disabled-input-border-color: #504945;
+    --textarea-border-color: #504945;
+    --inverse-border-color: rgba(235, 219, 178, 0.25);
+    --table-border-color: #3c3836;
+    --table-background-color: #32302f;
+    --table-header-background-color: #32302f;
+    --hover-table-row-background-color: rgba(235, 219, 178, 0.05);
+
+    --footer-text: #ebdbb2;
+    --footer-background-color: #32302f;
+    --small-shadow: 0 0 3px #1d2021;
+    --hr-color: #3c3836;
+    --checkbox-color: #3c3836;
+    --checkbox-hover-color: #504945;
+
+    --brand-orange: #fe8019;
+    --brand-red: #fb4934;
+
+    --header-text-color: #ebdbb2;
+    --header-background-color: #1d2021;
+    --title-header-background-color: #32302f;
+
+    --scrollbar-color: #504945;
+    --scrollbar-hover-color: #665c54;
+
+    --bg-opacity-10: rgba(235, 219, 178, 0.1);
+    --bg-opacity-30: rgba(235, 219, 178, 0.3);
+
+    --button-text-color: #fe8019;
+    --button-border: none;
+    --button-background:
+        linear-gradient(90deg, #fb4934 0, #fe8019) 0 0 no-repeat,
+        linear-gradient(90deg, #fb4934 0, #fe8019) 0 100% no-repeat,
+        linear-gradient(0deg, #fb4934 0, #fb4934) 0 100% no-repeat,
+        linear-gradient(0deg, #fe8019 0, #fe8019) 100% 100% no-repeat;
+    --button-background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
+    --hover-button-border: #83a598;
+    --hover-button-text-color: #282828;
+    --hover-button-background: linear-gradient(90deg, #fb4934 0, #fe8019);
+
+    --input-bg-color: transparent;
+    --focus-input-bg-color: #32302f;
+    --shade-bg-color: #3c3836;
+}
+]]>
+</INLINE>
+</FILE>
+
+<!-- ===== CSS LOADER (injected into every page head) ===== -->
+
+<FILE Name="/usr/local/emhttp/plugins/&name;/ThemeUILoader.page">
+<INLINE>
+<![CDATA[
+Menu="Buttons:100"
+Link="nav-user"
+---
+<?php
+require_once "$docroot/plugins/dynamix/include/Wrappers.php";
+$settings = parse_plugin_cfg("themeui");
+if (($settings['SERVICE'] ?? "disabled") === "enabled") {
+    $theme = $settings['THEME'] ?? "default";
+    $plugin_dir = "/usr/local/emhttp/plugins/themeui";
+    $theme_file = "$plugin_dir/themes/$theme.css";
+    $override_file = "$plugin_dir/custom-override.css";
+    if ($theme !== "default" && file_exists($theme_file)) {
+        $ver = filemtime($theme_file);
+        echo "<link rel='stylesheet' type='text/css' href='/plugins/themeui/themes/$theme.css?v=$ver'>\n";
+    }
+    if (file_exists($override_file) && filesize($override_file) > 0) {
+        $ver2 = filemtime($override_file);
+        echo "<link rel='stylesheet' type='text/css' href='/plugins/themeui/custom-override.css?v=$ver2'>\n";
+    }
+}
+?>
+]]>
+</INLINE>
+</FILE>
+
+<!-- ===== SETTINGS PAGE ===== -->
+
+<FILE Name="/usr/local/emhttp/plugins/&name;/ThemeUI.page">
+<INLINE>
+<![CDATA[
+Menu="Utilities"
+Title="ThemeUI"
+Icon="palette"
+---
+<?php
+$cfg_path      = "/boot/config/plugins/themeui/themeui.cfg";
+$override_path = "/boot/config/plugins/themeui/custom-override.css";
+$webroot_override = "/usr/local/emhttp/plugins/themeui/custom-override.css";
+$msg = "";
+
+require_once "$docroot/plugins/dynamix/include/Wrappers.php";
+
+$valid_themes = ["default","catppuccin-mocha","nord","dracula","gruvbox-dark"];
+
+$theme_meta = [
+    "default"          => ["label"=>"Default (Unraid built-in)", "colors"=>["#1c1b22","#f0f0f0","#ff8c00","#cc0000","#4a4a5a"]],
+    "catppuccin-mocha" => ["label"=>"Catppuccin Mocha",         "colors"=>["#1e1e2e","#cdd6f4","#fab387","#f38ba8","#89b4fa"]],
+    "nord"             => ["label"=>"Nord",                      "colors"=>["#2e3440","#eceff4","#d08770","#bf616a","#88c0d0"]],
+    "dracula"          => ["label"=>"Dracula",                   "colors"=>["#282a36","#f8f8f2","#ffb86c","#ff5555","#bd93f9"]],
+    "gruvbox-dark"     => ["label"=>"Gruvbox Dark",             "colors"=>["#282828","#ebdbb2","#fe8019","#fb4934","#83a598"]],
+];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['SAVE_CONFIG'])) {
+        $service = in_array($_POST['SERVICE'] ?? '', ['enabled','disabled']) ? $_POST['SERVICE'] : 'disabled';
+        $theme   = in_array($_POST['THEME'] ?? '', $valid_themes) ? $_POST['THEME'] : 'default';
+        file_put_contents($cfg_path, "SERVICE=\"$service\"\nTHEME=\"$theme\"\n");
+        if (isset($_POST['custom_css'])) {
+            file_put_contents($override_path, $_POST['custom_css']);
+            @copy($override_path, $webroot_override);
+        }
+        $msg = "Settings saved — reload your browser to see the new theme.";
+    }
+}
+
+if (!file_exists($cfg_path)) {
+    file_put_contents($cfg_path, "SERVICE=\"disabled\"\nTHEME=\"default\"\n");
+}
+if (!file_exists($override_path)) {
+    file_put_contents($override_path, "/* Custom CSS overrides — applied on top of the selected theme */\n");
+    @copy($override_path, $webroot_override);
+}
+
+$settings = parse_plugin_cfg("themeui");
+$service  = $settings['SERVICE'] ?? 'disabled';
+$theme    = $settings['THEME']   ?? 'default';
+$custom_css = file_get_contents($override_path);
+?>
+
+<?php if ($msg): ?>
+<div markdown="1">
+<span class="green"><?= htmlspecialchars($msg) ?></span>
+</div>
+<?php endif; ?>
+
+<form markdown="1" method="POST" action="/Settings/ThemeUI">
+
+_(Enable ThemeUI)_:
+: <select name="SERVICE" size="1">
+    <?=mk_option($service, "enabled",  "Yes — inject selected theme");?>
+    <?=mk_option($service, "disabled", "No — disabled");?>
+  </select>
+
+_(Theme)_:
+: <select name="THEME" id="themeui-select" size="1" onchange="themuiPreview(this.value)">
+    <?php foreach ($theme_meta as $key => $meta): ?>
+    <?=mk_option($theme, $key, $meta['label']);?>
+    <?php endforeach; ?>
+  </select>
+  <div id="themeui-swatches" style="display:flex;gap:5px;margin-top:8px;align-items:center;"></div>
+
+_(Custom CSS Override)_:
+: <textarea name="custom_css" id="themeui-css" spellcheck="false"
+    style="font-family:monospace;width:100%;max-width:820px;height:220px;
+           background:#111;color:#eee;border:1px solid #444;padding:10px;
+           box-sizing:border-box;"><?= htmlspecialchars($custom_css) ?></textarea>
+  <span>Applied after the selected theme — use this to fine-tune colors.
+        <br>Reload browser after saving to see changes.</span>
+
+&nbsp;
+: <span>
+    <a href="/webGui/styles/themes/white.css" target="_blank">Browse Unraid CSS variables (white.css)</a>
+    &nbsp;|&nbsp;
+    <a href="/webGui/styles/themes/black.css" target="_blank">black.css</a>
+  </span>
+
+&nbsp;
+: <span class="buttons-spaced">
+    <input type="submit" name="SAVE_CONFIG" value="_(Apply)_" disabled>
+    <input type="button" value="_(Done)_" onclick="done()">
+  </span>
+
+</form>
+
+<script>
+var themuiColors = <?= json_encode(array_map(function($m){ return $m['colors']; }, $theme_meta), JSON_UNESCAPED_SLASHES) ?>;
+function themuiPreview(theme) {
+    var colors = themuiColors[theme] || [];
+    var el = document.getElementById('themeui-swatches');
+    if (!el) return;
+    var labels = ['bg','text','accent','red','blue'];
+    el.innerHTML = colors.map(function(c, i) {
+        return '<span title="' + (labels[i]||'') + ': ' + c + '" style="display:inline-block;width:22px;height:22px;border-radius:4px;background:' + c + ';border:1px solid rgba(128,128,128,0.4);cursor:default;"></span>';
+    }).join('');
+}
+themuiPreview(<?= json_encode($theme) ?>);
+</script>
+]]>
+</INLINE>
+</FILE>
+
+<!-- ===== POST-INSTALL SETUP ===== -->
+
+<FILE Run="/bin/bash">
+<INLINE>
+# Create default config if not already present
+if [ ! -f /boot/config/plugins/&name;/themeui.cfg ]; then
+    printf 'SERVICE="disabled"\nTHEME="default"\n' > /boot/config/plugins/&name;/themeui.cfg
+fi
+
+# Create default custom override CSS if not present
+if [ ! -f /boot/config/plugins/&name;/custom-override.css ]; then
+    echo '/* Custom CSS overrides - applied on top of the selected theme */' > /boot/config/plugins/&name;/custom-override.css
+fi
+
+# Sync custom override from flash to webroot
+cp /boot/config/plugins/&name;/custom-override.css /usr/local/emhttp/plugins/&name;/custom-override.css
+
+echo "----------------------------------------------------"
+echo " ThemeUI installed successfully."
+echo " Go to Settings > Utilities > ThemeUI to pick a theme."
+echo "----------------------------------------------------"
+exit 0
+</INLINE>
+</FILE>
+
+<!-- ===== UNINSTALL ===== -->
+
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+rm -rf /usr/local/emhttp/plugins/&name;
+rm -rf /boot/config/plugins/&name;
+echo "ThemeUI removed."
+exit 0
+</INLINE>
+</FILE>
+
+</PLUGIN>

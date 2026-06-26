@@ -1,0 +1,78 @@
+/* Nord for Unraid 7.2+
+   https://www.nordtheme.com/
+   Polar Night: #2e3440 #3b4252 #434c5e #4c566a
+   Snow Storm:  #d8dee9 #e5e9f0 #eceff4
+   Frost:       #8fbcbb #88c0d0 #81a1c1 #5e81ac
+   Aurora:      #bf616a #d08770 #ebcb8b #a3be8c #b48ead */
+:root {
+    --text-color: #eceff4;
+    --blockquote-text-color: #e5e9f0;
+    --alt-text-color: #7b88a1;
+    --disabled-text-color: #616e88;
+    --inverse-text-color: #2e3440;
+    --link-text-color: #88c0d0;
+
+    --background-color: #2e3440;
+    --opac-background-color: #2e3440dd;
+    --mild-background-color: #3b4252;
+    --usage-bar-background-color: #434c5e;
+    --usage-bar-used-background-color: #4c566a;
+    --usage-disk-background-color: #3b4252;
+    --inverse-background-color: #eceff4;
+    --radio-background-color: #3b4252;
+    --dashboard-background-color: #3b4252;
+    --dashboard-title-action-color: rgba(236, 239, 244, 0.1);
+    --dashboard-icon-color: #3b4252;
+
+    --border-color: #4c566a;
+    --disabled-border-color: #434c5e;
+    --input-border-color: #7b88a1;
+    --disabled-input-border-color: #434c5e;
+    --textarea-border-color: #4c566a;
+    --inverse-border-color: rgba(236, 239, 244, 0.25);
+    --table-border-color: #3b4252;
+    --table-background-color: #3b4252;
+    --table-header-background-color: #3b4252;
+    --hover-table-row-background-color: rgba(236, 239, 244, 0.05);
+
+    --footer-text: #eceff4;
+    --footer-background-color: #3b4252;
+
+    --small-shadow: 0 0 3px #1e222a;
+    --hr-color: #3b4252;
+
+    --checkbox-color: #3b4252;
+    --checkbox-hover-color: #434c5e;
+
+    --brand-orange: #d08770;
+    --brand-red: #bf616a;
+
+    --header-text-color: #eceff4;
+    --header-background-color: #242933;
+
+    --title-header-background-color: #3b4252;
+
+    --scrollbar-color: #4c566a;
+    --scrollbar-hover-color: #616e88;
+
+    --bg-opacity-10: rgba(236, 239, 244, 0.1);
+    --bg-opacity-30: rgba(236, 239, 244, 0.3);
+
+    --button-text-color: #d08770;
+    --button-border: none;
+    --button-background:
+        linear-gradient(90deg, #bf616a 0, #d08770) 0 0 no-repeat,
+        linear-gradient(90deg, #bf616a 0, #d08770) 0 100% no-repeat,
+        linear-gradient(0deg, #bf616a 0, #bf616a) 0 100% no-repeat,
+        linear-gradient(0deg, #d08770 0, #d08770) 100% 100% no-repeat;
+    --button-background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
+
+    --hover-button-border: #88c0d0;
+    --hover-button-text-color: #2e3440;
+    --hover-button-background: linear-gradient(90deg, #bf616a 0, #d08770);
+
+    --input-bg-color: transparent;
+    --focus-input-bg-color: #3b4252;
+
+    --shade-bg-color: #3b4252;
+}

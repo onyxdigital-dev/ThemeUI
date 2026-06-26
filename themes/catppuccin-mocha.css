@@ -1,0 +1,76 @@
+/* Catppuccin Mocha for Unraid 7.2+
+   https://github.com/catppuccin/catppuccin
+   Palette: Base=#1e1e2e  Mantle=#181825  Crust=#11111b
+            Text=#cdd6f4  Peach=#fab387  Red=#f38ba8  Blue=#89b4fa */
+:root {
+    --text-color: #cdd6f4;
+    --blockquote-text-color: #bac2de;
+    --alt-text-color: #6c7086;
+    --disabled-text-color: #585b70;
+    --inverse-text-color: #1e1e2e;
+    --link-text-color: #89b4fa;
+
+    --background-color: #1e1e2e;
+    --opac-background-color: #1e1e2edd;
+    --mild-background-color: #181825;
+    --usage-bar-background-color: #45475a;
+    --usage-bar-used-background-color: #585b70;
+    --usage-disk-background-color: #313244;
+    --inverse-background-color: #cdd6f4;
+    --radio-background-color: #313244;
+    --dashboard-background-color: #181825;
+    --dashboard-title-action-color: rgba(205, 214, 244, 0.1);
+    --dashboard-icon-color: #181825;
+
+    --border-color: #313244;
+    --disabled-border-color: #45475a;
+    --input-border-color: #6c7086;
+    --disabled-input-border-color: #45475a;
+    --textarea-border-color: #45475a;
+    --inverse-border-color: rgba(205, 214, 244, 0.25);
+    --table-border-color: #313244;
+    --table-background-color: #181825;
+    --table-header-background-color: #181825;
+    --hover-table-row-background-color: rgba(205, 214, 244, 0.05);
+
+    --footer-text: #cdd6f4;
+    --footer-background-color: #181825;
+
+    --small-shadow: 0 0 3px #11111b;
+    --hr-color: #313244;
+
+    --checkbox-color: #313244;
+    --checkbox-hover-color: #45475a;
+
+    --brand-orange: #fab387;
+    --brand-red: #f38ba8;
+
+    --header-text-color: #cdd6f4;
+    --header-background-color: #11111b;
+
+    --title-header-background-color: #181825;
+
+    --scrollbar-color: #585b70;
+    --scrollbar-hover-color: #6c7086;
+
+    --bg-opacity-10: rgba(205, 214, 244, 0.1);
+    --bg-opacity-30: rgba(205, 214, 244, 0.3);
+
+    --button-text-color: #fab387;
+    --button-border: none;
+    --button-background:
+        linear-gradient(90deg, #f38ba8 0, #fab387) 0 0 no-repeat,
+        linear-gradient(90deg, #f38ba8 0, #fab387) 0 100% no-repeat,
+        linear-gradient(0deg, #f38ba8 0, #f38ba8) 0 100% no-repeat,
+        linear-gradient(0deg, #fab387 0, #fab387) 100% 100% no-repeat;
+    --button-background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
+
+    --hover-button-border: #89b4fa;
+    --hover-button-text-color: #1e1e2e;
+    --hover-button-background: linear-gradient(90deg, #f38ba8 0, #fab387);
+
+    --input-bg-color: transparent;
+    --focus-input-bg-color: #181825;
+
+    --shade-bg-color: #181825;
+}

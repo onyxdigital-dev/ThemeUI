@@ -1,0 +1,78 @@
+/* Dracula for Unraid 7.2+
+   https://draculatheme.com/
+   Background: #282a36   Current Line: #44475a   Foreground: #f8f8f2
+   Comment: #6272a4      Cyan: #8be9fd           Green: #50fa7b
+   Orange: #ffb86c       Pink: #ff79c6           Purple: #bd93f9
+   Red: #ff5555          Yellow: #f1fa8c */
+:root {
+    --text-color: #f8f8f2;
+    --blockquote-text-color: #e0e0da;
+    --alt-text-color: #6272a4;
+    --disabled-text-color: #6272a4;
+    --inverse-text-color: #282a36;
+    --link-text-color: #8be9fd;
+
+    --background-color: #282a36;
+    --opac-background-color: #282a36dd;
+    --mild-background-color: #21222c;
+    --usage-bar-background-color: #44475a;
+    --usage-bar-used-background-color: #6272a4;
+    --usage-disk-background-color: #44475a;
+    --inverse-background-color: #f8f8f2;
+    --radio-background-color: #44475a;
+    --dashboard-background-color: #21222c;
+    --dashboard-title-action-color: rgba(248, 248, 242, 0.1);
+    --dashboard-icon-color: #21222c;
+
+    --border-color: #44475a;
+    --disabled-border-color: #6272a4;
+    --input-border-color: #6272a4;
+    --disabled-input-border-color: #44475a;
+    --textarea-border-color: #44475a;
+    --inverse-border-color: rgba(248, 248, 242, 0.25);
+    --table-border-color: #44475a;
+    --table-background-color: #21222c;
+    --table-header-background-color: #21222c;
+    --hover-table-row-background-color: rgba(248, 248, 242, 0.05);
+
+    --footer-text: #f8f8f2;
+    --footer-background-color: #21222c;
+
+    --small-shadow: 0 0 3px #191a21;
+    --hr-color: #44475a;
+
+    --checkbox-color: #44475a;
+    --checkbox-hover-color: #6272a4;
+
+    --brand-orange: #ffb86c;
+    --brand-red: #ff5555;
+
+    --header-text-color: #f8f8f2;
+    --header-background-color: #191a21;
+
+    --title-header-background-color: #21222c;
+
+    --scrollbar-color: #44475a;
+    --scrollbar-hover-color: #6272a4;
+
+    --bg-opacity-10: rgba(248, 248, 242, 0.1);
+    --bg-opacity-30: rgba(248, 248, 242, 0.3);
+
+    --button-text-color: #ffb86c;
+    --button-border: none;
+    --button-background:
+        linear-gradient(90deg, #ff5555 0, #ffb86c) 0 0 no-repeat,
+        linear-gradient(90deg, #ff5555 0, #ffb86c) 0 100% no-repeat,
+        linear-gradient(0deg, #ff5555 0, #ff5555) 0 100% no-repeat,
+        linear-gradient(0deg, #ffb86c 0, #ffb86c) 100% 100% no-repeat;
+    --button-background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
+
+    --hover-button-border: #bd93f9;
+    --hover-button-text-color: #282a36;
+    --hover-button-background: linear-gradient(90deg, #ff5555 0, #ffb86c);
+
+    --input-bg-color: transparent;
+    --focus-input-bg-color: #21222c;
+
+    --shade-bg-color: #21222c;
+}
