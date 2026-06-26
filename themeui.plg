@@ -6,7 +6,7 @@
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
-<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.12" icon="fa-palette" support="https://github.com/Onyxdigital-dev/ThemeUI">
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.12" icon="https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/icon.png" support="https://github.com/Onyxdigital-dev/ThemeUI">
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
@@ -513,7 +513,7 @@ if (($settings['SERVICE'] ?? "disabled") === "enabled") {
 <![CDATA[
 Menu="Utilities"
 Title="ThemeUI"
-Icon="palette"
+Icon="/plugins/themeui/icon.png"
 ---
 <?php
 $cfg_path      = "/boot/config/plugins/themeui/themeui.cfg";
@@ -648,6 +648,10 @@ fi
 
 # Sync custom override from flash to webroot
 cp /boot/config/plugins/&name;/custom-override.css /usr/local/emhttp/plugins/&name;/custom-override.css
+
+# Download plugin icon to webroot
+curl -L --silent -o /usr/local/emhttp/plugins/&name;/icon.png \
+  "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/icon.png" 2&gt;/dev/null || true
 
 echo "----------------------------------------------------"
 echo " ThemeUI installed successfully."
