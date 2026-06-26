@@ -43,6 +43,7 @@
 <FILE Run="/bin/bash">
 <INLINE>
 rm -rf /usr/local/emhttp/plugins/&name;
+rm -rf /usr/local/emhttp/plugins/themeui
 mkdir -p /usr/local/emhttp/plugins/&name;/themes
 # Flash config always lives at lowercase 'themeui' so parse_plugin_cfg("themeui") finds it
 mkdir -p /boot/config/plugins/themeui
@@ -765,6 +766,7 @@ exit 0
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
 rm -rf /usr/local/emhttp/plugins/&name;
+rm -rf /usr/local/emhttp/plugins/themeui
 rm -rf /boot/config/plugins/themeui
 rm -rf /boot/config/plugins/&name;
 echo "ThemeUI removed."
