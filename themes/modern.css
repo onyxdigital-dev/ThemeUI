@@ -1,0 +1,116 @@
+/* Modern Design Layer for Unraid 7.2+
+   Adds rounded corners, full-border inputs, smooth transitions, and subtle
+   depth to the default flat design. Stacks on top of any color theme. */
+
+/* ── Form inputs: full border + rounded ── */
+input[type="text"]:where(:not(.unapi *)),
+input[type="password"]:where(:not(.unapi *)),
+input[type="number"]:where(:not(.unapi *)),
+input[type="url"]:where(:not(.unapi *)),
+input[type="email"]:where(:not(.unapi *)),
+input[type="date"]:where(:not(.unapi *)),
+input[type="file"]:where(:not(.unapi *)),
+textarea:where(:not(.unapi *)) {
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-radius: 6px !important;
+    padding: .5rem .75rem !important;
+    transition: border-color 0.2s ease, background-color 0.2s ease !important;
+}
+
+/* ── Select dropdowns: full border + rounded ── */
+select:where(:not(.unapi *)) {
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-radius: 6px !important;
+    padding-left: .75rem !important;
+    transition: border-color 0.2s ease, background-color 0.2s ease !important;
+}
+
+/* ── Buttons: rounder + smooth hover ── */
+input[type="button"]:where(:not(.unapi *)),
+input[type="reset"]:where(:not(.unapi *)),
+input[type="submit"]:where(:not(.unapi *)),
+button:where(:not(.unapi *)),
+a.button:where(:not(.unapi *)) {
+    border-radius: 10px !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+/* ── Section title headers: pill-shaped card ── */
+div.title:where(:not(.unapi *)) {
+    border-radius: 10px !important;
+    border: 1px solid var(--border-color) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+/* ── Dashboard cards: rounded box ── */
+table.dashboard {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+}
+table.dashboard tbody {
+    border-radius: 12px !important;
+}
+
+/* ── Data table containers: rounded + border ── */
+.TableContainer,
+.TableContainer--no-min-width {
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    border: 1px solid var(--table-border-color) !important;
+}
+
+/* Remove inner double-border since container now has one */
+.TableContainer table:where(:not(.unapi *)),
+.TableContainer--no-min-width table:where(:not(.unapi *)) {
+    border-style: hidden !important;
+}
+
+/* ── Pre / code blocks ── */
+pre {
+    border-radius: 8px !important;
+}
+
+/* ── Shade sections ── */
+.shade {
+    border-radius: 12px !important;
+}
+
+/* ── Notifications / banners ── */
+.upgrade_notice,
+.ca_element_notice {
+    border-radius: 14px !important;
+}
+
+/* ── Usage bars ── */
+.usage-bar {
+    border-radius: 8px !important;
+}
+.usage-bar > span {
+    border-radius: 7px !important;
+}
+
+/* ── Tooltips ── */
+a.info span,
+.clipboard-tooltip {
+    border-radius: 8px !important;
+}
+
+/* ── Tab buttons ── */
+.tabs button[role="tab"] {
+    border-radius: 8px 8px 0 0 !important;
+}
+
+/* ── Footer: rounded top ── */
+#footer {
+    border-radius: 12px 12px 0 0 !important;
+}
+
+/* ── Span labels ── */
+span.label {
+    border-radius: 6px !important;
+}

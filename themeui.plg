@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "themeui">
 <!ENTITY author    "Onyx">
-<!ENTITY version   "2026.06.26">
+<!ENTITY version   "2026.06.26b">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/themeUI/main/themeui.plg">
 ]>
@@ -10,6 +10,10 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.26b
+- Added Modern design style: rounded corners, smooth transitions, subtle depth
+- Design style can be combined with any color theme independently
+
 ## 2026.06.26
 - Initial release
 - Bundled themes: Catppuccin Mocha, Nord, Dracula, Gruvbox Dark
@@ -345,6 +349,127 @@ exit 0
 </INLINE>
 </FILE>
 
+<FILE Name="/usr/local/emhttp/plugins/&name;/themes/modern.css">
+<INLINE>
+<![CDATA[
+/* Modern Design Layer for Unraid 7.2+
+   Adds rounded corners, full-border inputs, smooth transitions, and subtle
+   depth to the default flat design. Stacks on top of any color theme. */
+
+/* ── Form inputs: full border + rounded ── */
+input[type="text"]:where(:not(.unapi *)),
+input[type="password"]:where(:not(.unapi *)),
+input[type="number"]:where(:not(.unapi *)),
+input[type="url"]:where(:not(.unapi *)),
+input[type="email"]:where(:not(.unapi *)),
+input[type="date"]:where(:not(.unapi *)),
+input[type="file"]:where(:not(.unapi *)),
+textarea:where(:not(.unapi *)) {
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-radius: 6px !important;
+    padding: .5rem .75rem !important;
+    transition: border-color 0.2s ease, background-color 0.2s ease !important;
+}
+
+/* ── Select dropdowns: full border + rounded ── */
+select:where(:not(.unapi *)) {
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-radius: 6px !important;
+    padding-left: .75rem !important;
+    transition: border-color 0.2s ease, background-color 0.2s ease !important;
+}
+
+/* ── Buttons: rounder + smooth hover ── */
+input[type="button"]:where(:not(.unapi *)),
+input[type="reset"]:where(:not(.unapi *)),
+input[type="submit"]:where(:not(.unapi *)),
+button:where(:not(.unapi *)),
+a.button:where(:not(.unapi *)) {
+    border-radius: 10px !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+/* ── Section title headers: rounded card ── */
+div.title:where(:not(.unapi *)) {
+    border-radius: 10px !important;
+    border: 1px solid var(--border-color) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+/* ── Dashboard cards: rounded box ── */
+table.dashboard {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+}
+table.dashboard tbody {
+    border-radius: 12px !important;
+}
+
+/* ── Data table containers: rounded + border ── */
+.TableContainer,
+.TableContainer--no-min-width {
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    border: 1px solid var(--table-border-color) !important;
+}
+.TableContainer table:where(:not(.unapi *)),
+.TableContainer--no-min-width table:where(:not(.unapi *)) {
+    border-style: hidden !important;
+}
+
+/* ── Pre / code blocks ── */
+pre {
+    border-radius: 8px !important;
+}
+
+/* ── Shade sections ── */
+.shade {
+    border-radius: 12px !important;
+}
+
+/* ── Notifications / banners ── */
+.upgrade_notice,
+.ca_element_notice {
+    border-radius: 14px !important;
+}
+
+/* ── Usage bars ── */
+.usage-bar {
+    border-radius: 8px !important;
+}
+.usage-bar > span {
+    border-radius: 7px !important;
+}
+
+/* ── Tooltips ── */
+a.info span,
+.clipboard-tooltip {
+    border-radius: 8px !important;
+}
+
+/* ── Tab buttons ── */
+.tabs button[role="tab"] {
+    border-radius: 8px 8px 0 0 !important;
+}
+
+/* ── Footer: rounded top ── */
+#footer {
+    border-radius: 12px 12px 0 0 !important;
+}
+
+/* ── Span labels ── */
+span.label {
+    border-radius: 6px !important;
+}
+]]>
+</INLINE>
+</FILE>
+
 <!-- ===== CSS LOADER (injected into every page head) ===== -->
 
 <FILE Name="/usr/local/emhttp/plugins/&name;/ThemeUILoader.page">
@@ -364,6 +489,12 @@ if (($settings['SERVICE'] ?? "disabled") === "enabled") {
     if ($theme !== "default" && file_exists($theme_file)) {
         $ver = filemtime($theme_file);
         echo "<link rel='stylesheet' type='text/css' href='/plugins/themeui/themes/$theme.css?v=$ver'>\n";
+    }
+    $design = $settings['DESIGN'] ?? 'default';
+    $design_file = "$plugin_dir/themes/modern.css";
+    if ($design === 'modern' && file_exists($design_file)) {
+        $ver3 = filemtime($design_file);
+        echo "<link rel='stylesheet' type='text/css' href='/plugins/themeui/themes/modern.css?v=$ver3'>\n";
     }
     if (file_exists($override_file) && filesize($override_file) > 0) {
         $ver2 = filemtime($override_file);
@@ -392,7 +523,8 @@ $msg = "";
 
 require_once "$docroot/plugins/dynamix/include/Wrappers.php";
 
-$valid_themes = ["default","catppuccin-mocha","nord","dracula","gruvbox-dark"];
+$valid_themes  = ["default","catppuccin-mocha","nord","dracula","gruvbox-dark"];
+$valid_designs = ["default","modern"];
 
 $theme_meta = [
     "default"          => ["label"=>"Default (Unraid built-in)", "colors"=>["#1c1b22","#f0f0f0","#ff8c00","#cc0000","#4a4a5a"]],
@@ -405,8 +537,9 @@ $theme_meta = [
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['SAVE_CONFIG'])) {
         $service = in_array($_POST['SERVICE'] ?? '', ['enabled','disabled']) ? $_POST['SERVICE'] : 'disabled';
-        $theme   = in_array($_POST['THEME'] ?? '', $valid_themes) ? $_POST['THEME'] : 'default';
-        file_put_contents($cfg_path, "SERVICE=\"$service\"\nTHEME=\"$theme\"\n");
+        $theme   = in_array($_POST['THEME']   ?? '', $valid_themes)  ? $_POST['THEME']  : 'default';
+        $design  = in_array($_POST['DESIGN']  ?? '', $valid_designs) ? $_POST['DESIGN'] : 'default';
+        file_put_contents($cfg_path, "SERVICE=\"$service\"\nTHEME=\"$theme\"\nDESIGN=\"$design\"\n");
         if (isset($_POST['custom_css'])) {
             file_put_contents($override_path, $_POST['custom_css']);
             @copy($override_path, $webroot_override);
@@ -426,6 +559,7 @@ if (!file_exists($override_path)) {
 $settings = parse_plugin_cfg("themeui");
 $service  = $settings['SERVICE'] ?? 'disabled';
 $theme    = $settings['THEME']   ?? 'default';
+$design   = $settings['DESIGN']  ?? 'default';
 $custom_css = file_get_contents($override_path);
 ?>
 
@@ -450,6 +584,13 @@ _(Theme)_:
     <?php endforeach; ?>
   </select>
   <div id="themeui-swatches" style="display:flex;gap:5px;margin-top:8px;align-items:center;"></div>
+
+_(Design Style)_:
+: <select name="DESIGN" size="1">
+    <?=mk_option($design, "default", "Default (flat)");?>
+    <?=mk_option($design, "modern",  "Modern (rounded corners + transitions)");?>
+  </select>
+  <span>Rounds corners on inputs, buttons, cards, and tables. Works with any color theme.</span>
 
 _(Custom CSS Override)_:
 : <textarea name="custom_css" id="themeui-css" spellcheck="false"
