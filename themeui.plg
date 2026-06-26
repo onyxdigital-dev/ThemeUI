@@ -2,14 +2,17 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "themeui">
 <!ENTITY author    "Onyx">
-<!ENTITY version   "2026.06.26c">
+<!ENTITY version   "2026.06.26d">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
-<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.12" icon="https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/icon.png" support="https://github.com/Onyxdigital-dev/ThemeUI">
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" min="6.12" icon="icon.png" support="https://github.com/Onyxdigital-dev/ThemeUI">
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.26d
+- Fix plugin icon not displaying: use filename-only icon reference so Unraid resolves it from the local webroot
+
 ## 2026.06.26c
 - Added custom plugin icon
 
@@ -516,7 +519,7 @@ if (($settings['SERVICE'] ?? "disabled") === "enabled") {
 <![CDATA[
 Menu="Utilities"
 Title="ThemeUI"
-Icon="/plugins/themeui/icon.png"
+Icon="icon.png"
 ---
 <?php
 $cfg_path      = "/boot/config/plugins/themeui/themeui.cfg";
