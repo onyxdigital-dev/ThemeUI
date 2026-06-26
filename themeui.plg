@@ -1,8 +1,8 @@
 <?xml version='1.0' standalone='yes'?>
 <!DOCTYPE PLUGIN [
-<!ENTITY name      "themeui">
+<!ENTITY name      "ThemeUI">
 <!ENTITY author    "Onyx">
-<!ENTITY version   "2026.06.26d">
+<!ENTITY version   "2026.06.26e">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.26e
+- Fix mixed table row colors on Docker and Plugins pages: override dynamix tablesorter CSS variables so alternating rows use theme colors instead of hardcoded Unraid grays
+
 ## 2026.06.26d
 - Fix plugin icon not displaying: use filename-only icon reference so Unraid resolves it from the local webroot
 
@@ -113,6 +116,12 @@ exit 0
     --input-bg-color: transparent;
     --focus-input-bg-color: #181825;
     --shade-bg-color: #181825;
+
+    --dynamix-tablesorter-tbody-row-bg-color: #1e1e2e;
+    --dynamix-tablesorter-tbody-row-alt-bg-color: #181825;
+    --dynamix-tablesorter-tbody-row-border-color: #313244;
+    --dynamix-tablesorter-thead-th-bg-color: #181825;
+    --dynamix-tablesorter-thead-th-text-color: #cdd6f4;
 }
 ]]>
 </INLINE>
@@ -193,6 +202,12 @@ exit 0
     --input-bg-color: transparent;
     --focus-input-bg-color: #3b4252;
     --shade-bg-color: #3b4252;
+
+    --dynamix-tablesorter-tbody-row-bg-color: #2e3440;
+    --dynamix-tablesorter-tbody-row-alt-bg-color: #3b4252;
+    --dynamix-tablesorter-tbody-row-border-color: #3b4252;
+    --dynamix-tablesorter-thead-th-bg-color: #3b4252;
+    --dynamix-tablesorter-thead-th-text-color: #eceff4;
 }
 ]]>
 </INLINE>
@@ -272,6 +287,12 @@ exit 0
     --input-bg-color: transparent;
     --focus-input-bg-color: #21222c;
     --shade-bg-color: #21222c;
+
+    --dynamix-tablesorter-tbody-row-bg-color: #282a36;
+    --dynamix-tablesorter-tbody-row-alt-bg-color: #21222c;
+    --dynamix-tablesorter-tbody-row-border-color: #44475a;
+    --dynamix-tablesorter-thead-th-bg-color: #21222c;
+    --dynamix-tablesorter-thead-th-text-color: #f8f8f2;
 }
 ]]>
 </INLINE>
@@ -350,6 +371,12 @@ exit 0
     --input-bg-color: transparent;
     --focus-input-bg-color: #32302f;
     --shade-bg-color: #3c3836;
+
+    --dynamix-tablesorter-tbody-row-bg-color: #282828;
+    --dynamix-tablesorter-tbody-row-alt-bg-color: #32302f;
+    --dynamix-tablesorter-tbody-row-border-color: #3c3836;
+    --dynamix-tablesorter-thead-th-bg-color: #32302f;
+    --dynamix-tablesorter-thead-th-text-color: #ebdbb2;
 }
 ]]>
 </INLINE>

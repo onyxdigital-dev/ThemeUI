@@ -73,4 +73,10 @@
     --focus-input-bg-color: #181825;
 
     --shade-bg-color: #181825;
+
+    --dynamix-tablesorter-tbody-row-bg-color: #1e1e2e;
+    --dynamix-tablesorter-tbody-row-alt-bg-color: #181825;
+    --dynamix-tablesorter-tbody-row-border-color: #313244;
+    --dynamix-tablesorter-thead-th-bg-color: #181825;
+    --dynamix-tablesorter-thead-th-text-color: #cdd6f4;
 }
