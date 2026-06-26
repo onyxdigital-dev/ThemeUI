@@ -82,3 +82,11 @@
     --dynamix-tablesorter-thead-th-bg-color: #21222c;
     --dynamix-tablesorter-thead-th-text-color: #f8f8f2;
 }
+
+table.tablesorter tbody tr:nth-child(even),
+table.tablesorter tbody tr.tr_last,
+table.t1.tablesorter tbody tr.alt-row { background-color: #21222c !important; }
+table.t1.tablesorter tbody tr.normal-row { background-color: #282a36 !important; }
+table.tablesorter thead tr th,
+table.tablesorter thead tr .tablesorter-headerAsc,
+table.tablesorter thead tr .tablesorter-headerDesc { background-color: #21222c !important; color: #f8f8f2 !important; }

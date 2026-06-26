@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "Onyx">
-<!ENTITY version   "2026.06.26e">
+<!ENTITY version   "2026.06.26f">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.26f
+- Fix table row colors: use direct CSS rules with !important instead of variable overrides (Unraid's CSS loads after ours and was winning the cascade)
+
 ## 2026.06.26e
 - Fix mixed table row colors on Docker and Plugins pages: override dynamix tablesorter CSS variables so alternating rows use theme colors instead of hardcoded Unraid grays
 
@@ -123,6 +126,14 @@ exit 0
     --dynamix-tablesorter-thead-th-bg-color: #181825;
     --dynamix-tablesorter-thead-th-text-color: #cdd6f4;
 }
+
+table.tablesorter tbody tr:nth-child(even),
+table.tablesorter tbody tr.tr_last,
+table.t1.tablesorter tbody tr.alt-row { background-color: #181825 !important; }
+table.t1.tablesorter tbody tr.normal-row { background-color: #1e1e2e !important; }
+table.tablesorter thead tr th,
+table.tablesorter thead tr .tablesorter-headerAsc,
+table.tablesorter thead tr .tablesorter-headerDesc { background-color: #181825 !important; color: #cdd6f4 !important; }
 ]]>
 </INLINE>
 </FILE>
@@ -209,6 +220,14 @@ exit 0
     --dynamix-tablesorter-thead-th-bg-color: #3b4252;
     --dynamix-tablesorter-thead-th-text-color: #eceff4;
 }
+
+table.tablesorter tbody tr:nth-child(even),
+table.tablesorter tbody tr.tr_last,
+table.t1.tablesorter tbody tr.alt-row { background-color: #3b4252 !important; }
+table.t1.tablesorter tbody tr.normal-row { background-color: #2e3440 !important; }
+table.tablesorter thead tr th,
+table.tablesorter thead tr .tablesorter-headerAsc,
+table.tablesorter thead tr .tablesorter-headerDesc { background-color: #3b4252 !important; color: #eceff4 !important; }
 ]]>
 </INLINE>
 </FILE>
@@ -294,6 +313,14 @@ exit 0
     --dynamix-tablesorter-thead-th-bg-color: #21222c;
     --dynamix-tablesorter-thead-th-text-color: #f8f8f2;
 }
+
+table.tablesorter tbody tr:nth-child(even),
+table.tablesorter tbody tr.tr_last,
+table.t1.tablesorter tbody tr.alt-row { background-color: #21222c !important; }
+table.t1.tablesorter tbody tr.normal-row { background-color: #282a36 !important; }
+table.tablesorter thead tr th,
+table.tablesorter thead tr .tablesorter-headerAsc,
+table.tablesorter thead tr .tablesorter-headerDesc { background-color: #21222c !important; color: #f8f8f2 !important; }
 ]]>
 </INLINE>
 </FILE>
@@ -378,6 +405,14 @@ exit 0
     --dynamix-tablesorter-thead-th-bg-color: #32302f;
     --dynamix-tablesorter-thead-th-text-color: #ebdbb2;
 }
+
+table.tablesorter tbody tr:nth-child(even),
+table.tablesorter tbody tr.tr_last,
+table.t1.tablesorter tbody tr.alt-row { background-color: #32302f !important; }
+table.t1.tablesorter tbody tr.normal-row { background-color: #282828 !important; }
+table.tablesorter thead tr th,
+table.tablesorter thead tr .tablesorter-headerAsc,
+table.tablesorter thead tr .tablesorter-headerDesc { background-color: #32302f !important; color: #ebdbb2 !important; }
 ]]>
 </INLINE>
 </FILE>
