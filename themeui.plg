@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "Onyx">
-<!ENTITY version   "2026.06.26g">
+<!ENTITY version   "2026.06.27">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.27
+- Remove dashboard card rounded corners from Modern design; the tightly-packed card grid made the rounding look awkward and overflow:hidden was clipping content
+
 ## 2026.06.26g
 - Fix critical path mismatch: plugin entity is ThemeUI (capital) but PHP was looking at themeui (lowercase); on Linux these are different paths so no CSS was loading after reinstall
 - Fix table row colors with inline style tag using var() instead of per-file !important rules; inline style always wins cascade regardless of load order
@@ -473,17 +476,6 @@ div.title:where(:not(.unapi *)) {
     border-bottom: 1px solid var(--border-color) !important;
 }
 
-/* ── Dashboard cards: rounded box ── */
-table.dashboard {
-    border-collapse: separate !important;
-    border-spacing: 0 !important;
-    border-radius: 12px !important;
-    overflow: hidden !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
-}
-table.dashboard tbody {
-    border-radius: 12px !important;
-}
 
 /* ── Data table containers: rounded + border ── */
 .TableContainer,
