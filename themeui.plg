@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.06.27q">
+<!ENTITY version   "2026.06.28r">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.28r
+- Login page theming: inject selected theme CSS into /webGui/include/.login.php on install/boot and immediately when settings are saved; removed on uninstall
+
 ## 2026.06.27q
 - Restructure: CSS and page files are now separate files in the repo; .plg downloads them from GitHub on install instead of embedding them inline
 
@@ -143,6 +146,17 @@ fi
 # Sync custom override from flash to webroot
 cp /boot/config/plugins/themeui/custom-override.css "$PLUGIN_DIR/custom-override.css"
 
+# Inject theme into login page (re-applied on every boot since webGui is RAM-based)
+LOGIN_PAGE="/usr/local/emhttp/webGui/include/.login.php"
+if [ -f "$LOGIN_PAGE" ]; then
+    sed -i '/data-themeui/d' "$LOGIN_PAGE"
+    SERVICE=$(grep ^SERVICE /boot/config/plugins/themeui/themeui.cfg 2>/dev/null | cut -d'"' -f2)
+    THEME=$(grep ^THEME /boot/config/plugins/themeui/themeui.cfg 2>/dev/null | cut -d'"' -f2)
+    if [ "$SERVICE" = "enabled" ] && [ -n "$THEME" ] && [ "$THEME" != "default" ]; then
+        sed -i "/<style>/i\\    <link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/$THEME.css'>" "$LOGIN_PAGE"
+    fi
+fi
+
 echo "----------------------------------------------------"
 echo " ThemeUI installed successfully."
 echo " Go to Settings > Utilities > ThemeUI to pick a theme."
@@ -159,6 +173,9 @@ rm -rf /usr/local/emhttp/plugins/&name;
 rm -rf /usr/local/emhttp/plugins/themeui
 rm -rf /boot/config/plugins/themeui
 rm -rf /boot/config/plugins/&name;
+# Remove login page injection
+LOGIN_PAGE="/usr/local/emhttp/webGui/include/.login.php"
+[ -f "$LOGIN_PAGE" ] && sed -i '/data-themeui/d' "$LOGIN_PAGE"
 echo "ThemeUI removed."
 exit 0
 </INLINE>
