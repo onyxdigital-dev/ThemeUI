@@ -1,8 +1,8 @@
 <?xml version='1.0' standalone='yes'?>
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
-<!ENTITY author    "Onyx">
-<!ENTITY version   "2026.06.27j">
+<!ENTITY author    "onyxdigital-dev">
+<!ENTITY version   "2026.06.27k">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.27k
+- Theme buttons: apply --button-background, --button-text-color and hover variants via inline style so button colors follow the active theme
+
 ## 2026.06.27j
 - Theme select dropdowns: override background, text, and border colors using CSS variables so dropdowns match the active theme instead of staying OS-default white
 
@@ -633,6 +636,8 @@ table.tablesorter thead tr .tablesorter-headerDesc{background-color:var(--table-
 div.pie::before,div.pie::after{background-color:var(--dashboard-background-color)!important}
 select{background-color:var(--background-color)!important;color:var(--text-color)!important;border-color:var(--input-border-color)!important}
 select option{background-color:var(--background-color)!important;color:var(--text-color)!important}
+input[type="button"],input[type="reset"],input[type="submit"],button,a.button{background:var(--button-background)!important;background-size:var(--button-background-size)!important;color:var(--button-text-color)!important;border:var(--button-border)!important}
+input[type="button"]:hover,input[type="reset"]:hover,input[type="submit"]:hover,button:hover,a.button:hover{background:var(--hover-button-background)!important;color:var(--hover-button-text-color)!important}
 </style>\n";
         // Theme the dashboard SmoothieChart grids and RAM pie charts.
         // Canvas charts cannot be styled with CSS - we patch their options via JS.
