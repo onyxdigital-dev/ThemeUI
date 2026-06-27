@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.06.27n">
+<!ENTITY version   "2026.06.27o">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.27o
+- All buttons now themed via JS inline style (beats Unraid's high-specificity CSS rules); MutationObserver covers dynamically added buttons on Docker/VM pages
+
 ## 2026.06.27n
 - Fix button theming: replace complex gradient-border approach (--button-background + separate background-size) with --hover-button-background solid fill which reliably applies across all browsers; hover dims to 85% opacity for feedback
 
@@ -704,6 +707,27 @@ document.addEventListener('DOMContentLoaded',function(){
       return oc.apply(this,arguments);
     };
   }
+  // Buttons: inline style beats all CSS specificity, including Unraid !important ID-selector rules
+  var btnBg=s.getPropertyValue('--hover-button-background').trim();
+  var btnFg=s.getPropertyValue('--hover-button-text-color').trim();
+  var btnSel='input[type=\"button\"],input[type=\"reset\"],input[type=\"submit\"],button,a.button';
+  function applyBtn(el){
+    el.style.setProperty('background',btnBg,'important');
+    el.style.setProperty('color',btnFg,'important');
+    el.style.setProperty('border','none','important');
+    el.addEventListener('mouseenter',function(){this.style.setProperty('opacity','0.8','important');});
+    el.addEventListener('mouseleave',function(){this.style.removeProperty('opacity');});
+  }
+  document.querySelectorAll(btnSel).forEach(applyBtn);
+  new MutationObserver(function(muts){
+    muts.forEach(function(m){
+      m.addedNodes.forEach(function(n){
+        if(n.nodeType!==1)return;
+        if(n.matches&&n.matches(btnSel))applyBtn(n);
+        if(n.querySelectorAll)n.querySelectorAll(btnSel).forEach(applyBtn);
+      });
+    });
+  }).observe(document.body,{childList:true,subtree:true});
 });
 </script>\n";
     }
