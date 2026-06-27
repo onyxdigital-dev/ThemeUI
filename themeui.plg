@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "Onyx">
-<!ENTITY version   "2026.06.27d">
+<!ENTITY version   "2026.06.27e">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.27e
+- Theme dashboard graphs: CPU and network chart grid/labels now use theme colors via JS options patching; RAM pie charts (sys0-sys3) recolored via MutationObserver intercepting the conic-gradient inline style
+
 ## 2026.06.27d
 - Theme usage bars: CPU, RAM and disk fill bars now use each theme's accent color instead of hardcoded gray
 
@@ -613,6 +616,49 @@ table.tablesorter thead tr th,
 table.tablesorter thead tr .tablesorter-headerAsc,
 table.tablesorter thead tr .tablesorter-headerDesc{background-color:var(--table-header-background-color)!important;color:var(--text-color)!important}
 </style>\n";
+        // Theme the dashboard SmoothieChart grids and RAM pie charts.
+        // Canvas charts cannot be styled with CSS - we patch their options via JS.
+        // Pie charts use conic-gradient set by inline style - we intercept via MutationObserver.
+        echo "<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var s=getComputedStyle(document.documentElement);
+  var c0=s.getPropertyValue('--brand-orange').trim();
+  var c1=s.getPropertyValue('--mild-background-color').trim();
+  var grid=s.getPropertyValue('--border-color').trim();
+  var text=s.getPropertyValue('--text-color').trim();
+  var red=s.getPropertyValue('--brand-red').trim();
+  // SmoothieChart: update grid + label + line colors
+  if(typeof cpuchart!=='undefined'){
+    cpuchart.options.grid.strokeStyle=grid;
+    cpuchart.options.labels.fillStyle=text;
+    if(cpuchart.seriesSet&&cpuchart.seriesSet[0])cpuchart.seriesSet[0].options.strokeStyle=c0;
+  }
+  if(typeof netchart!=='undefined'){
+    netchart.options.grid.strokeStyle=grid;
+    netchart.options.labels.fillStyle=text;
+    if(netchart.seriesSet){
+      if(netchart.seriesSet[0])netchart.seriesSet[0].options.strokeStyle=red;
+      if(netchart.seriesSet[1])netchart.seriesSet[1].options.strokeStyle=c0;
+    }
+  }
+  // Pie charts: intercept conic-gradient and swap PHP-default colors with theme colors
+  ['sys0','sys1','sys2','sys3'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el)return;
+    var busy=false;
+    new MutationObserver(function(){
+      if(busy)return;
+      var bg=el.style.background||'';
+      if(!bg.includes('conic-gradient'))return;
+      var nb=bg.replace(/#a8a8a8/gi,c0).replace(/#dcdcdc/gi,c1)
+               .replace(/#787878/gi,c0).replace(/#444444/gi,c1)
+               .replace(/#606e7f/gi,c0).replace(/#eceaec/gi,c1)
+               .replace(/#232523/gi,c1);
+      if(nb!==bg){busy=true;el.style.background=nb;busy=false;}
+    }).observe(el,{attributes:true,attributeFilter:['style']});
+  });
+});
+</script>\n";
     }
     $design = $settings['DESIGN'] ?? 'default';
     $design_file = "$plugin_dir/themes/modern.css";
