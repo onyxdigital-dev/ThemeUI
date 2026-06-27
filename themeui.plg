@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "Onyx">
-<!ENTITY version   "2026.06.27f">
+<!ENTITY version   "2026.06.27g">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.27g
+- Fix RAM pie charts: switch from Object.defineProperty (silently ignored on Chromium native objects) to jQuery.fn.css monkey-patch, intercepting the conic-gradient string before any DOM API can normalise hex to rgb()
+
 ## 2026.06.27f
 - Fix RAM pie charts: use Object.defineProperty setter interception instead of MutationObserver so hex colors are replaced before the browser normalises them to rgb()
 
@@ -621,7 +624,10 @@ table.tablesorter thead tr .tablesorter-headerDesc{background-color:var(--table-
 </style>\n";
         // Theme the dashboard SmoothieChart grids and RAM pie charts.
         // Canvas charts cannot be styled with CSS - we patch their options via JS.
-        // Pie charts use conic-gradient set by inline style - we intercept via MutationObserver.
+        // Pie charts use conic-gradient set by jQuery .css() - we monkey-patch jQuery.fn.css
+        // so we intercept the hex string before jQuery hands it to the DOM (where the browser
+        // would immediately normalise #rrggbb to rgb()). Object.defineProperty on native
+        // CSSStyleDeclaration instances is silently ignored in Chromium, so that approach fails.
         echo "<script>
 document.addEventListener('DOMContentLoaded',function(){
   var s=getComputedStyle(document.documentElement);
@@ -644,27 +650,33 @@ document.addEventListener('DOMContentLoaded',function(){
       if(netchart.seriesSet[1])netchart.seriesSet[1].options.strokeStyle=c0;
     }
   }
-  // Pie charts: intercept style.background setter BEFORE the browser normalises
-  // hex colours to rgb() — MutationObserver fires too late (hex already gone).
-  var origBg=Object.getOwnPropertyDescriptor(CSSStyleDeclaration.prototype,'background');
-  if(origBg&&origBg.set){
-    ['sys0','sys1','sys2','sys3'].forEach(function(id){
-      var el=document.getElementById(id);
-      if(!el)return;
-      Object.defineProperty(el.style,'background',{
-        configurable:true,
-        get:origBg.get,
-        set:function(val){
-          if(typeof val==='string'&&val.includes('conic-gradient')){
-            val=val.replace(/#a8a8a8/gi,c0).replace(/#dcdcdc/gi,c1)
-                   .replace(/#787878/gi,c0).replace(/#444444/gi,c1)
-                   .replace(/#606e7f/gi,c0).replace(/#eceaec/gi,c1)
-                   .replace(/#232523/gi,c1);
+  // Pie charts: patch the global colors[] array if accessible, then monkey-patch jQuery.fn.css
+  // to intercept the conic-gradient string before any DOM API normalises hex to rgb().
+  if(Array.isArray(window.colors)&&window.colors.length>=2){
+    window.colors[0]=c0;window.colors[1]=c1;
+  }
+  function fixGrad(v){
+    return v.replace(/#a8a8a8/gi,c0).replace(/#dcdcdc/gi,c1)
+             .replace(/#787878/gi,c0).replace(/#444444/gi,c1)
+             .replace(/#606e7f/gi,c0).replace(/#eceaec/gi,c1)
+             .replace(/#232523/gi,c1);
+  }
+  var jq=window.jQuery||window.$;
+  if(jq&&jq.fn&&jq.fn.css){
+    var oc=jq.fn.css,ps={sys0:1,sys1:1,sys2:1,sys3:1};
+    jq.fn.css=function(p){
+      if(p&&typeof p==='object'&&typeof p.background==='string'
+         &&p.background.indexOf('conic-gradient')!==-1){
+        for(var i=0;i<this.length;i++){
+          if(ps[this[i].id]){
+            var np={};for(var k in p)np[k]=p[k];
+            np.background=fixGrad(p.background);
+            return oc.call(this,np);
           }
-          origBg.set.call(this,val);
         }
-      });
-    });
+      }
+      return oc.apply(this,arguments);
+    };
   }
 });
 </script>\n";
