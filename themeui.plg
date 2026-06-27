@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.06.27o">
+<!ENTITY version   "2026.06.27p">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.27p
+- Per-theme button colors: Catppuccin=blue/lavender, Nord=deep/frost blue, Dracula=purple/pink, Gruvbox=red/orange
+
 ## 2026.06.27o
 - All buttons now themed via JS inline style (beats Unraid's high-specificity CSS rules); MutationObserver covers dynamically added buttons on Docker/VM pages
 
@@ -166,7 +169,7 @@ exit 0
     --button-background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
     --hover-button-border: #89b4fa;
     --hover-button-text-color: #1e1e2e;
-    --hover-button-background: linear-gradient(90deg, #f38ba8 0, #fab387);
+    --hover-button-background: linear-gradient(135deg, #89b4fa, #cba4f7);
 
     --input-bg-color: transparent;
     --focus-input-bg-color: #181825;
@@ -263,7 +266,7 @@ table.tablesorter thead tr .tablesorter-headerDesc { background-color: #181825 !
     --button-background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
     --hover-button-border: #88c0d0;
     --hover-button-text-color: #2e3440;
-    --hover-button-background: linear-gradient(90deg, #bf616a 0, #d08770);
+    --hover-button-background: linear-gradient(135deg, #5e81ac, #88c0d0);
 
     --input-bg-color: transparent;
     --focus-input-bg-color: #3b4252;
@@ -359,7 +362,7 @@ table.tablesorter thead tr .tablesorter-headerDesc { background-color: #3b4252 !
     --button-background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
     --hover-button-border: #bd93f9;
     --hover-button-text-color: #282a36;
-    --hover-button-background: linear-gradient(90deg, #ff5555 0, #ffb86c);
+    --hover-button-background: linear-gradient(135deg, #bd93f9, #ff79c6);
 
     --input-bg-color: transparent;
     --focus-input-bg-color: #21222c;
