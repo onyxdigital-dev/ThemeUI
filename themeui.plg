@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "Onyx">
-<!ENTITY version   "2026.06.27e">
+<!ENTITY version   "2026.06.27f">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.27f
+- Fix RAM pie charts: use Object.defineProperty setter interception instead of MutationObserver so hex colors are replaced before the browser normalises them to rgb()
+
 ## 2026.06.27e
 - Theme dashboard graphs: CPU and network chart grid/labels now use theme colors via JS options patching; RAM pie charts (sys0-sys3) recolored via MutationObserver intercepting the conic-gradient inline style
 
@@ -641,22 +644,28 @@ document.addEventListener('DOMContentLoaded',function(){
       if(netchart.seriesSet[1])netchart.seriesSet[1].options.strokeStyle=c0;
     }
   }
-  // Pie charts: intercept conic-gradient and swap PHP-default colors with theme colors
-  ['sys0','sys1','sys2','sys3'].forEach(function(id){
-    var el=document.getElementById(id);
-    if(!el)return;
-    var busy=false;
-    new MutationObserver(function(){
-      if(busy)return;
-      var bg=el.style.background||'';
-      if(!bg.includes('conic-gradient'))return;
-      var nb=bg.replace(/#a8a8a8/gi,c0).replace(/#dcdcdc/gi,c1)
-               .replace(/#787878/gi,c0).replace(/#444444/gi,c1)
-               .replace(/#606e7f/gi,c0).replace(/#eceaec/gi,c1)
-               .replace(/#232523/gi,c1);
-      if(nb!==bg){busy=true;el.style.background=nb;busy=false;}
-    }).observe(el,{attributes:true,attributeFilter:['style']});
-  });
+  // Pie charts: intercept style.background setter BEFORE the browser normalises
+  // hex colours to rgb() — MutationObserver fires too late (hex already gone).
+  var origBg=Object.getOwnPropertyDescriptor(CSSStyleDeclaration.prototype,'background');
+  if(origBg&&origBg.set){
+    ['sys0','sys1','sys2','sys3'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(!el)return;
+      Object.defineProperty(el.style,'background',{
+        configurable:true,
+        get:origBg.get,
+        set:function(val){
+          if(typeof val==='string'&&val.includes('conic-gradient')){
+            val=val.replace(/#a8a8a8/gi,c0).replace(/#dcdcdc/gi,c1)
+                   .replace(/#787878/gi,c0).replace(/#444444/gi,c1)
+                   .replace(/#606e7f/gi,c0).replace(/#eceaec/gi,c1)
+                   .replace(/#232523/gi,c1);
+          }
+          origBg.set.call(this,val);
+        }
+      });
+    });
+  }
 });
 </script>\n";
     }
