@@ -1,0 +1,117 @@
+Menu="Utilities"
+Title="ThemeUI"
+Icon="icon.png"
+---
+<?php
+$cfg_path      = "/boot/config/plugins/themeui/themeui.cfg";
+$override_path = "/boot/config/plugins/themeui/custom-override.css";
+$webroot_override = "/usr/local/emhttp/plugins/ThemeUI/custom-override.css";
+$msg = "";
+
+require_once "$docroot/plugins/dynamix/include/Wrappers.php";
+
+$valid_themes  = ["default","catppuccin-mocha","nord","dracula","gruvbox-dark"];
+$valid_designs = ["default","modern"];
+
+$theme_meta = [
+    "default"          => ["label"=>"Default (Unraid built-in)", "colors"=>["#1c1b22","#f0f0f0","#ff8c00","#cc0000","#4a4a5a"]],
+    "catppuccin-mocha" => ["label"=>"Catppuccin Mocha",         "colors"=>["#1e1e2e","#cdd6f4","#fab387","#f38ba8","#89b4fa"]],
+    "nord"             => ["label"=>"Nord",                      "colors"=>["#2e3440","#eceff4","#d08770","#bf616a","#88c0d0"]],
+    "dracula"          => ["label"=>"Dracula",                   "colors"=>["#282a36","#f8f8f2","#ffb86c","#ff5555","#bd93f9"]],
+    "gruvbox-dark"     => ["label"=>"Gruvbox Dark",             "colors"=>["#282828","#ebdbb2","#fe8019","#fb4934","#83a598"]],
+];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['SAVE_CONFIG'])) {
+        $service = in_array($_POST['SERVICE'] ?? '', ['enabled','disabled']) ? $_POST['SERVICE'] : 'disabled';
+        $theme   = in_array($_POST['THEME']   ?? '', $valid_themes)  ? $_POST['THEME']  : 'default';
+        $design  = in_array($_POST['DESIGN']  ?? '', $valid_designs) ? $_POST['DESIGN'] : 'default';
+        file_put_contents($cfg_path, "SERVICE=\"$service\"\nTHEME=\"$theme\"\nDESIGN=\"$design\"\n");
+        if (isset($_POST['custom_css'])) {
+            file_put_contents($override_path, $_POST['custom_css']);
+            @copy($override_path, $webroot_override);
+        }
+        $msg = "Settings saved — reload your browser to see the new theme.";
+    }
+}
+
+if (!file_exists($cfg_path)) {
+    file_put_contents($cfg_path, "SERVICE=\"disabled\"\nTHEME=\"default\"\n");
+}
+if (!file_exists($override_path)) {
+    file_put_contents($override_path, "/* Custom CSS overrides — applied on top of the selected theme */\n");
+    @copy($override_path, $webroot_override);
+}
+
+$settings = parse_plugin_cfg("themeui");
+$service  = $settings['SERVICE'] ?? 'disabled';
+$theme    = $settings['THEME']   ?? 'default';
+$design   = $settings['DESIGN']  ?? 'default';
+$custom_css = file_get_contents($override_path);
+?>
+
+<?php if ($msg): ?>
+<div markdown="1">
+<span class="green"><?= htmlspecialchars($msg) ?></span>
+</div>
+<?php endif; ?>
+
+<form markdown="1" method="POST" action="/Settings/ThemeUI">
+
+_(Enable ThemeUI)_:
+: <select name="SERVICE" size="1">
+    <?=mk_option($service, "enabled",  "Yes — inject selected theme");?>
+    <?=mk_option($service, "disabled", "No — disabled");?>
+  </select>
+
+_(Theme)_:
+: <select name="THEME" id="themeui-select" size="1" onchange="themuiPreview(this.value)">
+    <?php foreach ($theme_meta as $key => $meta): ?>
+    <?=mk_option($theme, $key, $meta['label']);?>
+    <?php endforeach; ?>
+  </select>
+  <div id="themeui-swatches" style="display:flex;gap:5px;margin-top:8px;align-items:center;"></div>
+
+_(Design Style)_:
+: <select name="DESIGN" size="1">
+    <?=mk_option($design, "default", "Default (flat)");?>
+    <?=mk_option($design, "modern",  "Modern (rounded corners + transitions)");?>
+  </select>
+  <span>Rounds corners on inputs, buttons, cards, and tables. Works with any color theme.</span>
+
+_(Custom CSS Override)_:
+: <textarea name="custom_css" id="themeui-css" spellcheck="false"
+    style="font-family:monospace;width:100%;max-width:820px;height:220px;
+           background:#111;color:#eee;border:1px solid #444;padding:10px;
+           box-sizing:border-box;"><?= htmlspecialchars($custom_css) ?></textarea>
+  <span>Applied after the selected theme — use this to fine-tune colors.
+        <br>Reload browser after saving to see changes.</span>
+
+&nbsp;
+: <span>
+    <a href="/webGui/styles/themes/white.css" target="_blank">Browse Unraid CSS variables (white.css)</a>
+    &nbsp;|&nbsp;
+    <a href="/webGui/styles/themes/black.css" target="_blank">black.css</a>
+  </span>
+
+&nbsp;
+: <span class="buttons-spaced">
+    <input type="submit" name="SAVE_CONFIG" value="_(Apply)_" disabled>
+    <input type="button" value="_(Done)_" onclick="done()">
+  </span>
+
+</form>
+
+<script>
+var themuiColors = <?= json_encode(array_map(function($m){ return $m['colors']; }, $theme_meta), JSON_UNESCAPED_SLASHES) ?>;
+function themuiPreview(theme) {
+    var colors = themuiColors[theme] || [];
+    var el = document.getElementById('themeui-swatches');
+    if (!el) return;
+    var labels = ['bg','text','accent','red','blue'];
+    el.innerHTML = colors.map(function(c, i) {
+        return '<span title="' + (labels[i]||'') + ': ' + c + '" style="display:inline-block;width:22px;height:22px;border-radius:4px;background:' + c + ';border:1px solid rgba(128,128,128,0.4);cursor:default;"></span>';
+    }).join('');
+}
+themuiPreview(<?= json_encode($theme) ?>);
+</script>

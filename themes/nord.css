@@ -15,9 +15,9 @@
     --background-color: #2e3440;
     --opac-background-color: #2e3440dd;
     --mild-background-color: #3b4252;
-    --usage-bar-background-color: #3b4252;
+    --usage-bar-background-color: #4c566a;
     --usage-bar-used-background-color: #88c0d0;
-    --usage-disk-background-color: #3b4252;
+    --usage-disk-background-color: #4c566a;
     --inverse-background-color: #eceff4;
     --radio-background-color: #3b4252;
     --dashboard-background-color: #3b4252;
@@ -69,7 +69,7 @@
 
     --hover-button-border: #88c0d0;
     --hover-button-text-color: #2e3440;
-    --hover-button-background: linear-gradient(90deg, #bf616a 0, #d08770);
+    --hover-button-background: linear-gradient(135deg, #5e81ac, #88c0d0);
 
     --input-bg-color: transparent;
     --focus-input-bg-color: #3b4252;
