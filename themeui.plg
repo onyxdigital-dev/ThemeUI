@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.06.27l">
+<!ENTITY version   "2026.06.27m">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.27m
+- Nord: use #4c566a (Polar Night 4) for pie chart empty segment so the free slice is visibly lighter, matching the contrast level of other themes
+
 ## 2026.06.27l
 - Fix PHP parse error: unescaped double-quotes in button CSS attribute selectors inside echo string crashed ThemeUILoader.page on every page
 
@@ -204,9 +207,9 @@ table.tablesorter thead tr .tablesorter-headerDesc { background-color: #181825 !
     --background-color: #2e3440;
     --opac-background-color: #2e3440dd;
     --mild-background-color: #3b4252;
-    --usage-bar-background-color: #3b4252;
+    --usage-bar-background-color: #4c566a;
     --usage-bar-used-background-color: #88c0d0;
-    --usage-disk-background-color: #3b4252;
+    --usage-disk-background-color: #4c566a;
     --inverse-background-color: #eceff4;
     --radio-background-color: #3b4252;
     --dashboard-background-color: #3b4252;
