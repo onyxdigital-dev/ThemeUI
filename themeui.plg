@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "Onyx">
-<!ENTITY version   "2026.06.27b">
+<!ENTITY version   "2026.06.27c">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.27c
+- Dashboard cards now use var(--small-shadow) for box-shadow so the shadow color adapts to the active theme
+
 ## 2026.06.27b
 - Add per-card rounded corners to dashboard: each section (tbody) gets border-radius via border-collapse:separate plus corner-cell fallback for full browser compatibility
 
@@ -490,6 +493,7 @@ table.dashboard {
 table.dashboard tbody {
     border-radius: 8px !important;
     overflow: hidden !important;
+    box-shadow: var(--small-shadow, 0 2px 6px rgba(0,0,0,0.3)) !important;
 }
 /* Corner-cell fallback for browsers that don't paint tbody border-radius */
 table.dashboard tbody tr:first-child td:first-child,
