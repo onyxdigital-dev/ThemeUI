@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "Onyx">
-<!ENTITY version   "2026.06.27h">
+<!ENTITY version   "2026.06.27i">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.27i
+- Pie chart free segment: use --usage-bar-background-color (lighter per-theme empty-slot color) instead of --mild-background-color for better contrast against the accent fill
+
 ## 2026.06.27h
 - Fix pie chart center: override div.pie::before/::after background with --dashboard-background-color so the donut hole matches the theme instead of staying white
 
@@ -636,7 +639,7 @@ div.pie::before,div.pie::after{background-color:var(--dashboard-background-color
 document.addEventListener('DOMContentLoaded',function(){
   var s=getComputedStyle(document.documentElement);
   var c0=s.getPropertyValue('--brand-orange').trim();
-  var c1=s.getPropertyValue('--mild-background-color').trim();
+  var c1=s.getPropertyValue('--usage-bar-background-color').trim();
   var grid=s.getPropertyValue('--border-color').trim();
   var text=s.getPropertyValue('--text-color').trim();
   var red=s.getPropertyValue('--brand-red').trim();
