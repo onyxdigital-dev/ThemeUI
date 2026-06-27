@@ -15,8 +15,8 @@
     --background-color: #2e3440;
     --opac-background-color: #2e3440dd;
     --mild-background-color: #3b4252;
-    --usage-bar-background-color: #434c5e;
-    --usage-bar-used-background-color: #4c566a;
+    --usage-bar-background-color: #3b4252;
+    --usage-bar-used-background-color: #88c0d0;
     --usage-disk-background-color: #3b4252;
     --inverse-background-color: #eceff4;
     --radio-background-color: #3b4252;
@@ -90,3 +90,6 @@ table.t1.tablesorter tbody tr.normal-row { background-color: #2e3440 !important;
 table.tablesorter thead tr th,
 table.tablesorter thead tr .tablesorter-headerAsc,
 table.tablesorter thead tr .tablesorter-headerDesc { background-color: #3b4252 !important; color: #eceff4 !important; }
+
+.usage-disk > span:first-child { background-color: #88c0d0 !important; }
+.usage-disk.sys > span { background-color: #88c0d0 !important; }

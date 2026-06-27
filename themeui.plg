@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "Onyx">
-<!ENTITY version   "2026.06.27c">
+<!ENTITY version   "2026.06.27d">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.27d
+- Theme usage bars: CPU, RAM and disk fill bars now use each theme's accent color instead of hardcoded gray
+
 ## 2026.06.27c
 - Dashboard cards now use var(--small-shadow) for box-shadow so the shadow color adapts to the active theme
 
@@ -80,8 +83,8 @@ exit 0
     --background-color: #1e1e2e;
     --opac-background-color: #1e1e2edd;
     --mild-background-color: #181825;
-    --usage-bar-background-color: #45475a;
-    --usage-bar-used-background-color: #585b70;
+    --usage-bar-background-color: #313244;
+    --usage-bar-used-background-color: #89b4fa;
     --usage-disk-background-color: #313244;
     --inverse-background-color: #cdd6f4;
     --radio-background-color: #313244;
@@ -150,6 +153,9 @@ table.t1.tablesorter tbody tr.normal-row { background-color: #1e1e2e !important;
 table.tablesorter thead tr th,
 table.tablesorter thead tr .tablesorter-headerAsc,
 table.tablesorter thead tr .tablesorter-headerDesc { background-color: #181825 !important; color: #cdd6f4 !important; }
+
+.usage-disk > span:first-child { background-color: #89b4fa !important; }
+.usage-disk.sys > span { background-color: #89b4fa !important; }
 ]]>
 </INLINE>
 </FILE>
@@ -174,8 +180,8 @@ table.tablesorter thead tr .tablesorter-headerDesc { background-color: #181825 !
     --background-color: #2e3440;
     --opac-background-color: #2e3440dd;
     --mild-background-color: #3b4252;
-    --usage-bar-background-color: #434c5e;
-    --usage-bar-used-background-color: #4c566a;
+    --usage-bar-background-color: #3b4252;
+    --usage-bar-used-background-color: #88c0d0;
     --usage-disk-background-color: #3b4252;
     --inverse-background-color: #eceff4;
     --radio-background-color: #3b4252;
@@ -244,6 +250,9 @@ table.t1.tablesorter tbody tr.normal-row { background-color: #2e3440 !important;
 table.tablesorter thead tr th,
 table.tablesorter thead tr .tablesorter-headerAsc,
 table.tablesorter thead tr .tablesorter-headerDesc { background-color: #3b4252 !important; color: #eceff4 !important; }
+
+.usage-disk > span:first-child { background-color: #88c0d0 !important; }
+.usage-disk.sys > span { background-color: #88c0d0 !important; }
 ]]>
 </INLINE>
 </FILE>
@@ -268,7 +277,7 @@ table.tablesorter thead tr .tablesorter-headerDesc { background-color: #3b4252 !
     --opac-background-color: #282a36dd;
     --mild-background-color: #21222c;
     --usage-bar-background-color: #44475a;
-    --usage-bar-used-background-color: #6272a4;
+    --usage-bar-used-background-color: #bd93f9;
     --usage-disk-background-color: #44475a;
     --inverse-background-color: #f8f8f2;
     --radio-background-color: #44475a;
@@ -337,6 +346,9 @@ table.t1.tablesorter tbody tr.normal-row { background-color: #282a36 !important;
 table.tablesorter thead tr th,
 table.tablesorter thead tr .tablesorter-headerAsc,
 table.tablesorter thead tr .tablesorter-headerDesc { background-color: #21222c !important; color: #f8f8f2 !important; }
+
+.usage-disk > span:first-child { background-color: #bd93f9 !important; }
+.usage-disk.sys > span { background-color: #bd93f9 !important; }
 ]]>
 </INLINE>
 </FILE>
@@ -359,8 +371,8 @@ table.tablesorter thead tr .tablesorter-headerDesc { background-color: #21222c !
     --background-color: #282828;
     --opac-background-color: #282828dd;
     --mild-background-color: #32302f;
-    --usage-bar-background-color: #504945;
-    --usage-bar-used-background-color: #665c54;
+    --usage-bar-background-color: #3c3836;
+    --usage-bar-used-background-color: #fe8019;
     --usage-disk-background-color: #3c3836;
     --inverse-background-color: #ebdbb2;
     --radio-background-color: #3c3836;
@@ -429,6 +441,9 @@ table.t1.tablesorter tbody tr.normal-row { background-color: #282828 !important;
 table.tablesorter thead tr th,
 table.tablesorter thead tr .tablesorter-headerAsc,
 table.tablesorter thead tr .tablesorter-headerDesc { background-color: #32302f !important; color: #ebdbb2 !important; }
+
+.usage-disk > span:first-child { background-color: #fe8019 !important; }
+.usage-disk.sys > span { background-color: #fe8019 !important; }
 ]]>
 </INLINE>
 </FILE>
