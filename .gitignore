@@ -3,3 +3,6 @@
 
 # Unraid plugin temp files (created when editing .plg live on the server)
 *.plg.tmp.*
+
+# Local screenshots
+screenshots/
