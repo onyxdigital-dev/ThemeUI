@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.06.28w">
+<!ENTITY version   "2026.06.28x">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.28x
+- Fix login-theme.sh CRLF line endings (Windows git converts LF to CRLF; bash on Linux rejects CRLF scripts silently); add .gitattributes to force LF in repo and sed strip in install script
+
 ## 2026.06.28w
 - Login page: rewrite as theme.park-style boot script (login-theme.sh saved to flash, hooked into /boot/config/go so it runs at every boot); settings save calls the same script + opcache_invalidate for instant effect
 
@@ -168,6 +171,7 @@ rm -f /usr/local/emhttp/webGui/include/.user.ini
 
 # Save the login injection script to flash so it survives reboots
 curl -fsSL -o /boot/config/plugins/themeui/login-theme.sh "$REPO_RAW/login-theme.sh"
+sed -i 's/\r//' /boot/config/plugins/themeui/login-theme.sh
 chmod +x /boot/config/plugins/themeui/login-theme.sh
 
 # Hook into /boot/config/go so it runs at every boot (same as theme.park approach)
