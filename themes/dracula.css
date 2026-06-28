@@ -94,14 +94,11 @@ table.tablesorter thead tr .tablesorter-headerDesc { background-color: #21222c !
 .usage-disk > span:first-child { background-color: #bd93f9 !important; }
 .usage-disk.sys > span { background-color: #bd93f9 !important; }
 
-/* SweetAlert2 (Community Applications) */
-.swal2-popup{background:var(--mild-background-color)!important;color:var(--text-color)!important;border:1px solid var(--border-color)!important}
-.swal2-title{color:var(--text-color)!important}
-.swal2-html-container,.swal2-content{color:var(--text-color)!important}
-.swal2-input,.swal2-textarea,.swal2-select{background:var(--background-color)!important;color:var(--text-color)!important;border-color:var(--input-border-color)!important}
-.swal2-confirm{background:var(--hover-button-background)!important;color:var(--hover-button-text-color)!important;border:none!important}
-.swal2-cancel{background:var(--border-color)!important;color:var(--text-color)!important;border:none!important}
-.swal2-deny{background:var(--brand-red)!important;color:#fff!important;border:none!important}
-.swal2-close{color:var(--text-color)!important}
-.swal2-close:hover{color:var(--brand-orange)!important}
-.swal2-backdrop,.swal2-container{background:rgba(0,0,0,.6)!important}
+/* SweetAlert (Community Applications) */
+.sweet-overlay{background:rgba(0,0,0,.6)!important}
+.sweet-alert{background:var(--mild-background-color)!important;color:var(--text-color)!important;border:1px solid var(--border-color)!important}
+.sweet-alert h2{color:var(--text-color)!important}
+.sweet-alert p{color:var(--text-color)!important}
+.sweet-alert button.confirm{background:var(--hover-button-background)!important;color:var(--hover-button-text-color)!important;box-shadow:none!important}
+.sweet-alert button.cancel{background:var(--border-color)!important;color:var(--text-color)!important;box-shadow:none!important}
+.sweet-alert input,.sweet-alert textarea{background:var(--background-color)!important;color:var(--text-color)!important;border-color:var(--input-border-color)!important}
