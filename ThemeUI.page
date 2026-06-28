@@ -31,20 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             file_put_contents($override_path, $_POST['custom_css']);
             @copy($override_path, $webroot_override);
         }
-        // Update login page injection live
+        // Update login page injection live — same script as the boot-time hook
         $login_page = "/usr/local/emhttp/webGui/include/.login.php";
-        if (file_exists($login_page)) {
-            $html = file_get_contents($login_page);
-            $html = preg_replace('/\n?\s*<link[^>]+data-themeui[^>]*>/', '', $html);
-            if ($service === 'enabled' && $theme !== 'default') {
-                $links = "\n    <link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/{$theme}.css'>" .
-                         "\n    <link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/login.css'>";
-                $html = str_replace('</head>', $links . "\n</head>", $html);
-            }
-            file_put_contents($login_page, $html);
-            if (function_exists('opcache_invalidate')) {
-                opcache_invalidate($login_page, true);
-            }
+        exec('bash /boot/config/plugins/themeui/login-theme.sh 2>/dev/null');
+        if (function_exists('opcache_invalidate')) {
+            opcache_invalidate($login_page, true);
         }
         $msg = "Settings saved — reload your browser to see the new theme.";
     }

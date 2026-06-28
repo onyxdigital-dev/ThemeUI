@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.06.28v">
+<!ENTITY version   "2026.06.28w">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.28w
+- Login page: rewrite as theme.park-style boot script (login-theme.sh saved to flash, hooked into /boot/config/go so it runs at every boot); settings save calls the same script + opcache_invalidate for instant effect
+
 ## 2026.06.28v
 - Login page: drop auto_prepend_file/.user.ini (was breaking all pages); switch to direct .login.php injection with opcache_invalidate() so changes take effect immediately without interfering with any other pages
 
@@ -163,20 +166,17 @@ cp /boot/config/plugins/themeui/custom-override.css "$PLUGIN_DIR/custom-override
 rm -f /usr/local/emhttp/webGui/.user.ini
 rm -f /usr/local/emhttp/webGui/include/.user.ini
 
-# Inject current theme into login page via direct file modification
-# Runs at boot before PHP-FPM has compiled anything, so no opcache issue
-LOGIN_PAGE="/usr/local/emhttp/webGui/include/.login.php"
-if [ -f "$LOGIN_PAGE" ]; then
-    CFG="/boot/config/plugins/themeui/themeui.cfg"
-    SERVICE=$(grep -oP '(?&lt;=SERVICE=")[^"]+' "$CFG" 2&gt;/dev/null || echo "disabled")
-    THEME=$(grep -oP '(?&lt;=THEME=")[^"]+' "$CFG" 2&gt;/dev/null || echo "default")
-    # Remove any previous ThemeUI link tags
-    sed -i '/data-themeui/d' "$LOGIN_PAGE"
-    if [ "$SERVICE" = "enabled" ] &amp;&amp; [ "$THEME" != "default" ]; then
-        LINKS="    &lt;link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/${THEME}.css'&gt;\n    &lt;link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/login.css'&gt;"
-        sed -i "s|&lt;/head&gt;|${LINKS}\n&lt;/head&gt;|" "$LOGIN_PAGE"
-    fi
+# Save the login injection script to flash so it survives reboots
+curl -fsSL -o /boot/config/plugins/themeui/login-theme.sh "$REPO_RAW/login-theme.sh"
+chmod +x /boot/config/plugins/themeui/login-theme.sh
+
+# Hook into /boot/config/go so it runs at every boot (same as theme.park approach)
+if ! grep -q 'themeui/login-theme.sh' /boot/config/go 2&gt;/dev/null; then
+    echo 'bash /boot/config/plugins/themeui/login-theme.sh' &gt;&gt; /boot/config/go
 fi
+
+# Run immediately so the current session is also themed
+bash /boot/config/plugins/themeui/login-theme.sh
 
 echo "----------------------------------------------------"
 echo " ThemeUI installed successfully."
@@ -196,9 +196,11 @@ rm -rf /boot/config/plugins/themeui
 rm -rf /boot/config/plugins/&name;
 rm -f /usr/local/emhttp/webGui/.user.ini
 rm -f /usr/local/emhttp/webGui/include/.user.ini
-# Remove ThemeUI link tags from login page on uninstall
+# Remove login page injection
 LOGIN_PAGE="/usr/local/emhttp/webGui/include/.login.php"
 [ -f "$LOGIN_PAGE" ] &amp;&amp; sed -i '/data-themeui/d' "$LOGIN_PAGE"
+# Remove go script entry
+sed -i '/themeui\/login-theme.sh/d' /boot/config/go 2&gt;/dev/null || true
 echo "ThemeUI removed."
 exit 0
 </INLINE>
