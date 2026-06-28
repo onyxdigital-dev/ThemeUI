@@ -1,0 +1,7 @@
+/* ThemeUI — applies active theme variables to Unraid login page elements */
+html,body{background-color:var(--background-color)!important;color:var(--text-color)!important}
+#login{background-color:var(--mild-background-color)!important;border-color:var(--border-color)!important}
+#login h1,#login h2,#login label,#login a{color:var(--text-color)!important}
+#login [type='text'],#login [type='password']{background-color:var(--background-color)!important;color:var(--text-color)!important;border-color:var(--input-border-color)!important}
+#login .button,#login [type='submit']{background:var(--hover-button-background)!important;color:var(--hover-button-text-color)!important;border:none!important}
+#login .error{color:var(--brand-red)!important}

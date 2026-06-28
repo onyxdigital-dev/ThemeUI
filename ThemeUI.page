@@ -37,8 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $html = file_get_contents($login_page);
             $html = preg_replace('/\n?\s*<link[^>]+data-themeui[^>]*>/', '', $html);
             if ($service === 'enabled' && $theme !== 'default') {
-                $link = "\n    <link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/{$theme}.css'>";
-                $html = preg_replace('/(<style>)/', $link . "\n    $1", $html, 1);
+                $links = "\n    <link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/{$theme}.css'>" .
+                         "\n    <link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/login.css'>";
+                $html = str_replace('</head>', $links . "\n</head>", $html);
             }
             file_put_contents($login_page, $html);
         }
