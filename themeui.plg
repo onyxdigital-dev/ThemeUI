@@ -152,8 +152,8 @@ if [ -f "$LOGIN_PAGE" ]; then
     sed -i '/data-themeui/d' "$LOGIN_PAGE"
     SERVICE=$(grep ^SERVICE /boot/config/plugins/themeui/themeui.cfg 2>/dev/null | cut -d'"' -f2)
     THEME=$(grep ^THEME /boot/config/plugins/themeui/themeui.cfg 2>/dev/null | cut -d'"' -f2)
-    if [ "$SERVICE" = "enabled" ] && [ -n "$THEME" ] && [ "$THEME" != "default" ]; then
-        sed -i "/<style>/i\\    <link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/$THEME.css'>" "$LOGIN_PAGE"
+    if [ "$SERVICE" = "enabled" ] &amp;&amp; [ -n "$THEME" ] &amp;&amp; [ "$THEME" != "default" ]; then
+        sed -i "/&lt;style&gt;/i\\    &lt;link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/$THEME.css'&gt;" "$LOGIN_PAGE"
     fi
 fi
 
@@ -175,7 +175,7 @@ rm -rf /boot/config/plugins/themeui
 rm -rf /boot/config/plugins/&name;
 # Remove login page injection
 LOGIN_PAGE="/usr/local/emhttp/webGui/include/.login.php"
-[ -f "$LOGIN_PAGE" ] && sed -i '/data-themeui/d' "$LOGIN_PAGE"
+[ -f "$LOGIN_PAGE" ] &amp;&amp; sed -i '/data-themeui/d' "$LOGIN_PAGE"
 echo "ThemeUI removed."
 exit 0
 </INLINE>
