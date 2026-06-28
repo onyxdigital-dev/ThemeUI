@@ -31,11 +31,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             file_put_contents($override_path, $_POST['custom_css']);
             @copy($override_path, $webroot_override);
         }
-        // Update login page injection live — same script as the boot-time hook
+        // Update login page injection live
         $login_page = "/usr/local/emhttp/webGui/include/.login.php";
-        exec('bash /boot/config/plugins/themeui/login-theme.sh 2>/dev/null');
-        if (function_exists('opcache_invalidate')) {
-            opcache_invalidate($login_page, true);
+        if (file_exists($login_page)) {
+            $html = file_get_contents($login_page);
+            // Remove any previous ThemeUI tags
+            $html = preg_replace('/[ \t]*<link[^>]+data-themeui[^>]*>\n?/', '', $html);
+            if ($service === 'enabled' && $theme !== 'default') {
+                $links = "    <link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/{$theme}.css'>\n" .
+                         "    <link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/login.css'>\n";
+                $html = str_replace('</head>', $links . '</head>', $html);
+            }
+            file_put_contents($login_page, $html);
+            // Clear the entire shared opcode cache so all PHP-FPM workers see the new file
+            if (function_exists('opcache_reset')) {
+                opcache_reset();
+            } elseif (function_exists('opcache_invalidate')) {
+                opcache_invalidate($login_page, true);
+            }
         }
         $msg = "Settings saved — reload your browser to see the new theme.";
     }
