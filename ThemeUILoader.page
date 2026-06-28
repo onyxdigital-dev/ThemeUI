@@ -26,6 +26,10 @@ table.tablesorter thead tr th,
 table.tablesorter thead tr .tablesorter-headerAsc,
 table.tablesorter thead tr .tablesorter-headerDesc{background-color:var(--table-header-background-color)!important;color:var(--text-color)!important}
 div.pie::before,div.pie::after{background-color:var(--dashboard-background-color)!important}
+span[id="dynamic"] i.fa-circle:nth-of-type(1){color:var(--usage-bar-used-background-color)!important}
+span[id="dynamic"] i.fa-circle:nth-of-type(2){color:var(--brand-orange)!important}
+span[id="dynamic"] i.fa-circle:nth-of-type(3){color:var(--brand-red)!important}
+span[id="dynamic"] i.fa-circle:nth-of-type(4){color:var(--alt-text-color)!important}
 select{background-color:var(--background-color)!important;color:var(--text-color)!important;border-color:var(--input-border-color)!important}
 select option{background-color:var(--background-color)!important;color:var(--text-color)!important}
 input[type='button'],input[type='reset'],input[type='submit'],button,a.button{background:var(--hover-button-background)!important;color:var(--hover-button-text-color)!important;border:none!important}
@@ -102,29 +106,6 @@ document.addEventListener('DOMContentLoaded',function(){
       return oc.apply(this,arguments);
     };
   }
-  // Legend icons: re-color fa-circle dots to match pie segment palette.
-  // Disconnect before changing styles to avoid triggering ourselves; reconnect after.
-  // Used segments: accent / orange / red — all vivid theme colors; free: muted alt-text
-  var lepal=[acc,c0,red];
-  var lobs;
-  function fixLeg(){
-    if(lobs)lobs.disconnect();
-    document.querySelectorAll('[id="dynamic"]').forEach(function(sp){
-      var ic=sp.querySelectorAll('i.fa-circle'),n=ic.length;
-      ic.forEach(function(el,i){el.style.color=i<n-1?(lepal[i%lepal.length]||c0):dim;});
-      if(lobs)lobs.observe(sp,{childList:true,subtree:true,attributes:true,attributeFilter:['style']});
-    });
-  }
-  lobs=new MutationObserver(fixLeg);
-  fixLeg();
-  // Also catch #dynamic spans injected after page load
-  new MutationObserver(function(ms){
-    ms.forEach(function(m){
-      m.addedNodes.forEach(function(nd){
-        if(nd.nodeType===1&&(nd.id==='dynamic'||(nd.querySelector&&nd.querySelector('[id="dynamic"]'))))fixLeg();
-      });
-    });
-  }).observe(document.body,{childList:true,subtree:true});
   // Buttons: inline style beats all CSS specificity, including Unraid !important ID-selector rules
   var btnBg=s.getPropertyValue('--hover-button-background').trim();
   var btnFg=s.getPropertyValue('--hover-button-text-color').trim();

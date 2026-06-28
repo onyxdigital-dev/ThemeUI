@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.06.29i">
+<!ENTITY version   "2026.06.29j">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.29j
+- Fix plugin breakage: replace MutationObserver legend code (caused page-wide issues) with CSS nth-of-type rules and !important — simpler, no JS timing or loop risks; legend icons now always themed instantly via stylesheet
+
 ## 2026.06.29i
 - Fix legend icon colors: use accent/orange/red for System/VM/Docker (all vivid theme colors) and muted alt-text for Free; previous palette used near-invisible background and muted grays
 
