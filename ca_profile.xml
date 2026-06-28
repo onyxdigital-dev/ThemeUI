@@ -5,9 +5,9 @@
     <Author>onyxdigital-dev</Author>
     <Overview>
       ThemeUI is a theme switcher plugin for Unraid 7.2+. It lets you apply
-      beautiful dark color themes — Catppuccin Mocha, Nord, Dracula, Gruvbox Dark,
+      beautiful dark color themes - Catppuccin Mocha, Nord, Dracula, Gruvbox Dark,
       Tokyo Night, Solarized Dark, One Dark, Rosé Pine, Everforest, and Black &amp;
-      White — across the entire Unraid web UI including the dashboard, login page,
+      White - across the entire Unraid web UI including the dashboard, login page,
       Docker and VM pages, usage bars, pie charts, tables, buttons, and dropdowns.
       Themes are applied instantly on save with no reboot required.
     </Overview>

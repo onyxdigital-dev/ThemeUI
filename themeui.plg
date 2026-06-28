@@ -17,7 +17,7 @@
 - Fix PHP parse error: CSS attribute selector span[id="dynamic"] used double quotes inside PHP double-quoted echo string, breaking all pages; changed to single quotes span[id='dynamic']
 
 ## 2026.06.29j
-- Fix plugin breakage: replace MutationObserver legend code (caused page-wide issues) with CSS nth-of-type rules and !important — simpler, no JS timing or loop risks; legend icons now always themed instantly via stylesheet
+- Fix plugin breakage: replace MutationObserver legend code (caused page-wide issues) with CSS nth-of-type rules and !important - simpler, no JS timing or loop risks; legend icons now always themed instantly via stylesheet
 </CHANGES>
 
 <FILE Run="/bin/bash">

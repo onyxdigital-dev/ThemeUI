@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 opcache_invalidate($login_page, true);
             }
         }
-        $msg = "Settings saved — applying theme...";
+        $msg = "Settings saved - applying theme...";
     }
 }
 
@@ -63,7 +63,7 @@ if (!file_exists($cfg_path)) {
     file_put_contents($cfg_path, "SERVICE=\"disabled\"\nTHEME=\"default\"\n");
 }
 if (!file_exists($override_path)) {
-    file_put_contents($override_path, "/* Custom CSS overrides — applied on top of the selected theme */\n");
+    file_put_contents($override_path, "/* Custom CSS overrides - applied on top of the selected theme */\n");
     @copy($override_path, $webroot_override);
 }
 
@@ -85,8 +85,8 @@ $custom_css = file_get_contents($override_path);
 
 _(Enable ThemeUI)_:
 : <select name="SERVICE" size="1">
-    <?=mk_option($service, "enabled",  "Yes — inject selected theme");?>
-    <?=mk_option($service, "disabled", "No — disabled");?>
+    <?=mk_option($service, "enabled",  "Yes - inject selected theme");?>
+    <?=mk_option($service, "disabled", "No - disabled");?>
   </select>
 
 _(Theme)_:
@@ -109,7 +109,7 @@ _(Custom CSS Override)_:
     style="font-family:monospace;width:100%;max-width:820px;height:220px;
            background:#111;color:#eee;border:1px solid #444;padding:10px;
            box-sizing:border-box;"><?= htmlspecialchars($custom_css) ?></textarea>
-  <span>Applied after the selected theme — use this to fine-tune colors.
+  <span>Applied after the selected theme - use this to fine-tune colors.
         <br>Reload browser after saving to see changes.</span>
 
 &nbsp;
