@@ -1,0 +1,113 @@
+/* Rose Pine for Unraid 7.2+
+   https://rosepinetheme.com/
+   Base: #191724  Surface: #1f1d2e  Overlay: #26233a
+   Text: #e0def4  Subtle: #908caa  Muted: #6e6a86
+   Love: #eb6f92  Gold: #f6c177  Rose: #ebbcba
+   Pine: #31748f  Foam: #9ccfd8  Iris: #c4a7e7 */
+:root {
+    --text-color: #e0def4;
+    --blockquote-text-color: #c8c5e0;
+    --alt-text-color: #6e6a86;
+    --disabled-text-color: #524f67;
+    --inverse-text-color: #191724;
+    --link-text-color: #9ccfd8;
+
+    --background-color: #191724;
+    --opac-background-color: #191724dd;
+    --mild-background-color: #1f1d2e;
+    --usage-bar-background-color: #26233a;
+    --usage-bar-used-background-color: #c4a7e7;
+    --usage-disk-background-color: #26233a;
+    --inverse-background-color: #e0def4;
+    --radio-background-color: #26233a;
+    --dashboard-background-color: #1f1d2e;
+    --dashboard-title-action-color: rgba(224,222,244,0.1);
+    --dashboard-icon-color: #1f1d2e;
+
+    --border-color: #26233a;
+    --disabled-border-color: #1f1d2e;
+    --input-border-color: #6e6a86;
+    --disabled-input-border-color: #1f1d2e;
+    --textarea-border-color: #26233a;
+    --inverse-border-color: rgba(224,222,244,0.25);
+    --table-border-color: #26233a;
+    --table-background-color: #1f1d2e;
+    --table-header-background-color: #1f1d2e;
+    --hover-table-row-background-color: rgba(224,222,244,0.05);
+
+    --footer-text: #e0def4;
+    --footer-background-color: #1f1d2e;
+
+    --small-shadow: 0 0 3px #0f0e17;
+    --hr-color: #26233a;
+
+    --checkbox-color: #26233a;
+    --checkbox-hover-color: #403d52;
+
+    --brand-orange: #f6c177;
+    --brand-red: #eb6f92;
+
+    --header-text-color: #e0def4;
+    --header-background-color: #120f1d;
+
+    --title-header-background-color: #1f1d2e;
+
+    --scrollbar-color: #524f67;
+    --scrollbar-hover-color: #6e6a86;
+
+    --bg-opacity-10: rgba(224,222,244,0.1);
+    --bg-opacity-30: rgba(224,222,244,0.3);
+
+    --button-text-color: #ebbcba;
+    --button-border: none;
+    --button-background:
+        linear-gradient(90deg, #eb6f92 0, #f6c177) 0 0 no-repeat,
+        linear-gradient(90deg, #eb6f92 0, #f6c177) 0 100% no-repeat,
+        linear-gradient(0deg, #eb6f92 0, #eb6f92) 0 100% no-repeat,
+        linear-gradient(0deg, #f6c177 0, #f6c177) 100% 100% no-repeat;
+    --button-background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
+
+    --hover-button-border: #c4a7e7;
+    --hover-button-text-color: #191724;
+    --hover-button-background: linear-gradient(135deg, #c4a7e7, #ebbcba);
+
+    --input-bg-color: transparent;
+    --focus-input-bg-color: #1f1d2e;
+    --shade-bg-color: #1f1d2e;
+
+    --dynamix-tablesorter-tbody-row-bg-color: #191724;
+    --dynamix-tablesorter-tbody-row-alt-bg-color: #1f1d2e;
+    --dynamix-tablesorter-tbody-row-border-color: #26233a;
+    --dynamix-tablesorter-thead-th-bg-color: #1f1d2e;
+    --dynamix-tablesorter-thead-th-text-color: #e0def4;
+}
+
+table.tablesorter tbody tr:nth-child(even),
+table.tablesorter tbody tr.tr_last,
+table.t1.tablesorter tbody tr.alt-row { background-color: #1f1d2e !important; }
+table.t1.tablesorter tbody tr.normal-row { background-color: #191724 !important; }
+table.tablesorter thead tr th,
+table.tablesorter thead tr .tablesorter-headerAsc,
+table.tablesorter thead tr .tablesorter-headerDesc { background-color: #1f1d2e !important; color: #e0def4 !important; }
+
+.usage-disk > span:first-child { background-color: #c4a7e7 !important; }
+.usage-disk.sys > span { background-color: #c4a7e7 !important; }
+
+/* Header text and icons */
+.text-header-text-primary{color:#ebbcba!important}
+.text-header-text-secondary{color:rgba(235,188,186,.7)!important}
+
+/* Dropdown context menus (Docker right-click) */
+.dropdown-menu{background:var(--mild-background-color)!important;border-color:var(--border-color)!important;box-shadow:0 4px 12px rgba(0,0,0,.4)!important}
+.dropdown-menu li a{color:var(--text-color)!important}
+.dropdown-menu li a:hover,.dropdown-menu li a:focus{background:var(--background-color)!important;color:var(--brand-orange)!important}
+.dropdown-menu .divider{background-color:var(--border-color)!important}
+
+/* SweetAlert (Community Applications) */
+.sweet-overlay{background:rgba(0,0,0,.6)!important}
+.sweet-alert{background:var(--mild-background-color)!important;color:var(--text-color)!important;border:1px solid var(--border-color)!important}
+.sweet-alert h2{color:var(--text-color)!important}
+.sweet-alert p{color:var(--text-color)!important}
+.sweet-alert button.confirm{background:var(--hover-button-background)!important;color:var(--hover-button-text-color)!important;box-shadow:none!important}
+.sweet-alert button.cancel{background:var(--border-color)!important;color:var(--text-color)!important;box-shadow:none!important}
+.sweet-alert input,.sweet-alert textarea{background:var(--background-color)!important;color:var(--text-color)!important;border-color:var(--input-border-color)!important}

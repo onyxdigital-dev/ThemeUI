@@ -1,0 +1,109 @@
+/* Black and White for Unraid 7.2+
+   High contrast monochrome — near-black background, near-white text */
+:root {
+    --text-color: #e8e8e8;
+    --blockquote-text-color: #d0d0d0;
+    --alt-text-color: #888888;
+    --disabled-text-color: #555555;
+    --inverse-text-color: #0d0d0d;
+    --link-text-color: #cccccc;
+
+    --background-color: #0d0d0d;
+    --opac-background-color: #0d0d0ddd;
+    --mild-background-color: #1a1a1a;
+    --usage-bar-background-color: #2a2a2a;
+    --usage-bar-used-background-color: #e8e8e8;
+    --usage-disk-background-color: #2a2a2a;
+    --inverse-background-color: #e8e8e8;
+    --radio-background-color: #2a2a2a;
+    --dashboard-background-color: #1a1a1a;
+    --dashboard-title-action-color: rgba(232,232,232,0.1);
+    --dashboard-icon-color: #1a1a1a;
+
+    --border-color: #2a2a2a;
+    --disabled-border-color: #1f1f1f;
+    --input-border-color: #555555;
+    --disabled-input-border-color: #1f1f1f;
+    --textarea-border-color: #2a2a2a;
+    --inverse-border-color: rgba(232,232,232,0.25);
+    --table-border-color: #2a2a2a;
+    --table-background-color: #1a1a1a;
+    --table-header-background-color: #1a1a1a;
+    --hover-table-row-background-color: rgba(232,232,232,0.05);
+
+    --footer-text: #e8e8e8;
+    --footer-background-color: #1a1a1a;
+
+    --small-shadow: 0 0 3px #000;
+    --hr-color: #2a2a2a;
+
+    --checkbox-color: #2a2a2a;
+    --checkbox-hover-color: #444444;
+
+    --brand-orange: #cccccc;
+    --brand-red: #aaaaaa;
+
+    --header-text-color: #e8e8e8;
+    --header-background-color: #080808;
+
+    --title-header-background-color: #1a1a1a;
+
+    --scrollbar-color: #3a3a3a;
+    --scrollbar-hover-color: #555555;
+
+    --bg-opacity-10: rgba(232,232,232,0.1);
+    --bg-opacity-30: rgba(232,232,232,0.3);
+
+    --button-text-color: #cccccc;
+    --button-border: none;
+    --button-background:
+        linear-gradient(90deg, #555555 0, #888888) 0 0 no-repeat,
+        linear-gradient(90deg, #555555 0, #888888) 0 100% no-repeat,
+        linear-gradient(0deg, #555555 0, #555555) 0 100% no-repeat,
+        linear-gradient(0deg, #888888 0, #888888) 100% 100% no-repeat;
+    --button-background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
+
+    --hover-button-border: #e8e8e8;
+    --hover-button-text-color: #0d0d0d;
+    --hover-button-background: linear-gradient(135deg, #d0d0d0, #ffffff);
+
+    --input-bg-color: transparent;
+    --focus-input-bg-color: #1a1a1a;
+    --shade-bg-color: #1a1a1a;
+
+    --dynamix-tablesorter-tbody-row-bg-color: #0d0d0d;
+    --dynamix-tablesorter-tbody-row-alt-bg-color: #1a1a1a;
+    --dynamix-tablesorter-tbody-row-border-color: #2a2a2a;
+    --dynamix-tablesorter-thead-th-bg-color: #1a1a1a;
+    --dynamix-tablesorter-thead-th-text-color: #e8e8e8;
+}
+
+table.tablesorter tbody tr:nth-child(even),
+table.tablesorter tbody tr.tr_last,
+table.t1.tablesorter tbody tr.alt-row { background-color: #1a1a1a !important; }
+table.t1.tablesorter tbody tr.normal-row { background-color: #0d0d0d !important; }
+table.tablesorter thead tr th,
+table.tablesorter thead tr .tablesorter-headerAsc,
+table.tablesorter thead tr .tablesorter-headerDesc { background-color: #1a1a1a !important; color: #e8e8e8 !important; }
+
+.usage-disk > span:first-child { background-color: #e8e8e8 !important; }
+.usage-disk.sys > span { background-color: #e8e8e8 !important; }
+
+/* Header text and icons */
+.text-header-text-primary{color:#e8e8e8!important}
+.text-header-text-secondary{color:rgba(232,232,232,.6)!important}
+
+/* Dropdown context menus (Docker right-click) */
+.dropdown-menu{background:var(--mild-background-color)!important;border-color:var(--border-color)!important;box-shadow:0 4px 12px rgba(0,0,0,.6)!important}
+.dropdown-menu li a{color:var(--text-color)!important}
+.dropdown-menu li a:hover,.dropdown-menu li a:focus{background:var(--background-color)!important;color:#ffffff!important}
+.dropdown-menu .divider{background-color:var(--border-color)!important}
+
+/* SweetAlert (Community Applications) */
+.sweet-overlay{background:rgba(0,0,0,.7)!important}
+.sweet-alert{background:var(--mild-background-color)!important;color:var(--text-color)!important;border:1px solid var(--border-color)!important}
+.sweet-alert h2{color:var(--text-color)!important}
+.sweet-alert p{color:var(--text-color)!important}
+.sweet-alert button.confirm{background:var(--hover-button-background)!important;color:var(--hover-button-text-color)!important;box-shadow:none!important}
+.sweet-alert button.cancel{background:var(--border-color)!important;color:var(--text-color)!important;box-shadow:none!important}
+.sweet-alert input,.sweet-alert textarea{background:var(--background-color)!important;color:var(--text-color)!important;border-color:var(--input-border-color)!important}

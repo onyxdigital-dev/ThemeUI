@@ -1,0 +1,113 @@
+/* Everforest Dark for Unraid 7.2+
+   https://github.com/sainnhe/everforest
+   Bg: #2d353b  Hard bg: #272e33  Soft bg: #3d484d
+   Fg: #d3c6aa  Grey: #859289
+   Red: #e67e80  Orange: #e69875  Yellow: #dbbc7f
+   Green: #a7c080  Aqua: #83c092  Blue: #7fbbb3  Purple: #d699b6 */
+:root {
+    --text-color: #d3c6aa;
+    --blockquote-text-color: #c5b8a0;
+    --alt-text-color: #5f6d64;
+    --disabled-text-color: #4a5550;
+    --inverse-text-color: #272e33;
+    --link-text-color: #7fbbb3;
+
+    --background-color: #2d353b;
+    --opac-background-color: #2d353bdd;
+    --mild-background-color: #272e33;
+    --usage-bar-background-color: #3d484d;
+    --usage-bar-used-background-color: #a7c080;
+    --usage-disk-background-color: #3d484d;
+    --inverse-background-color: #d3c6aa;
+    --radio-background-color: #3d484d;
+    --dashboard-background-color: #272e33;
+    --dashboard-title-action-color: rgba(211,198,170,0.1);
+    --dashboard-icon-color: #272e33;
+
+    --border-color: #3d484d;
+    --disabled-border-color: #343f44;
+    --input-border-color: #5f6d64;
+    --disabled-input-border-color: #343f44;
+    --textarea-border-color: #343f44;
+    --inverse-border-color: rgba(211,198,170,0.25);
+    --table-border-color: #3d484d;
+    --table-background-color: #272e33;
+    --table-header-background-color: #272e33;
+    --hover-table-row-background-color: rgba(211,198,170,0.05);
+
+    --footer-text: #d3c6aa;
+    --footer-background-color: #272e33;
+
+    --small-shadow: 0 0 3px #1e2427;
+    --hr-color: #3d484d;
+
+    --checkbox-color: #3d484d;
+    --checkbox-hover-color: #5f6d64;
+
+    --brand-orange: #e69875;
+    --brand-red: #e67e80;
+
+    --header-text-color: #d3c6aa;
+    --header-background-color: #1e2427;
+
+    --title-header-background-color: #272e33;
+
+    --scrollbar-color: #4a5550;
+    --scrollbar-hover-color: #5f6d64;
+
+    --bg-opacity-10: rgba(211,198,170,0.1);
+    --bg-opacity-30: rgba(211,198,170,0.3);
+
+    --button-text-color: #dbbc7f;
+    --button-border: none;
+    --button-background:
+        linear-gradient(90deg, #e67e80 0, #e69875) 0 0 no-repeat,
+        linear-gradient(90deg, #e67e80 0, #e69875) 0 100% no-repeat,
+        linear-gradient(0deg, #e67e80 0, #e67e80) 0 100% no-repeat,
+        linear-gradient(0deg, #e69875 0, #e69875) 100% 100% no-repeat;
+    --button-background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
+
+    --hover-button-border: #a7c080;
+    --hover-button-text-color: #272e33;
+    --hover-button-background: linear-gradient(135deg, #a7c080, #83c092);
+
+    --input-bg-color: transparent;
+    --focus-input-bg-color: #272e33;
+    --shade-bg-color: #272e33;
+
+    --dynamix-tablesorter-tbody-row-bg-color: #2d353b;
+    --dynamix-tablesorter-tbody-row-alt-bg-color: #272e33;
+    --dynamix-tablesorter-tbody-row-border-color: #3d484d;
+    --dynamix-tablesorter-thead-th-bg-color: #272e33;
+    --dynamix-tablesorter-thead-th-text-color: #d3c6aa;
+}
+
+table.tablesorter tbody tr:nth-child(even),
+table.tablesorter tbody tr.tr_last,
+table.t1.tablesorter tbody tr.alt-row { background-color: #272e33 !important; }
+table.t1.tablesorter tbody tr.normal-row { background-color: #2d353b !important; }
+table.tablesorter thead tr th,
+table.tablesorter thead tr .tablesorter-headerAsc,
+table.tablesorter thead tr .tablesorter-headerDesc { background-color: #272e33 !important; color: #d3c6aa !important; }
+
+.usage-disk > span:first-child { background-color: #a7c080 !important; }
+.usage-disk.sys > span { background-color: #a7c080 !important; }
+
+/* Header text and icons */
+.text-header-text-primary{color:#a7c080!important}
+.text-header-text-secondary{color:rgba(167,192,128,.7)!important}
+
+/* Dropdown context menus (Docker right-click) */
+.dropdown-menu{background:var(--mild-background-color)!important;border-color:var(--border-color)!important;box-shadow:0 4px 12px rgba(0,0,0,.4)!important}
+.dropdown-menu li a{color:var(--text-color)!important}
+.dropdown-menu li a:hover,.dropdown-menu li a:focus{background:var(--background-color)!important;color:var(--brand-orange)!important}
+.dropdown-menu .divider{background-color:var(--border-color)!important}
+
+/* SweetAlert (Community Applications) */
+.sweet-overlay{background:rgba(0,0,0,.6)!important}
+.sweet-alert{background:var(--mild-background-color)!important;color:var(--text-color)!important;border:1px solid var(--border-color)!important}
+.sweet-alert h2{color:var(--text-color)!important}
+.sweet-alert p{color:var(--text-color)!important}
+.sweet-alert button.confirm{background:var(--hover-button-background)!important;color:var(--hover-button-text-color)!important;box-shadow:none!important}
+.sweet-alert button.cancel{background:var(--border-color)!important;color:var(--text-color)!important;box-shadow:none!important}
+.sweet-alert input,.sweet-alert textarea{background:var(--background-color)!important;color:var(--text-color)!important;border-color:var(--input-border-color)!important}

@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.06.29e">
+<!ENTITY version   "2026.06.29f">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,10 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.29f
+- Add 6 new themes: Tokyo Night, Solarized Dark, One Dark, Rose Pine, Everforest, Black and White
+- Settings apply now auto-reloads the page so the new theme is visible immediately
+
 ## 2026.06.29e
 - Header text uses per-theme accent color: Catppuccin=blue, Nord=frost, Dracula=purple, Gruvbox=cream
 
@@ -157,7 +161,7 @@ curl -fsSL -o "$PLUGIN_DIR/ThemeUI.page"         "$REPO_RAW/ThemeUI.page"
 curl -fsSL -o "$PLUGIN_DIR/login-prepend.php"    "$REPO_RAW/login-prepend.php"
 
 # Theme CSS files
-for theme in catppuccin-mocha nord dracula gruvbox-dark modern login; do
+for theme in catppuccin-mocha nord dracula gruvbox-dark tokyo-night solarized-dark one-dark rose-pine everforest black-white modern login; do
     curl -fsSL -o "$PLUGIN_DIR/themes/$theme.css" "$REPO_RAW/themes/$theme.css"
 done
 

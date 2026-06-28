@@ -1,0 +1,112 @@
+/* Solarized Dark for Unraid 7.2+
+   https://ethanschoonover.com/solarized/
+   Base03: #002b36  Base02: #073642  Base01: #586e75  Base0: #839496
+   Yellow: #b58900  Orange: #cb4b16  Red: #dc322f
+   Blue: #268bd2    Cyan: #2aa198    Green: #859900 */
+:root {
+    --text-color: #839496;
+    --blockquote-text-color: #93a1a1;
+    --alt-text-color: #586e75;
+    --disabled-text-color: #657b83;
+    --inverse-text-color: #002b36;
+    --link-text-color: #268bd2;
+
+    --background-color: #002b36;
+    --opac-background-color: #002b36dd;
+    --mild-background-color: #073642;
+    --usage-bar-background-color: #094c5e;
+    --usage-bar-used-background-color: #2aa198;
+    --usage-disk-background-color: #094c5e;
+    --inverse-background-color: #839496;
+    --radio-background-color: #094c5e;
+    --dashboard-background-color: #073642;
+    --dashboard-title-action-color: rgba(131,148,150,0.1);
+    --dashboard-icon-color: #073642;
+
+    --border-color: #094c5e;
+    --disabled-border-color: #073642;
+    --input-border-color: #586e75;
+    --disabled-input-border-color: #073642;
+    --textarea-border-color: #073642;
+    --inverse-border-color: rgba(131,148,150,0.25);
+    --table-border-color: #094c5e;
+    --table-background-color: #073642;
+    --table-header-background-color: #073642;
+    --hover-table-row-background-color: rgba(131,148,150,0.05);
+
+    --footer-text: #839496;
+    --footer-background-color: #073642;
+
+    --small-shadow: 0 0 3px #001e26;
+    --hr-color: #094c5e;
+
+    --checkbox-color: #094c5e;
+    --checkbox-hover-color: #586e75;
+
+    --brand-orange: #cb4b16;
+    --brand-red: #dc322f;
+
+    --header-text-color: #93a1a1;
+    --header-background-color: #001e26;
+
+    --title-header-background-color: #073642;
+
+    --scrollbar-color: #586e75;
+    --scrollbar-hover-color: #657b83;
+
+    --bg-opacity-10: rgba(131,148,150,0.1);
+    --bg-opacity-30: rgba(131,148,150,0.3);
+
+    --button-text-color: #b58900;
+    --button-border: none;
+    --button-background:
+        linear-gradient(90deg, #dc322f 0, #cb4b16) 0 0 no-repeat,
+        linear-gradient(90deg, #dc322f 0, #cb4b16) 0 100% no-repeat,
+        linear-gradient(0deg, #dc322f 0, #dc322f) 0 100% no-repeat,
+        linear-gradient(0deg, #cb4b16 0, #cb4b16) 100% 100% no-repeat;
+    --button-background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
+
+    --hover-button-border: #268bd2;
+    --hover-button-text-color: #002b36;
+    --hover-button-background: linear-gradient(135deg, #268bd2, #2aa198);
+
+    --input-bg-color: transparent;
+    --focus-input-bg-color: #073642;
+    --shade-bg-color: #073642;
+
+    --dynamix-tablesorter-tbody-row-bg-color: #002b36;
+    --dynamix-tablesorter-tbody-row-alt-bg-color: #073642;
+    --dynamix-tablesorter-tbody-row-border-color: #094c5e;
+    --dynamix-tablesorter-thead-th-bg-color: #073642;
+    --dynamix-tablesorter-thead-th-text-color: #93a1a1;
+}
+
+table.tablesorter tbody tr:nth-child(even),
+table.tablesorter tbody tr.tr_last,
+table.t1.tablesorter tbody tr.alt-row { background-color: #073642 !important; }
+table.t1.tablesorter tbody tr.normal-row { background-color: #002b36 !important; }
+table.tablesorter thead tr th,
+table.tablesorter thead tr .tablesorter-headerAsc,
+table.tablesorter thead tr .tablesorter-headerDesc { background-color: #073642 !important; color: #93a1a1 !important; }
+
+.usage-disk > span:first-child { background-color: #2aa198 !important; }
+.usage-disk.sys > span { background-color: #2aa198 !important; }
+
+/* Header text and icons */
+.text-header-text-primary{color:#2aa198!important}
+.text-header-text-secondary{color:rgba(42,161,152,.7)!important}
+
+/* Dropdown context menus (Docker right-click) */
+.dropdown-menu{background:var(--mild-background-color)!important;border-color:var(--border-color)!important;box-shadow:0 4px 12px rgba(0,0,0,.4)!important}
+.dropdown-menu li a{color:var(--text-color)!important}
+.dropdown-menu li a:hover,.dropdown-menu li a:focus{background:var(--background-color)!important;color:var(--brand-orange)!important}
+.dropdown-menu .divider{background-color:var(--border-color)!important}
+
+/* SweetAlert (Community Applications) */
+.sweet-overlay{background:rgba(0,0,0,.6)!important}
+.sweet-alert{background:var(--mild-background-color)!important;color:var(--text-color)!important;border:1px solid var(--border-color)!important}
+.sweet-alert h2{color:var(--text-color)!important}
+.sweet-alert p{color:var(--text-color)!important}
+.sweet-alert button.confirm{background:var(--hover-button-background)!important;color:var(--hover-button-text-color)!important;box-shadow:none!important}
+.sweet-alert button.cancel{background:var(--border-color)!important;color:var(--text-color)!important;box-shadow:none!important}
+.sweet-alert input,.sweet-alert textarea{background:var(--background-color)!important;color:var(--text-color)!important;border-color:var(--input-border-color)!important}

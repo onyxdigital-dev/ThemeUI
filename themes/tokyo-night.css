@@ -1,0 +1,112 @@
+/* Tokyo Night for Unraid 7.2+
+   https://github.com/enkia/tokyo-night-vscode-theme
+   Night: #1a1b26 (bg)  #16161e (bg_dark)  #414868 (comment)
+   Text: #c0caf5  Blue: #7aa2f7  Purple: #bb9af7
+   Red: #f7768e   Orange: #ff9e64 Cyan: #7dcfff */
+:root {
+    --text-color: #c0caf5;
+    --blockquote-text-color: #a9b1d6;
+    --alt-text-color: #565f89;
+    --disabled-text-color: #414868;
+    --inverse-text-color: #1a1b26;
+    --link-text-color: #7aa2f7;
+
+    --background-color: #1a1b26;
+    --opac-background-color: #1a1b26dd;
+    --mild-background-color: #16161e;
+    --usage-bar-background-color: #414868;
+    --usage-bar-used-background-color: #7aa2f7;
+    --usage-disk-background-color: #414868;
+    --inverse-background-color: #c0caf5;
+    --radio-background-color: #414868;
+    --dashboard-background-color: #16161e;
+    --dashboard-title-action-color: rgba(192,202,245,0.1);
+    --dashboard-icon-color: #16161e;
+
+    --border-color: #414868;
+    --disabled-border-color: #2f3349;
+    --input-border-color: #565f89;
+    --disabled-input-border-color: #2f3349;
+    --textarea-border-color: #2f3349;
+    --inverse-border-color: rgba(192,202,245,0.25);
+    --table-border-color: #414868;
+    --table-background-color: #16161e;
+    --table-header-background-color: #16161e;
+    --hover-table-row-background-color: rgba(192,202,245,0.05);
+
+    --footer-text: #c0caf5;
+    --footer-background-color: #16161e;
+
+    --small-shadow: 0 0 3px #0f0f14;
+    --hr-color: #414868;
+
+    --checkbox-color: #414868;
+    --checkbox-hover-color: #565f89;
+
+    --brand-orange: #ff9e64;
+    --brand-red: #f7768e;
+
+    --header-text-color: #c0caf5;
+    --header-background-color: #0f0f1a;
+
+    --title-header-background-color: #16161e;
+
+    --scrollbar-color: #414868;
+    --scrollbar-hover-color: #565f89;
+
+    --bg-opacity-10: rgba(192,202,245,0.1);
+    --bg-opacity-30: rgba(192,202,245,0.3);
+
+    --button-text-color: #ff9e64;
+    --button-border: none;
+    --button-background:
+        linear-gradient(90deg, #f7768e 0, #ff9e64) 0 0 no-repeat,
+        linear-gradient(90deg, #f7768e 0, #ff9e64) 0 100% no-repeat,
+        linear-gradient(0deg, #f7768e 0, #f7768e) 0 100% no-repeat,
+        linear-gradient(0deg, #ff9e64 0, #ff9e64) 100% 100% no-repeat;
+    --button-background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
+
+    --hover-button-border: #7aa2f7;
+    --hover-button-text-color: #1a1b26;
+    --hover-button-background: linear-gradient(135deg, #7aa2f7, #bb9af7);
+
+    --input-bg-color: transparent;
+    --focus-input-bg-color: #16161e;
+    --shade-bg-color: #16161e;
+
+    --dynamix-tablesorter-tbody-row-bg-color: #1a1b26;
+    --dynamix-tablesorter-tbody-row-alt-bg-color: #16161e;
+    --dynamix-tablesorter-tbody-row-border-color: #414868;
+    --dynamix-tablesorter-thead-th-bg-color: #16161e;
+    --dynamix-tablesorter-thead-th-text-color: #c0caf5;
+}
+
+table.tablesorter tbody tr:nth-child(even),
+table.tablesorter tbody tr.tr_last,
+table.t1.tablesorter tbody tr.alt-row { background-color: #16161e !important; }
+table.t1.tablesorter tbody tr.normal-row { background-color: #1a1b26 !important; }
+table.tablesorter thead tr th,
+table.tablesorter thead tr .tablesorter-headerAsc,
+table.tablesorter thead tr .tablesorter-headerDesc { background-color: #16161e !important; color: #c0caf5 !important; }
+
+.usage-disk > span:first-child { background-color: #7aa2f7 !important; }
+.usage-disk.sys > span { background-color: #7aa2f7 !important; }
+
+/* Header text and icons */
+.text-header-text-primary{color:#7aa2f7!important}
+.text-header-text-secondary{color:rgba(122,162,247,.7)!important}
+
+/* Dropdown context menus (Docker right-click) */
+.dropdown-menu{background:var(--mild-background-color)!important;border-color:var(--border-color)!important;box-shadow:0 4px 12px rgba(0,0,0,.4)!important}
+.dropdown-menu li a{color:var(--text-color)!important}
+.dropdown-menu li a:hover,.dropdown-menu li a:focus{background:var(--background-color)!important;color:var(--brand-orange)!important}
+.dropdown-menu .divider{background-color:var(--border-color)!important}
+
+/* SweetAlert (Community Applications) */
+.sweet-overlay{background:rgba(0,0,0,.6)!important}
+.sweet-alert{background:var(--mild-background-color)!important;color:var(--text-color)!important;border:1px solid var(--border-color)!important}
+.sweet-alert h2{color:var(--text-color)!important}
+.sweet-alert p{color:var(--text-color)!important}
+.sweet-alert button.confirm{background:var(--hover-button-background)!important;color:var(--hover-button-text-color)!important;box-shadow:none!important}
+.sweet-alert button.cancel{background:var(--border-color)!important;color:var(--text-color)!important;box-shadow:none!important}
+.sweet-alert input,.sweet-alert textarea{background:var(--background-color)!important;color:var(--text-color)!important;border-color:var(--input-border-color)!important}

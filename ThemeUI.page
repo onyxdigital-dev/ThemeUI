@@ -10,7 +10,7 @@ $msg = "";
 
 require_once "$docroot/plugins/dynamix/include/Wrappers.php";
 
-$valid_themes  = ["default","catppuccin-mocha","nord","dracula","gruvbox-dark"];
+$valid_themes  = ["default","catppuccin-mocha","nord","dracula","gruvbox-dark","tokyo-night","solarized-dark","one-dark","rose-pine","everforest","black-white"];
 $valid_designs = ["default","modern"];
 
 $theme_meta = [
@@ -19,6 +19,12 @@ $theme_meta = [
     "nord"             => ["label"=>"Nord",                      "colors"=>["#2e3440","#eceff4","#d08770","#bf616a","#88c0d0"]],
     "dracula"          => ["label"=>"Dracula",                   "colors"=>["#282a36","#f8f8f2","#ffb86c","#ff5555","#bd93f9"]],
     "gruvbox-dark"     => ["label"=>"Gruvbox Dark",             "colors"=>["#282828","#ebdbb2","#fe8019","#fb4934","#83a598"]],
+    "tokyo-night"      => ["label"=>"Tokyo Night",              "colors"=>["#1a1b26","#c0caf5","#ff9e64","#f7768e","#7aa2f7"]],
+    "solarized-dark"   => ["label"=>"Solarized Dark",           "colors"=>["#002b36","#839496","#cb4b16","#dc322f","#268bd2"]],
+    "one-dark"         => ["label"=>"One Dark",                 "colors"=>["#282c34","#abb2bf","#d19a66","#e06c75","#61afef"]],
+    "rose-pine"        => ["label"=>"Rose Pine",                "colors"=>["#191724","#e0def4","#f6c177","#eb6f92","#c4a7e7"]],
+    "everforest"       => ["label"=>"Everforest",               "colors"=>["#2d353b","#d3c6aa","#e69875","#e67e80","#a7c080"]],
+    "black-white"      => ["label"=>"Black and White",          "colors"=>["#0d0d0d","#e8e8e8","#cccccc","#aaaaaa","#888888"]],
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -51,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 opcache_invalidate($login_page, true);
             }
         }
-        $msg = "Settings saved — reload your browser to see the new theme.";
+        $msg = "Settings saved — applying theme...";
     }
 }
 
@@ -74,6 +80,7 @@ $custom_css = file_get_contents($override_path);
 <div markdown="1">
 <span class="green"><?= htmlspecialchars($msg) ?></span>
 </div>
+<script>setTimeout(function(){ location.reload(); }, 800);</script>
 <?php endif; ?>
 
 <form markdown="1" method="POST" action="/Settings/ThemeUI">
