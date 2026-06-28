@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.06.29f">
+<!ENTITY version   "2026.06.29g">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.29g
+- Theme RAM pie chart segments dynamically: Docker uses accent color, VM uses brand-orange, system uses muted color, free uses bar-background; works across all Unraid versions regardless of hardcoded hex values
+
 ## 2026.06.29f
 - Add 6 new themes: Tokyo Night, Solarized Dark, One Dark, Rose Pine, Everforest, Black and White
 - Settings apply now auto-reloads the page so the new theme is visible immediately

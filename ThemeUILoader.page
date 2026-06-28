@@ -42,6 +42,8 @@ document.addEventListener('DOMContentLoaded',function(){
   var s=getComputedStyle(document.documentElement);
   var c0=s.getPropertyValue('--brand-orange').trim();
   var c1=s.getPropertyValue('--usage-bar-background-color').trim();
+  var acc=s.getPropertyValue('--usage-bar-used-background-color').trim();
+  var dim=s.getPropertyValue('--alt-text-color').trim();
   var grid=s.getPropertyValue('--border-color').trim();
   var text=s.getPropertyValue('--text-color').trim();
   var red=s.getPropertyValue('--brand-red').trim();
@@ -59,16 +61,29 @@ document.addEventListener('DOMContentLoaded',function(){
       if(netchart.seriesSet[1])netchart.seriesSet[1].options.strokeStyle=c0;
     }
   }
-  // Pie charts: patch the global colors[] array if accessible, then monkey-patch jQuery.fn.css
-  // to intercept the conic-gradient string before any DOM API normalises hex to rgb().
+  // Pie charts: patch global colors[] array then monkey-patch jQuery.fn.css to intercept
+  // conic-gradient before the browser normalises hex to rgb(). We parse colors dynamically
+  // so Docker, VM and system segments each get a distinct theme color regardless of what
+  // hex values Unraid happens to hardcode (they vary between Unraid versions/themes).
   if(Array.isArray(window.colors)&&window.colors.length>=2){
-    window.colors[0]=c0;window.colors[1]=c1;
+    window.colors[0]=acc;window.colors[1]=c1;
   }
   function fixGrad(v){
-    return v.replace(/#a8a8a8/gi,c0).replace(/#dcdcdc/gi,c1)
-             .replace(/#787878/gi,c0).replace(/#444444/gi,c1)
-             .replace(/#606e7f/gi,c0).replace(/#eceaec/gi,c1)
-             .replace(/#232523/gi,c1);
+    // Extract unique hex colors in order of first appearance
+    var seen={},order=[];
+    var m,re=/#[0-9a-fA-F]{6}/gi;
+    while((m=re.exec(v))!==null){var h=m[0].toLowerCase();if(!seen[h]){seen[h]=true;order.push(h);}}
+    if(order.length<2)return v;
+    // Segment palette: Docker → accent, VM → brand-orange, system → muted, free → bar-bg
+    var palette=[acc,c0,dim];
+    var result=v;
+    // Replace free segment first (last unique color in gradient)
+    result=result.replace(new RegExp(order[order.length-1],'gi'),c1);
+    // Replace each used segment with a distinct theme color
+    order.slice(0,-1).forEach(function(h,i){
+      result=result.replace(new RegExp(h,'gi'),palette[i%palette.length]);
+    });
+    return result;
   }
   var jq=window.jQuery||window.$;
   if(jq&&jq.fn&&jq.fn.css){
