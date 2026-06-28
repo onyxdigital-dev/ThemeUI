@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded',function(){
     var m,re=/#[0-9a-fA-F]{6}/gi;
     while((m=re.exec(v))!==null){var h=m[0].toLowerCase();if(!seen[h]){seen[h]=true;order.push(h);}}
     if(order.length<2)return v;
-    // Segment palette: Docker → accent, VM → brand-orange, system → muted, free → bar-bg
-    var palette=[acc,c0,dim];
+    // Segment palette: system → accent, VM → orange, Docker → red, free → bar-bg
+    var palette=[acc,c0,red];
     var result=v;
     // Replace free segment first (last unique color in gradient)
     result=result.replace(new RegExp(order[order.length-1],'gi'),c1);
@@ -104,13 +104,14 @@ document.addEventListener('DOMContentLoaded',function(){
   }
   // Legend icons: re-color fa-circle dots to match pie segment palette.
   // Disconnect before changing styles to avoid triggering ourselves; reconnect after.
-  var lepal=[acc,c0,dim];
+  // Used segments: accent / orange / red — all vivid theme colors; free: muted alt-text
+  var lepal=[acc,c0,red];
   var lobs;
   function fixLeg(){
     if(lobs)lobs.disconnect();
     document.querySelectorAll('[id="dynamic"]').forEach(function(sp){
       var ic=sp.querySelectorAll('i.fa-circle'),n=ic.length;
-      ic.forEach(function(el,i){el.style.color=i<n-1?(lepal[i%lepal.length]||c0):c1;});
+      ic.forEach(function(el,i){el.style.color=i<n-1?(lepal[i%lepal.length]||c0):dim;});
       if(lobs)lobs.observe(sp,{childList:true,subtree:true,attributes:true,attributeFilter:['style']});
     });
   }
