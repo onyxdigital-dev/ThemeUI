@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.06.28s">
+<!ENTITY version   "2026.06.28t">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.28t
+- Login page: switch from sed injection (fought opcache) to PHP auto_prepend_file via .user.ini — CSS now injected at runtime by PHP itself, no opcache issues
+
 ## 2026.06.28s
 - Login page theming: fix injection point (head close tag instead of style tag), add login.css with explicit #login element rules so CSS variables actually apply to the form
 
@@ -116,8 +119,9 @@ REPO_RAW="https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master"
 PLUGIN_DIR="/usr/local/emhttp/plugins/ThemeUI"
 
 # Page files
-curl -fsSL -o "$PLUGIN_DIR/ThemeUILoader.page" "$REPO_RAW/ThemeUILoader.page"
-curl -fsSL -o "$PLUGIN_DIR/ThemeUI.page"       "$REPO_RAW/ThemeUI.page"
+curl -fsSL -o "$PLUGIN_DIR/ThemeUILoader.page"   "$REPO_RAW/ThemeUILoader.page"
+curl -fsSL -o "$PLUGIN_DIR/ThemeUI.page"         "$REPO_RAW/ThemeUI.page"
+curl -fsSL -o "$PLUGIN_DIR/login-prepend.php"    "$REPO_RAW/login-prepend.php"
 
 # Theme CSS files
 for theme in catppuccin-mocha nord dracula gruvbox-dark modern login; do
@@ -149,20 +153,11 @@ fi
 # Sync custom override from flash to webroot
 cp /boot/config/plugins/themeui/custom-override.css "$PLUGIN_DIR/custom-override.css"
 
-# Inject theme into login page (re-applied on every boot since webGui is RAM-based)
-LOGIN_PAGE="/usr/local/emhttp/webGui/include/.login.php"
-if [ -f "$LOGIN_PAGE" ]; then
-    sed -i '/data-themeui/d' "$LOGIN_PAGE"
-    SERVICE=$(grep ^SERVICE /boot/config/plugins/themeui/themeui.cfg 2>/dev/null | cut -d'"' -f2)
-    THEME=$(grep ^THEME /boot/config/plugins/themeui/themeui.cfg 2>/dev/null | cut -d'"' -f2)
-    if [ "$SERVICE" = "enabled" ] &amp;&amp; [ -n "$THEME" ] &amp;&amp; [ "$THEME" != "default" ]; then
-        sed -i "/&lt;\/head&gt;/i\\    &lt;link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/$THEME.css'&gt;" "$LOGIN_PAGE"
-        sed -i "/&lt;\/head&gt;/i\\    &lt;link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/login.css'&gt;" "$LOGIN_PAGE"
-    fi
-    # Force PHP-FPM to recompile the file (clears opcache for this file)
-    touch "$LOGIN_PAGE"
-    /etc/rc.d/rc.nginx restart 2>/dev/null || true
-fi
+# Inject theme into login page via PHP auto_prepend_file (avoids opcache issues)
+# .user.ini tells PHP-FPM to run login-prepend.php before every script in that dir
+USER_INI_CONTENT="auto_prepend_file = $PLUGIN_DIR/login-prepend.php"
+echo "$USER_INI_CONTENT" > /usr/local/emhttp/webGui/include/.user.ini
+echo "$USER_INI_CONTENT" > /usr/local/emhttp/webGui/.user.ini
 
 echo "----------------------------------------------------"
 echo " ThemeUI installed successfully."
@@ -180,9 +175,8 @@ rm -rf /usr/local/emhttp/plugins/&name;
 rm -rf /usr/local/emhttp/plugins/themeui
 rm -rf /boot/config/plugins/themeui
 rm -rf /boot/config/plugins/&name;
-# Remove login page injection
-LOGIN_PAGE="/usr/local/emhttp/webGui/include/.login.php"
-[ -f "$LOGIN_PAGE" ] &amp;&amp; sed -i '/data-themeui/d' "$LOGIN_PAGE"
+rm -f /usr/local/emhttp/webGui/include/.user.ini
+rm -f /usr/local/emhttp/webGui/.user.ini
 echo "ThemeUI removed."
 exit 0
 </INLINE>
