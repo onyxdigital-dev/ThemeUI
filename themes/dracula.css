@@ -94,6 +94,12 @@ table.tablesorter thead tr .tablesorter-headerDesc { background-color: #21222c !
 .usage-disk > span:first-child { background-color: #bd93f9 !important; }
 .usage-disk.sys > span { background-color: #bd93f9 !important; }
 
+/* Dropdown context menus (Docker right-click) */
+.dropdown-menu{background:var(--mild-background-color)!important;border-color:var(--border-color)!important;box-shadow:0 4px 12px rgba(0,0,0,.4)!important}
+.dropdown-menu li a{color:var(--text-color)!important}
+.dropdown-menu li a:hover,.dropdown-menu li a:focus{background:var(--background-color)!important;color:var(--brand-orange)!important}
+.dropdown-menu .divider{background-color:var(--border-color)!important}
+
 /* SweetAlert (Community Applications) */
 .sweet-overlay{background:rgba(0,0,0,.6)!important}
 .sweet-alert{background:var(--mild-background-color)!important;color:var(--text-color)!important;border:1px solid var(--border-color)!important}
