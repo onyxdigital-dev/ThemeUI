@@ -83,30 +83,93 @@
 
 table.tablesorter tbody tr:nth-child(even),
 table.tablesorter tbody tr.tr_last,
-table.t1.tablesorter tbody tr.alt-row { background-color: #181825 !important; }
-table.t1.tablesorter tbody tr.normal-row { background-color: #1e1e2e !important; }
+table.t1.tablesorter tbody tr.alt-row {
+    background-color: #181825 !important;
+}
+
+table.t1.tablesorter tbody tr.normal-row {
+    background-color: #1e1e2e !important;
+}
+
 table.tablesorter thead tr th,
 table.tablesorter thead tr .tablesorter-headerAsc,
-table.tablesorter thead tr .tablesorter-headerDesc { background-color: #181825 !important; color: #cdd6f4 !important; }
+table.tablesorter thead tr .tablesorter-headerDesc {
+    background-color: #181825 !important;
+    color: #cdd6f4 !important;
+}
 
-.usage-disk > span:first-child { background-color: #89b4fa !important; }
-.usage-disk.sys > span { background-color: #89b4fa !important; }
+.usage-disk>span:first-child {
+    background-color: #89b4fa !important;
+}
+
+.usage-disk.sys>span {
+    background-color: #89b4fa !important;
+}
 
 /* Header text and icons */
-.text-header-text-primary{color:#ffffff!important}
-.text-header-text-secondary{color:rgba(255,255,255,.55)!important}
+.text-header-text-primary {
+    color: #89b4fa !important
+}
+
+.text-header-text-secondary {
+    color: rgba(124, 184, 218, 0.774) !important
+}
 
 /* Dropdown context menus (Docker right-click) */
-.dropdown-menu{background:var(--mild-background-color)!important;border-color:var(--border-color)!important;box-shadow:0 4px 12px rgba(0,0,0,.4)!important}
-.dropdown-menu li a{color:var(--text-color)!important}
-.dropdown-menu li a:hover,.dropdown-menu li a:focus{background:var(--background-color)!important;color:var(--brand-orange)!important}
-.dropdown-menu .divider{background-color:var(--border-color)!important}
+.dropdown-menu {
+    background: var(--mild-background-color) !important;
+    border-color: var(--border-color) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .4) !important
+}
+
+.dropdown-menu li a {
+    color: var(--text-color) !important
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus {
+    background: var(--background-color) !important;
+    color: var(--brand-orange) !important
+}
+
+.dropdown-menu .divider {
+    background-color: var(--border-color) !important
+}
 
 /* SweetAlert (Community Applications) */
-.sweet-overlay{background:rgba(0,0,0,.6)!important}
-.sweet-alert{background:var(--mild-background-color)!important;color:var(--text-color)!important;border:1px solid var(--border-color)!important}
-.sweet-alert h2{color:var(--text-color)!important}
-.sweet-alert p{color:var(--text-color)!important}
-.sweet-alert button.confirm{background:var(--hover-button-background)!important;color:var(--hover-button-text-color)!important;box-shadow:none!important}
-.sweet-alert button.cancel{background:var(--border-color)!important;color:var(--text-color)!important;box-shadow:none!important}
-.sweet-alert input,.sweet-alert textarea{background:var(--background-color)!important;color:var(--text-color)!important;border-color:var(--input-border-color)!important}
+.sweet-overlay {
+    background: rgba(0, 0, 0, .6) !important
+}
+
+.sweet-alert {
+    background: var(--mild-background-color) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--border-color) !important
+}
+
+.sweet-alert h2 {
+    color: var(--text-color) !important
+}
+
+.sweet-alert p {
+    color: var(--text-color) !important
+}
+
+.sweet-alert button.confirm {
+    background: var(--hover-button-background) !important;
+    color: var(--hover-button-text-color) !important;
+    box-shadow: none !important
+}
+
+.sweet-alert button.cancel {
+    background: var(--border-color) !important;
+    color: var(--text-color) !important;
+    box-shadow: none !important
+}
+
+.sweet-alert input,
+.sweet-alert textarea {
+    background: var(--background-color) !important;
+    color: var(--text-color) !important;
+    border-color: var(--input-border-color) !important
+}
