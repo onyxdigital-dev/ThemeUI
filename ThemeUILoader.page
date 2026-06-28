@@ -26,10 +26,10 @@ table.tablesorter thead tr th,
 table.tablesorter thead tr .tablesorter-headerAsc,
 table.tablesorter thead tr .tablesorter-headerDesc{background-color:var(--table-header-background-color)!important;color:var(--text-color)!important}
 div.pie::before,div.pie::after{background-color:var(--dashboard-background-color)!important}
-span[id="dynamic"] i.fa-circle:nth-of-type(1){color:var(--usage-bar-used-background-color)!important}
-span[id="dynamic"] i.fa-circle:nth-of-type(2){color:var(--brand-orange)!important}
-span[id="dynamic"] i.fa-circle:nth-of-type(3){color:var(--brand-red)!important}
-span[id="dynamic"] i.fa-circle:nth-of-type(4){color:var(--alt-text-color)!important}
+span[id='dynamic'] i.fa-circle:nth-of-type(1){color:var(--usage-bar-used-background-color)!important}
+span[id='dynamic'] i.fa-circle:nth-of-type(2){color:var(--brand-orange)!important}
+span[id='dynamic'] i.fa-circle:nth-of-type(3){color:var(--brand-red)!important}
+span[id='dynamic'] i.fa-circle:nth-of-type(4){color:var(--alt-text-color)!important}
 select{background-color:var(--background-color)!important;color:var(--text-color)!important;border-color:var(--input-border-color)!important}
 select option{background-color:var(--background-color)!important;color:var(--text-color)!important}
 input[type='button'],input[type='reset'],input[type='submit'],button,a.button{background:var(--hover-button-background)!important;color:var(--hover-button-text-color)!important;border:none!important}
