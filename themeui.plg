@@ -153,11 +153,10 @@ fi
 # Sync custom override from flash to webroot
 cp /boot/config/plugins/themeui/custom-override.css "$PLUGIN_DIR/custom-override.css"
 
-# Inject theme into login page via PHP auto_prepend_file (avoids opcache issues)
-# .user.ini tells PHP-FPM to run login-prepend.php before every script in that dir
-USER_INI_CONTENT="auto_prepend_file = $PLUGIN_DIR/login-prepend.php"
-echo "$USER_INI_CONTENT" > /usr/local/emhttp/webGui/include/.user.ini
-echo "$USER_INI_CONTENT" > /usr/local/emhttp/webGui/.user.ini
+# Inject theme into login page via PHP auto_prepend_file
+# Must be in webGui root (where the main PHP script runs), not the include dir
+# login-prepend.php guards itself with a /login URI check so other pages are unaffected
+echo "auto_prepend_file = $PLUGIN_DIR/login-prepend.php" > /usr/local/emhttp/webGui/.user.ini
 
 echo "----------------------------------------------------"
 echo " ThemeUI installed successfully."
@@ -175,7 +174,6 @@ rm -rf /usr/local/emhttp/plugins/&name;
 rm -rf /usr/local/emhttp/plugins/themeui
 rm -rf /boot/config/plugins/themeui
 rm -rf /boot/config/plugins/&name;
-rm -f /usr/local/emhttp/webGui/include/.user.ini
 rm -f /usr/local/emhttp/webGui/.user.ini
 echo "ThemeUI removed."
 exit 0
