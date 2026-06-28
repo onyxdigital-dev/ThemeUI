@@ -80,7 +80,7 @@ $custom_css = file_get_contents($override_path);
 <div markdown="1">
 <span class="green"><?= htmlspecialchars($msg) ?></span>
 </div>
-<script>setTimeout(function(){ location.reload(); }, 800);</script>
+<script>setTimeout(function(){ location.href=location.pathname; }, 800);</script>
 <?php endif; ?>
 
 <form markdown="1" method="POST" action="/Settings/ThemeUI">
