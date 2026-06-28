@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.06.28u">
+<!ENTITY version   "2026.06.28v">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.28v
+- Login page: drop auto_prepend_file/.user.ini (was breaking all pages); switch to direct .login.php injection with opcache_invalidate() so changes take effect immediately without interfering with any other pages
+
 ## 2026.06.28u
 - Login page: fix .user.ini placement (webGui root, not include dir); add URI guard in login-prepend.php so other pages are unaffected; fix login.css selectors to match actual element structure
 
@@ -156,10 +159,24 @@ fi
 # Sync custom override from flash to webroot
 cp /boot/config/plugins/themeui/custom-override.css "$PLUGIN_DIR/custom-override.css"
 
-# Inject theme into login page via PHP auto_prepend_file
-# Must be in webGui root (where the main PHP script runs), not the include dir
-# login-prepend.php guards itself with a /login URI check so other pages are unaffected
-echo "auto_prepend_file = $PLUGIN_DIR/login-prepend.php" > /usr/local/emhttp/webGui/.user.ini
+# Clean up any leftover .user.ini from previous approach
+rm -f /usr/local/emhttp/webGui/.user.ini
+rm -f /usr/local/emhttp/webGui/include/.user.ini
+
+# Inject current theme into login page via direct file modification
+# Runs at boot before PHP-FPM has compiled anything, so no opcache issue
+LOGIN_PAGE="/usr/local/emhttp/webGui/include/.login.php"
+if [ -f "$LOGIN_PAGE" ]; then
+    CFG="/boot/config/plugins/themeui/themeui.cfg"
+    SERVICE=$(grep -oP '(?&lt;=SERVICE=")[^"]+' "$CFG" 2&gt;/dev/null || echo "disabled")
+    THEME=$(grep -oP '(?&lt;=THEME=")[^"]+' "$CFG" 2&gt;/dev/null || echo "default")
+    # Remove any previous ThemeUI link tags
+    sed -i '/data-themeui/d' "$LOGIN_PAGE"
+    if [ "$SERVICE" = "enabled" ] &amp;&amp; [ "$THEME" != "default" ]; then
+        LINKS="    &lt;link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/${THEME}.css'&gt;\n    &lt;link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/login.css'&gt;"
+        sed -i "s|&lt;/head&gt;|${LINKS}\n&lt;/head&gt;|" "$LOGIN_PAGE"
+    fi
+fi
 
 echo "----------------------------------------------------"
 echo " ThemeUI installed successfully."
@@ -178,6 +195,10 @@ rm -rf /usr/local/emhttp/plugins/themeui
 rm -rf /boot/config/plugins/themeui
 rm -rf /boot/config/plugins/&name;
 rm -f /usr/local/emhttp/webGui/.user.ini
+rm -f /usr/local/emhttp/webGui/include/.user.ini
+# Remove ThemeUI link tags from login page on uninstall
+LOGIN_PAGE="/usr/local/emhttp/webGui/include/.login.php"
+[ -f "$LOGIN_PAGE" ] &amp;&amp; sed -i '/data-themeui/d' "$LOGIN_PAGE"
 echo "ThemeUI removed."
 exit 0
 </INLINE>

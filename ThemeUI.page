@@ -42,6 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $html = str_replace('</head>', $links . "\n</head>", $html);
             }
             file_put_contents($login_page, $html);
+            if (function_exists('opcache_invalidate')) {
+                opcache_invalidate($login_page, true);
+            }
         }
         $msg = "Settings saved — reload your browser to see the new theme.";
     }
