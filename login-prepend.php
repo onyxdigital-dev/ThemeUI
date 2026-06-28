@@ -1,5 +1,8 @@
 <?php
-// ThemeUI: inject theme CSS into login page via auto_prepend_file
+// Only activate on login page requests
+$uri = $_SERVER['REQUEST_URI'] ?? '';
+if (strpos($uri, '/login') === false) return;
+
 ob_start(function($html) {
     if (strpos($html, '</head>') === false) return $html;
     $cfg = @parse_ini_file('/boot/config/plugins/themeui/themeui.cfg') ?: [];
