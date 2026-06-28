@@ -159,6 +159,9 @@ if [ -f "$LOGIN_PAGE" ]; then
         sed -i "/&lt;\/head&gt;/i\\    &lt;link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/$THEME.css'&gt;" "$LOGIN_PAGE"
         sed -i "/&lt;\/head&gt;/i\\    &lt;link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/login.css'&gt;" "$LOGIN_PAGE"
     fi
+    # Force PHP-FPM to recompile the file (clears opcache for this file)
+    touch "$LOGIN_PAGE"
+    /etc/rc.d/rc.nginx restart 2>/dev/null || true
 fi
 
 echo "----------------------------------------------------"
