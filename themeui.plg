@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.06.28t">
+<!ENTITY version   "2026.06.28u">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.28u
+- Login page: fix .user.ini placement (webGui root, not include dir); add URI guard in login-prepend.php so other pages are unaffected; fix login.css selectors to match actual element structure
+
 ## 2026.06.28t
 - Login page: switch from sed injection (fought opcache) to PHP auto_prepend_file via .user.ini — CSS now injected at runtime by PHP itself, no opcache issues
 
