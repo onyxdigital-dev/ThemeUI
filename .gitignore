@@ -1,0 +1,5 @@
+# Claude Code session files
+.claude/
+
+# Unraid plugin temp files (created when editing .plg live on the server)
+*.plg.tmp.*
