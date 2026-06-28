@@ -31,19 +31,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             file_put_contents($override_path, $_POST['custom_css']);
             @copy($override_path, $webroot_override);
         }
-        // Update login page injection live
+        // Embed CSS inline in login page — link tags can't load because nginx blocks
+        // /plugins/ for unauthenticated requests, so we inline the CSS content directly.
         $login_page = "/usr/local/emhttp/webGui/include/.login.php";
         if (file_exists($login_page)) {
+            $plug = "/usr/local/emhttp/plugins/ThemeUI";
             $html = file_get_contents($login_page);
-            // Remove any previous ThemeUI tags
-            $html = preg_replace('/[ \t]*<link[^>]+data-themeui[^>]*>\n?/', '', $html);
+            $html = preg_replace('/<!--themeui-start-->.*?<!--themeui-end-->\n?/s', '', $html);
             if ($service === 'enabled' && $theme !== 'default') {
-                $links = "    <link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/{$theme}.css'>\n" .
-                         "    <link data-themeui rel='stylesheet' href='/plugins/ThemeUI/themes/login.css'>\n";
-                $html = str_replace('</head>', $links . '</head>', $html);
+                $css  = @file_get_contents("$plug/themes/$theme.css") ?: '';
+                $css .= "\n" . (@file_get_contents("$plug/themes/login.css") ?: '');
+                $block = "<!--themeui-start-->\n<style>\n$css\n</style>\n<!--themeui-end-->";
+                $html = str_replace('</head>', "$block\n</head>", $html);
             }
             file_put_contents($login_page, $html);
-            // Clear the entire shared opcode cache so all PHP-FPM workers see the new file
             if (function_exists('opcache_reset')) {
                 opcache_reset();
             } elseif (function_exists('opcache_invalidate')) {
