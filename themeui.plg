@@ -20,39 +20,31 @@
 - Fix plugin breakage: replace MutationObserver legend code (caused page-wide issues) with CSS nth-of-type rules and !important — simpler, no JS timing or loop risks; legend icons now always themed instantly via stylesheet
 </CHANGES>
 
-<!-- Pre-install: wipe previous version and create directories -->
 <FILE Run="/bin/bash">
 <INLINE>
 rm -rf /usr/local/emhttp/plugins/&name;
 rm -rf /usr/local/emhttp/plugins/themeui
 mkdir -p /usr/local/emhttp/plugins/&name;/themes
-# Flash config always lives at lowercase 'themeui' so parse_plugin_cfg("themeui") finds it
 mkdir -p /boot/config/plugins/themeui
 exit 0
 </INLINE>
 </FILE>
-
-<!-- ===== POST-INSTALL: download files from GitHub and set up config ===== -->
 
 <FILE Run="/bin/bash">
 <INLINE>
 REPO_RAW="https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master"
 PLUGIN_DIR="/usr/local/emhttp/plugins/ThemeUI"
 
-# Page files
 curl -fsSL -o "$PLUGIN_DIR/ThemeUILoader.page"   "$REPO_RAW/ThemeUILoader.page"
 curl -fsSL -o "$PLUGIN_DIR/ThemeUI.page"         "$REPO_RAW/ThemeUI.page"
 curl -fsSL -o "$PLUGIN_DIR/login-prepend.php"    "$REPO_RAW/login-prepend.php"
 
-# Theme CSS files
 for theme in catppuccin-mocha nord dracula gruvbox-dark tokyo-night solarized-dark one-dark rose-pine everforest black-white modern login; do
     curl -fsSL -o "$PLUGIN_DIR/themes/$theme.css" "$REPO_RAW/themes/$theme.css"
 done
 
-# Plugin icon
 curl -fsSL -o "$PLUGIN_DIR/icon.png" "$REPO_RAW/icon.png" 2>/dev/null || true
 
-# Flash config: migrate from old capital-ThemeUI location if needed
 mkdir -p /boot/config/plugins/themeui
 if [ -f /boot/config/plugins/ThemeUI/themeui.cfg ] &amp;&amp; [ ! -f /boot/config/plugins/themeui/themeui.cfg ]; then
     cp /boot/config/plugins/ThemeUI/themeui.cfg /boot/config/plugins/themeui/themeui.cfg
@@ -61,34 +53,27 @@ if [ -f /boot/config/plugins/ThemeUI/custom-override.css ] &amp;&amp; [ ! -f /bo
     cp /boot/config/plugins/ThemeUI/custom-override.css /boot/config/plugins/themeui/custom-override.css
 fi
 
-# Create default config if not already present
 if [ ! -f /boot/config/plugins/themeui/themeui.cfg ]; then
     printf 'SERVICE="disabled"\nTHEME="default"\n' > /boot/config/plugins/themeui/themeui.cfg
 fi
 
-# Create default custom override CSS if not present
 if [ ! -f /boot/config/plugins/themeui/custom-override.css ]; then
     echo '/* Custom CSS overrides - applied on top of the selected theme */' > /boot/config/plugins/themeui/custom-override.css
 fi
 
-# Sync custom override from flash to webroot
 cp /boot/config/plugins/themeui/custom-override.css "$PLUGIN_DIR/custom-override.css"
 
-# Clean up any leftover .user.ini from previous approach
 rm -f /usr/local/emhttp/webGui/.user.ini
 rm -f /usr/local/emhttp/webGui/include/.user.ini
 
-# Save the login injection script to flash so it survives reboots
 curl -fsSL -o /boot/config/plugins/themeui/login-theme.sh "$REPO_RAW/login-theme.sh"
 sed -i 's/\r//' /boot/config/plugins/themeui/login-theme.sh
 chmod +x /boot/config/plugins/themeui/login-theme.sh
 
-# Hook into /boot/config/go so it runs at every boot (same as theme.park approach)
 if ! grep -q 'themeui/login-theme.sh' /boot/config/go 2&gt;/dev/null; then
     echo 'bash /boot/config/plugins/themeui/login-theme.sh' &gt;&gt; /boot/config/go
 fi
 
-# Run immediately so the current session is also themed
 bash /boot/config/plugins/themeui/login-theme.sh
 
 echo "----------------------------------------------------"
@@ -99,8 +84,6 @@ exit 0
 </INLINE>
 </FILE>
 
-<!-- ===== UNINSTALL ===== -->
-
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
 rm -rf /usr/local/emhttp/plugins/&name;
@@ -109,10 +92,8 @@ rm -rf /boot/config/plugins/themeui
 rm -rf /boot/config/plugins/&name;
 rm -f /usr/local/emhttp/webGui/.user.ini
 rm -f /usr/local/emhttp/webGui/include/.user.ini
-# Remove login page injection
 LOGIN_PAGE="/usr/local/emhttp/webGui/include/.login.php"
 [ -f "$LOGIN_PAGE" ] &amp;&amp; sed -i '/data-themeui/d' "$LOGIN_PAGE"
-# Remove go script entry
 sed -i '/themeui\/login-theme.sh/d' /boot/config/go 2&gt;/dev/null || true
 echo "ThemeUI removed."
 exit 0

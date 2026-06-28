@@ -1,4 +1,3 @@
-/* ThemeUI — login page theming */
 html,body{background-color:var(--background-color)!important;color:var(--text-color)!important}
 #login{background:var(--mild-background-color)!important}
 #login h1,#login h2,#login a{color:var(--text-color)!important}

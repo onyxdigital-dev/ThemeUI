@@ -1,7 +1,4 @@
 #!/bin/bash
-# ThemeUI - Login page theme injection (boot-time, called from /boot/config/go)
-# Embeds CSS inline because nginx blocks /plugins/ for unauthenticated requests
-
 php -r "
 \$cfg  = @parse_ini_file('/boot/config/plugins/themeui/themeui.cfg') ?: [];
 \$service = \$cfg['SERVICE'] ?? 'disabled';

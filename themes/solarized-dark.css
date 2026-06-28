@@ -1,8 +1,3 @@
-/* Solarized Dark for Unraid 7.2+
-   https://ethanschoonover.com/solarized/
-   Base03: #002b36  Base02: #073642  Base01: #586e75  Base0: #839496
-   Yellow: #b58900  Orange: #cb4b16  Red: #dc322f
-   Blue: #268bd2    Cyan: #2aa198    Green: #859900 */
 :root {
     --text-color: #839496;
     --blockquote-text-color: #93a1a1;
@@ -92,17 +87,14 @@ table.tablesorter thead tr .tablesorter-headerDesc { background-color: #073642 !
 .usage-disk > span:first-child { background-color: #2aa198 !important; }
 .usage-disk.sys > span { background-color: #2aa198 !important; }
 
-/* Header text and icons */
 .text-header-text-primary{color:#2aa198!important}
 .text-header-text-secondary{color:rgba(42,161,152,.7)!important}
 
-/* Dropdown context menus (Docker right-click) */
 .dropdown-menu{background:var(--mild-background-color)!important;border-color:var(--border-color)!important;box-shadow:0 4px 12px rgba(0,0,0,.4)!important}
 .dropdown-menu li a{color:var(--text-color)!important}
 .dropdown-menu li a:hover,.dropdown-menu li a:focus{background:var(--background-color)!important;color:var(--brand-orange)!important}
 .dropdown-menu .divider{background-color:var(--border-color)!important}
 
-/* SweetAlert (Community Applications) */
 .sweet-overlay{background:rgba(0,0,0,.6)!important}
 .sweet-alert{background:var(--mild-background-color)!important;color:var(--text-color)!important;border:1px solid var(--border-color)!important}
 .sweet-alert h2{color:var(--text-color)!important}

@@ -1,5 +1,4 @@
 <?php
-// Only activate on login page requests
 $uri = $_SERVER['REQUEST_URI'] ?? '';
 if (strpos($uri, '/login') === false) return;
 

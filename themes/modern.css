@@ -1,8 +1,4 @@
-/* Modern Design Layer for Unraid 7.2+
-   Adds rounded corners, full-border inputs, smooth transitions, and subtle
-   depth to the default flat design. Stacks on top of any color theme. */
 
-/* ── Form inputs: full border + rounded ── */
 input[type="text"]:where(:not(.unapi *)),
 input[type="password"]:where(:not(.unapi *)),
 input[type="number"]:where(:not(.unapi *)),
@@ -18,7 +14,6 @@ textarea:where(:not(.unapi *)) {
     transition: border-color 0.2s ease, background-color 0.2s ease !important;
 }
 
-/* ── Select dropdowns: full border + rounded ── */
 select:where(:not(.unapi *)) {
     border-width: 1px !important;
     border-style: solid !important;
@@ -27,7 +22,6 @@ select:where(:not(.unapi *)) {
     transition: border-color 0.2s ease, background-color 0.2s ease !important;
 }
 
-/* ── Buttons: rounder + smooth hover ── */
 input[type="button"]:where(:not(.unapi *)),
 input[type="reset"]:where(:not(.unapi *)),
 input[type="submit"]:where(:not(.unapi *)),
@@ -37,15 +31,11 @@ a.button:where(:not(.unapi *)) {
     transition: all 0.2s ease-in-out !important;
 }
 
-/* ── Section title headers: pill-shaped card ── */
 div.title:where(:not(.unapi *)) {
     border-radius: 10px !important;
     border: 1px solid var(--border-color) !important;
     border-bottom: 1px solid var(--border-color) !important;
 }
-/* ── Dashboard cards: rounded per card ── */
-/* Each tbody is one card. border-collapse:separate lets the tbody
-   border render as its own box so border-radius works on it. */
 table.dashboard {
     border-collapse: separate !important;
     border-spacing: 0 !important;
@@ -55,7 +45,6 @@ table.dashboard tbody {
     overflow: hidden !important;
     box-shadow: var(--small-shadow, 0 2px 6px rgba(0,0,0,0.3)) !important;
 }
-/* Corner-cell fallback for browsers that don't paint tbody border-radius */
 table.dashboard tbody tr:first-child td:first-child,
 table.dashboard tbody tr:first-child th:first-child { border-top-left-radius: 8px !important; }
 table.dashboard tbody tr:first-child td:last-child,
@@ -65,7 +54,6 @@ table.dashboard tbody tr:last-child th:first-child  { border-bottom-left-radius:
 table.dashboard tbody tr:last-child td:last-child,
 table.dashboard tbody tr:last-child th:last-child   { border-bottom-right-radius: 8px !important; }
 
-/* ── Data table containers: rounded + border ── */
 .TableContainer,
 .TableContainer--no-min-width {
     border-radius: 10px !important;
@@ -73,29 +61,24 @@ table.dashboard tbody tr:last-child th:last-child   { border-bottom-right-radius
     border: 1px solid var(--table-border-color) !important;
 }
 
-/* Remove inner double-border since container now has one */
 .TableContainer table:where(:not(.unapi *)),
 .TableContainer--no-min-width table:where(:not(.unapi *)) {
     border-style: hidden !important;
 }
 
-/* ── Pre / code blocks ── */
 pre {
     border-radius: 8px !important;
 }
 
-/* ── Shade sections ── */
 .shade {
     border-radius: 12px !important;
 }
 
-/* ── Notifications / banners ── */
 .upgrade_notice,
 .ca_element_notice {
     border-radius: 14px !important;
 }
 
-/* ── Usage bars ── */
 .usage-bar {
     border-radius: 8px !important;
 }
@@ -103,23 +86,19 @@ pre {
     border-radius: 7px !important;
 }
 
-/* ── Tooltips ── */
 a.info span,
 .clipboard-tooltip {
     border-radius: 8px !important;
 }
 
-/* ── Tab buttons ── */
 .tabs button[role="tab"] {
     border-radius: 8px 8px 0 0 !important;
 }
 
-/* ── Footer: rounded top ── */
 #footer {
     border-radius: 12px 12px 0 0 !important;
 }
 
-/* ── Span labels ── */
 span.label {
     border-radius: 6px !important;
 }

@@ -37,8 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             file_put_contents($override_path, $_POST['custom_css']);
             @copy($override_path, $webroot_override);
         }
-        // Embed CSS inline in login page — link tags can't load because nginx blocks
-        // /plugins/ for unauthenticated requests, so we inline the CSS content directly.
         $login_page = "/usr/local/emhttp/webGui/include/.login.php";
         if (file_exists($login_page)) {
             $plug = "/usr/local/emhttp/plugins/ThemeUI";
