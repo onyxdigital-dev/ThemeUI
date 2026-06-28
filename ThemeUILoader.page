@@ -102,6 +102,28 @@ document.addEventListener('DOMContentLoaded',function(){
       return oc.apply(this,arguments);
     };
   }
+  // Legend icons: re-color fa-circle dots to match pie segment palette.
+  // Disconnect before changing styles to avoid triggering ourselves; reconnect after.
+  var lepal=[acc,c0,dim];
+  var lobs;
+  function fixLeg(){
+    if(lobs)lobs.disconnect();
+    document.querySelectorAll('[id="dynamic"]').forEach(function(sp){
+      var ic=sp.querySelectorAll('i.fa-circle'),n=ic.length;
+      ic.forEach(function(el,i){el.style.color=i<n-1?(lepal[i%lepal.length]||c0):c1;});
+      if(lobs)lobs.observe(sp,{childList:true,subtree:true,attributes:true,attributeFilter:['style']});
+    });
+  }
+  lobs=new MutationObserver(fixLeg);
+  fixLeg();
+  // Also catch #dynamic spans injected after page load
+  new MutationObserver(function(ms){
+    ms.forEach(function(m){
+      m.addedNodes.forEach(function(nd){
+        if(nd.nodeType===1&&(nd.id==='dynamic'||(nd.querySelector&&nd.querySelector('[id="dynamic"]'))))fixLeg();
+      });
+    });
+  }).observe(document.body,{childList:true,subtree:true});
   // Buttons: inline style beats all CSS specificity, including Unraid !important ID-selector rules
   var btnBg=s.getPropertyValue('--hover-button-background').trim();
   var btnFg=s.getPropertyValue('--hover-button-text-color').trim();
