@@ -1,6 +1,6 @@
 # ThemeUI
 
-A theme switcher plugin for Unraid 7.2+. Apply beautiful dark color themes across the entire Unraid web UI — dashboard, login page, Docker and VM pages, usage bars, pie charts, tables, buttons, and context menus. Themes apply instantly on save with no reboot required.
+A theme switcher plugin for Unraid 7.2+. Apply beautiful dark color themes across the entire Unraid web UI - dashboard, login page, Docker and VM pages, usage bars, pie charts, tables, buttons, and context menus. Themes apply instantly on save with no reboot required.
 
 ![ThemeUI Settings](screenshots/Screenshot%202026-06-27%20022038.png)
 
@@ -30,7 +30,7 @@ A theme switcher plugin for Unraid 7.2+. Apply beautiful dark color themes acros
 - Modern design style option: rounded corners, smooth transitions, subtle depth
 - Custom CSS override textarea for fine-tuning any color
 - Color swatch preview when selecting a theme
-- Applies instantly on save — no reboot or page refresh needed
+- Applies instantly on save - no reboot or page refresh needed
 - Login page themed even before authentication (CSS embedded inline, bypasses nginx auth block)
 
 ---
@@ -52,7 +52,7 @@ https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg
 2. Set **Enable ThemeUI** to `Yes`
 3. Pick a theme from the dropdown (color swatches preview instantly)
 4. Optionally select **Modern** design style for rounded corners
-5. Click **Apply** — the page reloads with the new theme active
+5. Click **Apply** - the page reloads with the new theme active
 
 ### Custom CSS
 
