@@ -11,7 +11,7 @@
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
 ## 2026.06.28s
-- Login page theming: fix injection point (</head> instead of <style>), add login.css with explicit #login element rules so CSS variables actually apply to the form
+- Login page theming: fix injection point (head close tag instead of style tag), add login.css with explicit #login element rules so CSS variables actually apply to the form
 
 ## 2026.06.28r
 - Login page theming: inject selected theme CSS into /webGui/include/.login.php on install/boot and immediately when settings are saved; removed on uninstall
