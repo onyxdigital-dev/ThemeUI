@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.06.29r">
+<!ENTITY version   "2026.06.29s">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,15 +10,14 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.29s
+- Add ThemeUI.xml plugin template with PluginURL for Community Applications; fix ca_profile.xml structure
+
 ## 2026.06.29r
 - Equal width columns: both left and right sides share the page width 50/50
 
 ## 2026.06.29q
 - Fix CSS editor width: left column fixed at 460px, right column fills all remaining page width
-
-
-## 2026.06.29l
-- Fix auto-reload loop: use location.href=location.pathname (explicit GET) instead of location.reload() which was re-submitting the POST and triggering the save+reload cycle repeatedly
 
 ## 2026.06.29k
 - Fix PHP parse error: CSS attribute selector span[id="dynamic"] used double quotes inside PHP double-quoted echo string, breaking all pages; changed to single quotes span[id='dynamic']
