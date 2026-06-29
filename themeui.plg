@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.06.29l">
+<!ENTITY version   "2026.06.29m">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.29m
+- Redesign settings page: toggle switch for enable, theme card grid with color swatches, pill buttons for design style, theme-aware CSS textarea
+
 ## 2026.06.29l
 - Fix auto-reload loop: use location.href=location.pathname (explicit GET) instead of location.reload() which was re-submitting the POST and triggering the save+reload cycle repeatedly
 
