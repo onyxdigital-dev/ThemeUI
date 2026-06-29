@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.06.29v">
+<!ENTITY version   "2026.06.29w">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,14 +10,15 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.29w
+- Fix ca_profile.xml: correct root element to Maintainer with Profile as plain text
+
 ## 2026.06.29v
 - Move icon to assets/logo.png; update all references
 
 ## 2026.06.29u
 - Reorganize repo: move source files to source/ folder; update download URLs in plg; fix CA profile XML
 
-## 2026.06.29t
-- Fix ca_profile.xml: remove CDATA sections so CA validator can parse the Profile block
 
 
 </CHANGES>
