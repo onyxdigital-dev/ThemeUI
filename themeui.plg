@@ -16,17 +16,6 @@
 ## 2026.06.29q
 - Fix CSS editor width: left column fixed at 460px, right column fills all remaining page width
 
-## 2026.06.29p
-- Custom CSS right column now fills all remaining horizontal space
-
-## 2026.06.29o
-- Custom CSS textarea now fills the full height of the right column
-
-## 2026.06.29n
-- Move custom CSS editor to right column; two-column layout with sticky CSS panel beside theme controls
-
-## 2026.06.29m
-- Redesign settings page: toggle switch for enable, theme card grid with color swatches, pill buttons for design style, theme-aware CSS textarea
 
 ## 2026.06.29l
 - Fix auto-reload loop: use location.href=location.pathname (explicit GET) instead of location.reload() which was re-submitting the POST and triggering the save+reload cycle repeatedly
