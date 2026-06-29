@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.06.29t">
+<!ENTITY version   "2026.06.29u">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,14 +10,14 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.06.29u
+- Reorganize repo: move source files to source/ folder; update download URLs in plg; fix CA profile XML
+
 ## 2026.06.29t
 - Fix ca_profile.xml: remove CDATA sections so CA validator can parse the Profile block
 
 ## 2026.06.29s
 - Add ThemeUI.xml plugin template with PluginURL for Community Applications; fix ca_profile.xml structure
-
-## 2026.06.29r
-- Equal width columns: both left and right sides share the page width 50/50
 </CHANGES>
 
 <FILE Run="/bin/bash">
@@ -35,9 +35,9 @@ exit 0
 REPO_RAW="https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master"
 PLUGIN_DIR="/usr/local/emhttp/plugins/ThemeUI"
 
-curl -fsSL -o "$PLUGIN_DIR/ThemeUILoader.page"   "$REPO_RAW/ThemeUILoader.page"
-curl -fsSL -o "$PLUGIN_DIR/ThemeUI.page"         "$REPO_RAW/ThemeUI.page"
-curl -fsSL -o "$PLUGIN_DIR/login-prepend.php"    "$REPO_RAW/login-prepend.php"
+curl -fsSL -o "$PLUGIN_DIR/ThemeUILoader.page"   "$REPO_RAW/source/ThemeUILoader.page"
+curl -fsSL -o "$PLUGIN_DIR/ThemeUI.page"         "$REPO_RAW/source/ThemeUI.page"
+curl -fsSL -o "$PLUGIN_DIR/login-prepend.php"    "$REPO_RAW/source/login-prepend.php"
 
 for theme in catppuccin-mocha nord dracula gruvbox-dark tokyo-night solarized-dark one-dark rose-pine everforest black-white modern login; do
     curl -fsSL -o "$PLUGIN_DIR/themes/$theme.css" "$REPO_RAW/themes/$theme.css"
@@ -66,7 +66,7 @@ cp /boot/config/plugins/themeui/custom-override.css "$PLUGIN_DIR/custom-override
 rm -f /usr/local/emhttp/webGui/.user.ini
 rm -f /usr/local/emhttp/webGui/include/.user.ini
 
-curl -fsSL -o /boot/config/plugins/themeui/login-theme.sh "$REPO_RAW/login-theme.sh"
+curl -fsSL -o /boot/config/plugins/themeui/login-theme.sh "$REPO_RAW/source/login-theme.sh"
 sed -i 's/\r//' /boot/config/plugins/themeui/login-theme.sh
 chmod +x /boot/config/plugins/themeui/login-theme.sh
 
