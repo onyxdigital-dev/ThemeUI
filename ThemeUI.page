@@ -82,7 +82,9 @@ $custom_css = file_get_contents($override_path);
 <?php endif; ?>
 
 <style>
-.tui{max-width:860px}
+.tui{display:flex;gap:28px;align-items:flex-start;max-width:1100px}
+.tui-left{flex:1;min-width:0}
+.tui-right{width:280px;flex-shrink:0;position:sticky;top:20px}
 .tui-section{margin-bottom:32px}
 .tui-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--alt-text-color,#888);margin-bottom:12px}
 .tui-switch{position:relative;display:inline-block;width:46px;height:26px;cursor:pointer;flex-shrink:0}
@@ -93,7 +95,7 @@ $custom_css = file_get_contents($override_path);
 .tui-switch input:checked+.tui-knob::after{transform:translateX(20px)}
 .tui-toggle-row{display:flex;align-items:center;gap:12px}
 .tui-status{font-size:13px;color:var(--text-color,#cdd6f4)}
-.tui-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px}
+.tui-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
 .tui-card{display:flex;flex-direction:column;gap:9px;padding:12px 14px;background:var(--mild-background-color,#181825);border:2px solid var(--border-color,#313244);border-radius:10px;cursor:pointer;transition:border-color .15s,transform .1s;user-select:none}
 .tui-card input{display:none}
 .tui-card:hover{border-color:var(--input-border-color,#6c7086);transform:translateY(-1px)}
@@ -109,7 +111,7 @@ $custom_css = file_get_contents($override_path);
 .tui-hint{margin-top:8px;font-size:12px;color:var(--alt-text-color,#888)}
 .tui-hint a{color:var(--usage-bar-used-background-color,#89b4fa);text-decoration:none}
 .tui-hint a:hover{text-decoration:underline}
-.tui-textarea{display:block;width:100%;max-width:820px;height:200px;font-family:monospace;font-size:12px;background:var(--mild-background-color,#181825);color:var(--text-color,#cdd6f4);border:1px solid var(--input-border-color,#6c7086);border-radius:8px;padding:10px 12px;box-sizing:border-box;resize:vertical;outline:none;transition:border-color .15s}
+.tui-textarea{display:block;width:100%;height:420px;font-family:monospace;font-size:12px;background:var(--mild-background-color,#181825);color:var(--text-color,#cdd6f4);border:1px solid var(--input-border-color,#6c7086);border-radius:8px;padding:10px 12px;box-sizing:border-box;resize:vertical;outline:none;transition:border-color .15s}
 .tui-textarea:focus{border-color:var(--usage-bar-used-background-color,#89b4fa)}
 .tui-actions{display:flex;gap:10px;padding-top:4px}
 </style>
@@ -117,66 +119,70 @@ $custom_css = file_get_contents($override_path);
 <form method="POST" action="/Settings/ThemeUI">
 <div class="tui">
 
-  <div class="tui-section">
-    <div class="tui-label">Enable ThemeUI</div>
-    <div class="tui-toggle-row">
-      <label class="tui-switch">
-        <input type="checkbox" name="SERVICE" value="enabled" id="tui-enable"
-          <?= $service === 'enabled' ? 'checked' : '' ?>
-          onchange="document.getElementById('tui-status').textContent=this.checked?'Enabled':'Disabled';tuiDirty()">
-        <span class="tui-knob"></span>
-      </label>
-      <span class="tui-status" id="tui-status"><?= $service === 'enabled' ? 'Enabled' : 'Disabled' ?></span>
+  <div class="tui-left">
+    <div class="tui-section">
+      <div class="tui-label">Enable ThemeUI</div>
+      <div class="tui-toggle-row">
+        <label class="tui-switch">
+          <input type="checkbox" name="SERVICE" value="enabled" id="tui-enable"
+            <?= $service === 'enabled' ? 'checked' : '' ?>
+            onchange="document.getElementById('tui-status').textContent=this.checked?'Enabled':'Disabled';tuiDirty()">
+          <span class="tui-knob"></span>
+        </label>
+        <span class="tui-status" id="tui-status"><?= $service === 'enabled' ? 'Enabled' : 'Disabled' ?></span>
+      </div>
+    </div>
+
+    <div class="tui-section">
+      <div class="tui-label">Theme</div>
+      <div class="tui-grid">
+        <?php foreach ($theme_meta as $key => $meta): ?>
+        <label class="tui-card<?= $theme === $key ? ' sel' : '' ?>">
+          <input type="radio" name="THEME" value="<?= $key ?>"
+            <?= $theme === $key ? 'checked' : '' ?>
+            onchange="document.querySelectorAll('.tui-card').forEach(function(c){c.classList.remove('sel')});this.closest('.tui-card').classList.add('sel');tuiDirty()">
+          <div class="tui-card-name"><?= htmlspecialchars($meta['label']) ?></div>
+          <div class="tui-dots">
+            <?php foreach ($meta['colors'] as $c): ?>
+            <span style="background:<?= $c ?>"></span>
+            <?php endforeach; ?>
+          </div>
+        </label>
+        <?php endforeach; ?>
+      </div>
+    </div>
+
+    <div class="tui-section">
+      <div class="tui-label">Design Style</div>
+      <div class="tui-pills">
+        <label class="tui-pill<?= $design === 'default' ? ' sel' : '' ?>">
+          <input type="radio" name="DESIGN" value="default"
+            <?= $design === 'default' ? 'checked' : '' ?>
+            onchange="document.querySelectorAll('.tui-pill').forEach(function(p){p.classList.remove('sel')});this.closest('.tui-pill').classList.add('sel');tuiDirty()">
+          Default
+        </label>
+        <label class="tui-pill<?= $design === 'modern' ? ' sel' : '' ?>">
+          <input type="radio" name="DESIGN" value="modern"
+            <?= $design === 'modern' ? 'checked' : '' ?>
+            onchange="document.querySelectorAll('.tui-pill').forEach(function(p){p.classList.remove('sel')});this.closest('.tui-pill').classList.add('sel');tuiDirty()">
+          Modern
+        </label>
+      </div>
+      <div class="tui-hint">Modern adds rounded corners and smooth transitions to all UI elements.</div>
+    </div>
+
+    <div class="tui-actions">
+      <input type="submit" name="SAVE_CONFIG" value="Apply" id="tui-apply" disabled>
+      <input type="button" value="Done" onclick="done()">
     </div>
   </div>
 
-  <div class="tui-section">
-    <div class="tui-label">Theme</div>
-    <div class="tui-grid">
-      <?php foreach ($theme_meta as $key => $meta): ?>
-      <label class="tui-card<?= $theme === $key ? ' sel' : '' ?>">
-        <input type="radio" name="THEME" value="<?= $key ?>"
-          <?= $theme === $key ? 'checked' : '' ?>
-          onchange="document.querySelectorAll('.tui-card').forEach(function(c){c.classList.remove('sel')});this.closest('.tui-card').classList.add('sel');tuiDirty()">
-        <div class="tui-card-name"><?= htmlspecialchars($meta['label']) ?></div>
-        <div class="tui-dots">
-          <?php foreach ($meta['colors'] as $c): ?>
-          <span style="background:<?= $c ?>"></span>
-          <?php endforeach; ?>
-        </div>
-      </label>
-      <?php endforeach; ?>
+  <div class="tui-right">
+    <div class="tui-section">
+      <div class="tui-label">Custom CSS Override</div>
+      <textarea name="custom_css" class="tui-textarea" spellcheck="false" oninput="tuiDirty()"><?= htmlspecialchars($custom_css) ?></textarea>
+      <div class="tui-hint">Injected after the active theme. Reference: <a href="/webGui/styles/themes/white.css" target="_blank">white.css</a> &nbsp;|&nbsp; <a href="/webGui/styles/themes/black.css" target="_blank">black.css</a></div>
     </div>
-  </div>
-
-  <div class="tui-section">
-    <div class="tui-label">Design Style</div>
-    <div class="tui-pills">
-      <label class="tui-pill<?= $design === 'default' ? ' sel' : '' ?>">
-        <input type="radio" name="DESIGN" value="default"
-          <?= $design === 'default' ? 'checked' : '' ?>
-          onchange="document.querySelectorAll('.tui-pill').forEach(function(p){p.classList.remove('sel')});this.closest('.tui-pill').classList.add('sel');tuiDirty()">
-        Default
-      </label>
-      <label class="tui-pill<?= $design === 'modern' ? ' sel' : '' ?>">
-        <input type="radio" name="DESIGN" value="modern"
-          <?= $design === 'modern' ? 'checked' : '' ?>
-          onchange="document.querySelectorAll('.tui-pill').forEach(function(p){p.classList.remove('sel')});this.closest('.tui-pill').classList.add('sel');tuiDirty()">
-        Modern
-      </label>
-    </div>
-    <div class="tui-hint">Modern adds rounded corners and smooth transitions to all UI elements.</div>
-  </div>
-
-  <div class="tui-section">
-    <div class="tui-label">Custom CSS Override</div>
-    <textarea name="custom_css" class="tui-textarea" spellcheck="false" oninput="tuiDirty()"><?= htmlspecialchars($custom_css) ?></textarea>
-    <div class="tui-hint">Injected after the active theme. Reference: <a href="/webGui/styles/themes/white.css" target="_blank">white.css</a> &nbsp;|&nbsp; <a href="/webGui/styles/themes/black.css" target="_blank">black.css</a></div>
-  </div>
-
-  <div class="tui-actions">
-    <input type="submit" name="SAVE_CONFIG" value="Apply" id="tui-apply" disabled>
-    <input type="button" value="Done" onclick="done()">
   </div>
 
 </div>
