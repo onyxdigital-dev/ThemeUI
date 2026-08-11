@@ -30,6 +30,9 @@ select option{background-color:var(--background-color)!important;color:var(--tex
 input[type='button'],input[type='reset'],input[type='submit'],button,a.button{background:var(--hover-button-background)!important;color:var(--hover-button-text-color)!important;border:none!important}
 input[type='button']:hover,input[type='reset']:hover,input[type='submit']:hover,button:hover,a.button:hover{background:var(--hover-button-background)!important;color:var(--hover-button-text-color)!important;opacity:.85!important}
 a.info span,.clipboard-tooltip{color:#1a1a1a!important;background-color:#f0f0f0!important;border-color:rgba(0,0,0,.25)!important}
+fieldset.CMD{background-color:var(--mild-background-color)!important;border-color:var(--border-color)!important;color:var(--text-color)!important}
+fieldset.CMD legend{color:var(--text-color)!important}
+fieldset.CMD .logLine,fieldset.CMD span.id,#logBody{color:var(--text-color)!important}
 </style>\n";
         echo "<script>
 document.addEventListener('DOMContentLoaded',function(){
@@ -115,15 +118,15 @@ document.addEventListener('DOMContentLoaded',function(){
     ifr.addEventListener('load',function(){themeIframe(ifr.contentDocument);});
     themeIframe(ifr.contentDocument);
   }
-  document.querySelectorAll('iframe#myIframe').forEach(watchFrame);
+  document.querySelectorAll('iframe').forEach(watchFrame);
   new MutationObserver(function(muts){
     muts.forEach(function(m){
       m.addedNodes.forEach(function(n){
         if(n.nodeType!==1)return;
         if(n.matches&&n.matches(btnSel))applyBtn(n);
         if(n.querySelectorAll)n.querySelectorAll(btnSel).forEach(applyBtn);
-        if(n.tagName==='IFRAME'&&n.id==='myIframe')watchFrame(n);
-        if(n.querySelectorAll)n.querySelectorAll('iframe#myIframe').forEach(watchFrame);
+        if(n.tagName==='IFRAME')watchFrame(n);
+        if(n.querySelectorAll)n.querySelectorAll('iframe').forEach(watchFrame);
       });
     });
   }).observe(document.body,{childList:true,subtree:true});
