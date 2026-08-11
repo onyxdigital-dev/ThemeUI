@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded',function(){
   var grid=s.getPropertyValue('--border-color').trim();
   var text=s.getPropertyValue('--text-color').trim();
   var red=s.getPropertyValue('--brand-red').trim();
+  var mild=s.getPropertyValue('--mild-background-color').trim();
+  var bg=s.getPropertyValue('--background-color').trim();
   if(typeof cpuchart!=='undefined'){
     cpuchart.options.grid.strokeStyle=grid;
     cpuchart.options.labels.fillStyle=text;
@@ -98,12 +100,30 @@ document.addEventListener('DOMContentLoaded',function(){
     el.addEventListener('mouseleave',function(){this.style.removeProperty('opacity');});
   }
   document.querySelectorAll(btnSel).forEach(applyBtn);
+  function themeIframe(doc){
+    try{
+      if(!doc||!doc.head||doc.getElementById('themeui-iframe-fix'))return;
+      var st=doc.createElement('style');
+      st.id='themeui-iframe-fix';
+      st.textContent='body{background:'+bg+' !important}.logLine{color:'+text+' !important}fieldset.CMD{background:'+mild+' !important;border-color:'+grid+' !important;color:'+text+' !important}fieldset.CMD legend{color:'+text+' !important}span.id{color:'+c0+' !important}';
+      doc.head.appendChild(st);
+    }catch(e){}
+  }
+  function watchFrame(ifr){
+    if(!ifr||ifr.getAttribute('data-themeui'))return;
+    ifr.setAttribute('data-themeui','1');
+    ifr.addEventListener('load',function(){themeIframe(ifr.contentDocument);});
+    themeIframe(ifr.contentDocument);
+  }
+  document.querySelectorAll('iframe#myIframe').forEach(watchFrame);
   new MutationObserver(function(muts){
     muts.forEach(function(m){
       m.addedNodes.forEach(function(n){
         if(n.nodeType!==1)return;
         if(n.matches&&n.matches(btnSel))applyBtn(n);
         if(n.querySelectorAll)n.querySelectorAll(btnSel).forEach(applyBtn);
+        if(n.tagName==='IFRAME'&&n.id==='myIframe')watchFrame(n);
+        if(n.querySelectorAll)n.querySelectorAll('iframe#myIframe').forEach(watchFrame);
       });
     });
   }).observe(document.body,{childList:true,subtree:true});
