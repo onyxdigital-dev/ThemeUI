@@ -63,7 +63,7 @@ if (!file_exists($cfg_path)) {
     file_put_contents($cfg_path, "SERVICE=\"disabled\"\nTHEME=\"default\"\n");
 }
 if (!file_exists($override_path)) {
-    file_put_contents($override_path, "/* Custom CSS overrides - applied on top of the selected theme */\n");
+    file_put_contents($override_path, "");
     @copy($override_path, $webroot_override);
 }
 
