@@ -29,6 +29,7 @@ select{background-color:var(--background-color)!important;color:var(--text-color
 select option{background-color:var(--background-color)!important;color:var(--text-color)!important}
 input[type='button'],input[type='reset'],input[type='submit'],button,a.button{background:var(--hover-button-background)!important;color:var(--hover-button-text-color)!important;border:none!important}
 input[type='button']:hover,input[type='reset']:hover,input[type='submit']:hover,button:hover,a.button:hover{background:var(--hover-button-background)!important;color:var(--hover-button-text-color)!important;opacity:.85!important}
+a.info span,.clipboard-tooltip{color:#1a1a1a!important;background-color:#f0f0f0!important;border-color:rgba(0,0,0,.25)!important}
 </style>\n";
         echo "<script>
 document.addEventListener('DOMContentLoaded',function(){
