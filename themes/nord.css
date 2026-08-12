@@ -121,3 +121,5 @@ table.tablesorter thead tr .tablesorter-headerDesc { background-color: #3b4252 !
 .fileTree{background:var(--mild-background-color)!important;color:var(--text-color)!important;border:1px solid var(--border-color)!important}
 .jqueryFileTree A{color:var(--text-color)!important}
 .jqueryFileTree A:hover{background:var(--background-color)!important}
+
+blockquote,.inline_help{background-color:var(--mild-background-color)!important;border-color:var(--border-color)!important}

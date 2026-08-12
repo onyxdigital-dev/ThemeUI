@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.08.12a">
+<!ENTITY version   "2026.08.12b">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.08.12b
+- Fix illegible inline help text boxes across all themes (e.g. "Changes the font size of terminal windows" under Settings dropdowns) - Unraid's blockquote.inline_help tooltip kept its hardcoded light-blue background while our themes only recolored the text, producing light-on-light text
+
 ## 2026.08.12a
 - Fix illegible jQuery UI dialogs and folder-browse popups across all themes (Docker/VM "Add Configuration" dialog, path browser dropdown) - these use Unraid's unthemed stock jquery.ui.css/.fileTree widgets which stayed light while the rest of the UI went dark
 

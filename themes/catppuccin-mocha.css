@@ -266,3 +266,9 @@ table.tablesorter thead tr .tablesorter-headerDesc {
 .jqueryFileTree A:hover {
     background: var(--background-color) !important
 }
+
+blockquote,
+.inline_help {
+    background-color: var(--mild-background-color) !important;
+    border-color: var(--border-color) !important
+}
