@@ -39,7 +39,7 @@ $theme_meta = [
 
 $valid_logo_modes = ["none","url","upload"];
 $valid_logo_sizes = ["small","medium","large"];
-$logo_size_css = ["small"=>"height:1.5rem;max-width:6rem;", "medium"=>"height:2.5rem;max-width:10rem;", "large"=>"height:3.5rem;max-width:14rem;"];
+$logo_size_css = ["small"=>"height:2.5rem;max-width:10rem;", "medium"=>"height:3.5rem;max-width:14rem;", "large"=>"height:4.5rem;max-width:18rem;"];
 $logo_header_file = "/usr/local/emhttp/webGui/images/UN-logotype-gradient.svg";
 $logo_anim_file   = "/usr/local/emhttp/webGui/images/animated-logo.svg";
 $logo_backup_dir  = "/boot/config/plugins/themeui/logo-originals";

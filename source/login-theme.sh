@@ -9,7 +9,7 @@ php -r "
 \$logo_mode       = \$cfg['LOGO_MODE'] ?? 'none';
 \$logo_url        = \$cfg['LOGO_URL']  ?? '';
 \$logo_size       = \$cfg['LOGO_SIZE'] ?? 'medium';
-\$logo_size_css   = ['small'=>'height:1.5rem;max-width:6rem;', 'medium'=>'height:2.5rem;max-width:10rem;', 'large'=>'height:3.5rem;max-width:14rem;'];
+\$logo_size_css   = ['small'=>'height:2.5rem;max-width:10rem;', 'medium'=>'height:3.5rem;max-width:14rem;', 'large'=>'height:4.5rem;max-width:18rem;'];
 \$size_css        = \$logo_size_css[\$logo_size] ?? \$logo_size_css['medium'];
 \$logo_header     = '/usr/local/emhttp/webGui/images/UN-logotype-gradient.svg';
 \$logo_anim       = '/usr/local/emhttp/webGui/images/animated-logo.svg';

@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.08.13g">
+<!ENTITY version   "2026.08.13h">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.08.13h
+- Bump logo Size presets larger: Small 2.5rem, Medium 3.5rem, Large 4.5rem (was 1.5/2.5/3.5rem)
+
 ## 2026.08.13g
 - Add a Size setting (Small/Medium/Large) for the custom logo, since one fixed size didn't fit every logo shape
 
