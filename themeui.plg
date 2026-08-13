@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.08.13b">
+<!ENTITY version   "2026.08.13c">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.08.13c
+- Fix Apply hanging indefinitely on every save - the settings form's enctype="multipart/form-data" (added for logo upload) was breaking Unraid's own form submission handling. Reverted for now; Logo upload mode is temporarily non-functional (URL mode still works) until it's rebuilt as an isolated upload mechanism that doesn't touch the main settings form
+
 ## 2026.08.13b
 - Add custom logo replacement (Settings > ThemeUI > Logo) - paste an image URL or upload a PNG/JPG/WEBP/GIF (20MB max) to replace the Unraid logo in the header and login page. Overwrites UN-logotype-gradient.svg/animated-logo.svg directly (backing up the originals first) since the header, login page, and set-password screen all read the same files; reapplied automatically on every boot alongside the login theme, and restored on switching back to "Default" or removing the plugin
 

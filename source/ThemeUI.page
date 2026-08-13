@@ -208,7 +208,7 @@ foreach (glob("$logo_upload_dir/custom-logo.*") as $f) { $existing_upload = base
 .tui-actions{display:flex;gap:10px;padding-top:4px}
 </style>
 
-<form method="POST" action="/Settings/ThemeUI" enctype="multipart/form-data">
+<form method="POST" action="/Settings/ThemeUI">
 <div class="tui">
 
   <div class="tui-left">
@@ -278,11 +278,9 @@ foreach (glob("$logo_upload_dir/custom-logo.*") as $f) { $existing_upload = base
             onchange="tuiLogoMode(this.value);tuiDirty()">
           URL
         </label>
-        <label class="tui-pill<?= $logo_mode === 'upload' ? ' sel' : '' ?>">
-          <input type="radio" name="LOGO_MODE" value="upload"
-            <?= $logo_mode === 'upload' ? 'checked' : '' ?>
-            onchange="tuiLogoMode(this.value);tuiDirty()">
-          Upload
+        <label class="tui-pill" style="opacity:.45;cursor:not-allowed" title="Temporarily unavailable - being rebuilt so it doesn't interfere with the main form">
+          <input type="radio" name="LOGO_MODE_disabled" value="upload" disabled>
+          Upload (soon)
         </label>
       </div>
 
@@ -291,8 +289,7 @@ foreach (glob("$logo_upload_dir/custom-logo.*") as $f) { $existing_upload = base
           value="<?= htmlspecialchars($logo_url) ?>" oninput="tuiDirty()">
       </div>
 
-      <div id="tui-logo-upload" style="display:<?= $logo_mode === 'upload' ? 'block' : 'none' ?>;margin-top:12px">
-        <input type="file" name="logo_file" accept="image/png,image/jpeg,image/webp,image/gif" onchange="tuiDirty()">
+      <div id="tui-logo-upload" style="display:none">
         <?php if ($existing_upload): ?>
         <div class="tui-hint">Current file: <?= htmlspecialchars($existing_upload) ?></div>
         <?php endif; ?>
@@ -309,7 +306,7 @@ foreach (glob("$logo_upload_dir/custom-logo.*") as $f) { $existing_upload = base
       </div>
       <?php endif; ?>
 
-      <div class="tui-hint">Replaces the Unraid logo in the header and login page. PNG/JPG/WEBP/GIF, 20MB max for uploads.</div>
+      <div class="tui-hint">Replaces the Unraid logo in the header and login page. File upload is temporarily disabled - use a URL for now.</div>
     </div>
 
     <div class="tui-actions">
