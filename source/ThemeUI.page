@@ -43,7 +43,7 @@ $logo_anim_file   = "/usr/local/emhttp/webGui/images/animated-logo.svg";
 $logo_backup_dir  = "/boot/config/plugins/themeui/logo-originals";
 $logo_upload_dir  = "/boot/config/plugins/themeui";
 $logo_webroot     = "/usr/local/emhttp/plugins/ThemeUI";
-$logo_allowed_mimes = ["image/png"=>"png","image/jpeg"=>"jpg","image/webp"=>"webp","image/gif"=>"gif"];
+$logo_allowed_mimes = ["image/png"=>"png","image/jpeg"=>"jpg","image/webp"=>"webp","image/gif"=>"gif","image/x-icon"=>"ico","image/vnd.microsoft.icon"=>"ico"];
 
 function themeui_logo_svg($src) {
     $src = htmlspecialchars($src, ENT_QUOTES);
