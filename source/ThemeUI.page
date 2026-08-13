@@ -37,12 +37,84 @@ $theme_meta = [
     "white-black"      => ["label"=>"White and Black",    "colors"=>["#f5f5f5","#181818","#444444","#666666","#181818"]],
 ];
 
+$valid_logo_modes = ["none","url","upload"];
+$logo_header_file = "/usr/local/emhttp/webGui/images/UN-logotype-gradient.svg";
+$logo_anim_file   = "/usr/local/emhttp/webGui/images/animated-logo.svg";
+$logo_backup_dir  = "/boot/config/plugins/themeui/logo-originals";
+$logo_upload_dir  = "/boot/config/plugins/themeui";
+$logo_webroot     = "/usr/local/emhttp/plugins/ThemeUI";
+$logo_allowed_mimes = ["image/png"=>"png","image/jpeg"=>"jpg","image/webp"=>"webp","image/gif"=>"gif"];
+
+function themeui_logo_svg($src) {
+    $src = htmlspecialchars($src, ENT_QUOTES);
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 222.36 39.04" class="xs:w-[16rem] h-auto max-h-[3rem] w-[14rem] shrink-0" aria-hidden="true" focusable="false"><image href="' . $src . '" x="0" y="0" width="222.36" height="39.04" preserveAspectRatio="xMidYMid meet"/></svg>';
+}
+
+function themeui_apply_logo($mode, $src) {
+    global $logo_header_file, $logo_anim_file, $logo_backup_dir;
+    if (!file_exists($logo_header_file)) return;
+    if (!is_dir($logo_backup_dir)) @mkdir($logo_backup_dir, 0755, true);
+    $backup_header = "$logo_backup_dir/UN-logotype-gradient.svg";
+    $backup_anim   = "$logo_backup_dir/animated-logo.svg";
+    if (!file_exists($backup_header)) @copy($logo_header_file, $backup_header);
+    if (file_exists($logo_anim_file) && !file_exists($backup_anim)) @copy($logo_anim_file, $backup_anim);
+
+    if ($mode === 'none' || !$src) {
+        if (file_exists($backup_header)) @copy($backup_header, $logo_header_file);
+        if (file_exists($backup_anim))   @copy($backup_anim, $logo_anim_file);
+        return;
+    }
+    $svg = themeui_logo_svg($src);
+    @file_put_contents($logo_header_file, $svg);
+    @file_put_contents($logo_anim_file, $svg);
+}
+
+$error = "";
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['SAVE_CONFIG'])) {
         $service = (isset($_POST['SERVICE']) && $_POST['SERVICE'] === 'enabled') ? 'enabled' : 'disabled';
         $theme   = in_array($_POST['THEME']  ?? '', $valid_themes)  ? $_POST['THEME']  : 'default';
         $design  = in_array($_POST['DESIGN'] ?? '', $valid_designs) ? $_POST['DESIGN'] : 'default';
-        file_put_contents($cfg_path, "SERVICE=\"$service\"\nTHEME=\"$theme\"\nDESIGN=\"$design\"\n");
+
+        $logo_mode = in_array($_POST['LOGO_MODE'] ?? '', $valid_logo_modes) ? $_POST['LOGO_MODE'] : 'none';
+        $logo_url  = trim($_POST['logo_url'] ?? '');
+
+        $existing_upload = null;
+        foreach (glob("$logo_upload_dir/custom-logo.*") as $f) { $existing_upload = basename($f); }
+
+        if ($logo_mode === 'upload' && isset($_FILES['logo_file']) && $_FILES['logo_file']['error'] === UPLOAD_ERR_OK && $_FILES['logo_file']['size'] > 0) {
+            if ($_FILES['logo_file']['size'] <= 2 * 1024 * 1024) {
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mime  = finfo_file($finfo, $_FILES['logo_file']['tmp_name']);
+                finfo_close($finfo);
+                if (isset($logo_allowed_mimes[$mime])) {
+                    foreach (glob("$logo_upload_dir/custom-logo.*") as $old) @unlink($old);
+                    foreach (glob("$logo_webroot/custom-logo.*") as $old) @unlink($old);
+                    $ext  = $logo_allowed_mimes[$mime];
+                    $dest = "$logo_upload_dir/custom-logo.$ext";
+                    move_uploaded_file($_FILES['logo_file']['tmp_name'], $dest);
+                    @copy($dest, "$logo_webroot/custom-logo.$ext");
+                    $existing_upload = "custom-logo.$ext";
+                } else {
+                    $error = "Logo not saved - unsupported image type. Use PNG, JPG, WEBP, or GIF.";
+                }
+            } else {
+                $error = "Logo not saved - file too large (2MB max).";
+            }
+        }
+
+        $logo_src = '';
+        if ($logo_mode === 'url' && $logo_url !== '') {
+            $logo_src = $logo_url;
+        } elseif ($logo_mode === 'upload' && $existing_upload) {
+            $logo_src = "/plugins/ThemeUI/$existing_upload";
+        } else {
+            $logo_mode = 'none';
+        }
+        themeui_apply_logo($logo_mode, $logo_src);
+
+        file_put_contents($cfg_path, "SERVICE=\"$service\"\nTHEME=\"$theme\"\nDESIGN=\"$design\"\nLOGO_MODE=\"$logo_mode\"\nLOGO_URL=\"$logo_url\"\n");
         if (isset($_POST['custom_css'])) {
             file_put_contents($override_path, $_POST['custom_css']);
             @copy($override_path, $webroot_override);
@@ -65,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 opcache_invalidate($login_page, true);
             }
         }
-        $msg = "Settings saved - applying theme...";
+        $msg = $error ? "Settings saved - $error" : "Settings saved - applying theme...";
     }
 }
 
@@ -82,13 +154,18 @@ $service    = $settings['SERVICE'] ?? 'disabled';
 $theme      = $settings['THEME']   ?? 'default';
 $design     = $settings['DESIGN']  ?? 'default';
 $custom_css = file_get_contents($override_path);
+$logo_mode  = $settings['LOGO_MODE'] ?? 'none';
+$logo_url   = $settings['LOGO_URL']  ?? '';
+
+$existing_upload = null;
+foreach (glob("$logo_upload_dir/custom-logo.*") as $f) { $existing_upload = basename($f); }
 ?>
 
 <?php if ($msg): ?>
 <div style="margin-bottom:20px">
-  <span style="color:#a6e3a1;font-weight:500"><?= htmlspecialchars($msg) ?></span>
+  <span style="color:<?= $error ? '#f38ba8' : '#a6e3a1' ?>;font-weight:500"><?= htmlspecialchars($msg) ?></span>
 </div>
-<script>setTimeout(function(){ location.href=location.pathname; }, 800);</script>
+<script>setTimeout(function(){ location.href=location.pathname; }, <?= $error ? 2200 : 800 ?>);</script>
 <?php endif; ?>
 
 <style>
@@ -124,10 +201,14 @@ $custom_css = file_get_contents($override_path);
 .tui-right .tui-section{display:flex;flex-direction:column;flex:1;margin-bottom:0}
 .tui-textarea{display:block;width:100%;flex:1;min-height:200px;font-family:monospace;font-size:12px;background:var(--mild-background-color,#181825);color:var(--text-color,#cdd6f4);border:1px solid var(--input-border-color,#6c7086);border-radius:8px;padding:10px 12px;box-sizing:border-box;resize:none;outline:none;transition:border-color .15s}
 .tui-textarea:focus{border-color:var(--usage-bar-used-background-color,#89b4fa)}
+.tui-textinput{display:block;width:100%;font-size:13px;background:var(--mild-background-color,#181825);color:var(--text-color,#cdd6f4);border:1px solid var(--input-border-color,#6c7086);border-radius:8px;padding:9px 12px;box-sizing:border-box;outline:none;transition:border-color .15s}
+.tui-textinput:focus{border-color:var(--usage-bar-used-background-color,#89b4fa)}
+.tui-logo-preview{margin-top:12px;padding:14px;background:var(--mild-background-color,#181825);border:1px solid var(--border-color,#313244);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.tui-logo-preview img{max-width:220px;max-height:48px}
 .tui-actions{display:flex;gap:10px;padding-top:4px}
 </style>
 
-<form method="POST" action="/Settings/ThemeUI">
+<form method="POST" action="/Settings/ThemeUI" enctype="multipart/form-data">
 <div class="tui">
 
   <div class="tui-left">
@@ -182,6 +263,55 @@ $custom_css = file_get_contents($override_path);
       <div class="tui-hint">Modern adds rounded corners and smooth transitions to all UI elements.</div>
     </div>
 
+    <div class="tui-section">
+      <div class="tui-label">Logo</div>
+      <div class="tui-pills">
+        <label class="tui-pill<?= $logo_mode === 'none' ? ' sel' : '' ?>">
+          <input type="radio" name="LOGO_MODE" value="none"
+            <?= $logo_mode === 'none' ? 'checked' : '' ?>
+            onchange="tuiLogoMode(this.value);tuiDirty()">
+          Default
+        </label>
+        <label class="tui-pill<?= $logo_mode === 'url' ? ' sel' : '' ?>">
+          <input type="radio" name="LOGO_MODE" value="url"
+            <?= $logo_mode === 'url' ? 'checked' : '' ?>
+            onchange="tuiLogoMode(this.value);tuiDirty()">
+          URL
+        </label>
+        <label class="tui-pill<?= $logo_mode === 'upload' ? ' sel' : '' ?>">
+          <input type="radio" name="LOGO_MODE" value="upload"
+            <?= $logo_mode === 'upload' ? 'checked' : '' ?>
+            onchange="tuiLogoMode(this.value);tuiDirty()">
+          Upload
+        </label>
+      </div>
+
+      <div id="tui-logo-url" style="display:<?= $logo_mode === 'url' ? 'block' : 'none' ?>;margin-top:12px">
+        <input type="text" name="logo_url" class="tui-textinput" placeholder="https://example.com/logo.png"
+          value="<?= htmlspecialchars($logo_url) ?>" oninput="tuiDirty()">
+      </div>
+
+      <div id="tui-logo-upload" style="display:<?= $logo_mode === 'upload' ? 'block' : 'none' ?>;margin-top:12px">
+        <input type="file" name="logo_file" accept="image/png,image/jpeg,image/webp,image/gif" onchange="tuiDirty()">
+        <?php if ($existing_upload): ?>
+        <div class="tui-hint">Current file: <?= htmlspecialchars($existing_upload) ?></div>
+        <?php endif; ?>
+      </div>
+
+      <?php
+        $logo_preview_src = '';
+        if ($logo_mode === 'url' && $logo_url) $logo_preview_src = $logo_url;
+        elseif ($logo_mode === 'upload' && $existing_upload) $logo_preview_src = "/plugins/ThemeUI/$existing_upload";
+      ?>
+      <?php if ($logo_preview_src): ?>
+      <div class="tui-logo-preview">
+        <img src="<?= htmlspecialchars($logo_preview_src) ?>" alt="Logo preview">
+      </div>
+      <?php endif; ?>
+
+      <div class="tui-hint">Replaces the Unraid logo in the header and login page. PNG/JPG/WEBP/GIF, 2MB max for uploads.</div>
+    </div>
+
     <div class="tui-actions">
       <input type="submit" name="SAVE_CONFIG" value="Apply" id="tui-apply" disabled>
       <input type="button" value="Done" onclick="done()">
@@ -201,4 +331,8 @@ $custom_css = file_get_contents($override_path);
 
 <script>
 function tuiDirty(){ document.getElementById('tui-apply').removeAttribute('disabled'); }
+function tuiLogoMode(mode){
+  document.getElementById('tui-logo-url').style.display = mode === 'url' ? 'block' : 'none';
+  document.getElementById('tui-logo-upload').style.display = mode === 'upload' ? 'block' : 'none';
+}
 </script>

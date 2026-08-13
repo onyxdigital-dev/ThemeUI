@@ -43,6 +43,7 @@ Catppuccin Latte, Gruvbox Light, Tokyo Night Day, Solarized Light, One Light, Ro
 - **20 built-in themes** (10 dark + 10 light), switchable from one settings page
 - **Themes the full UI** - dashboard, login page, Docker/VM pages, tables, pie charts, usage bars, buttons, dropdowns, native dialogs, and context menus
 - **Modern design style** option - rounded corners, smooth transitions, subtle depth
+- **Custom logo** - replace the Unraid logo in the header and login page with your own, via URL or upload
 - **Custom CSS override** textarea for fine-tuning any color
 - **Color swatch previews** when picking a theme
 - **Instant apply** - no reboot or manual page refresh needed

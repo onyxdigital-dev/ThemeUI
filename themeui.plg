@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.08.13a">
+<!ENTITY version   "2026.08.13b">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.08.13b
+- Add custom logo replacement (Settings > ThemeUI > Logo) - paste an image URL or upload a PNG/JPG/WEBP/GIF (2MB max) to replace the Unraid logo in the header and login page. Overwrites UN-logotype-gradient.svg/animated-logo.svg directly (backing up the originals first) since the header, login page, and set-password screen all read the same files; reapplied automatically on every boot alongside the login theme, and restored on switching back to "Default" or removing the plugin
+
 ## 2026.08.13a
 - Add a light variant for every theme (20 themes total): Catppuccin Latte, Nord Light, Dracula Light, Gruvbox Light, Tokyo Night Day, Solarized Light, One Light, Rose Pine Dawn, Everforest Light, and White and Black - official published palettes where the theme family has one, hand-tuned accent colors (contrast-checked) for the rest
 
@@ -50,6 +53,7 @@ rm -rf /usr/local/emhttp/plugins/&name;
 rm -rf /usr/local/emhttp/plugins/themeui
 mkdir -p /usr/local/emhttp/plugins/&name;/themes
 mkdir -p /boot/config/plugins/themeui
+mkdir -p /boot/config/plugins/themeui/logo-originals
 exit 0
 </INLINE>
 </FILE>
@@ -110,6 +114,11 @@ exit 0
 
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
+ORIG_DIR="/boot/config/plugins/themeui/logo-originals"
+IMG_DIR="/usr/local/emhttp/webGui/images"
+[ -f "$ORIG_DIR/UN-logotype-gradient.svg" ] &amp;&amp; cp "$ORIG_DIR/UN-logotype-gradient.svg" "$IMG_DIR/UN-logotype-gradient.svg"
+[ -f "$ORIG_DIR/animated-logo.svg" ] &amp;&amp; cp "$ORIG_DIR/animated-logo.svg" "$IMG_DIR/animated-logo.svg"
+
 rm -rf /usr/local/emhttp/plugins/&name;
 rm -rf /usr/local/emhttp/plugins/themeui
 rm -rf /boot/config/plugins/themeui
