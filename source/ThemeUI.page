@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach (glob("$logo_upload_dir/custom-logo.*") as $f) { $existing_upload = basename($f); }
 
         if ($logo_mode === 'upload' && isset($_FILES['logo_file']) && $_FILES['logo_file']['error'] === UPLOAD_ERR_OK && $_FILES['logo_file']['size'] > 0) {
-            if ($_FILES['logo_file']['size'] <= 2 * 1024 * 1024) {
+            if ($_FILES['logo_file']['size'] <= 20 * 1024 * 1024) {
                 $finfo = finfo_open(FILEINFO_MIME_TYPE);
                 $mime  = finfo_file($finfo, $_FILES['logo_file']['tmp_name']);
                 finfo_close($finfo);
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $error = "Logo not saved - unsupported image type. Use PNG, JPG, WEBP, or GIF.";
                 }
             } else {
-                $error = "Logo not saved - file too large (2MB max).";
+                $error = "Logo not saved - file too large (20MB max).";
             }
         }
 
@@ -309,7 +309,7 @@ foreach (glob("$logo_upload_dir/custom-logo.*") as $f) { $existing_upload = base
       </div>
       <?php endif; ?>
 
-      <div class="tui-hint">Replaces the Unraid logo in the header and login page. PNG/JPG/WEBP/GIF, 2MB max for uploads.</div>
+      <div class="tui-hint">Replaces the Unraid logo in the header and login page. PNG/JPG/WEBP/GIF, 20MB max for uploads.</div>
     </div>
 
     <div class="tui-actions">
