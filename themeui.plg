@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.08.13e">
+<!ENTITY version   "2026.08.13f">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.08.13f
+- Fix custom logo rendering way too big - it was inheriting the original wordmark's fixed Tailwind width classes (sized for a wide 5.7:1 aspect-ratio logo), which blew up any square/differently-shaped custom image. Now sized independently: fixed height, auto width, capped max-width
+
 ## 2026.08.13e
 - Fix custom logo not showing anywhere: Unraid 7.2's header and login screens render the stock logo from an SVG baked into their own JS bundle (unraid-components), not read live from UN-logotype-gradient.svg/animated-logo.svg - overwriting those files (the previous approach) had no visible effect. Now finds the rendered logo by its gradient id and swaps it for the chosen image via JS after render, same technique this plugin already uses for dashboard charts and buttons. File-overwrite is kept as a harmless fallback for older/classic Unraid UIs
 

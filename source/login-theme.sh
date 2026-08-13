@@ -45,10 +45,7 @@ if (file_exists(\$login)) {
     var img=document.createElement('img');
     img.src=src;
     img.alt='Logo';
-    var cls=svg.getAttribute('class');
-    if(cls)img.setAttribute('class',cls);
-    img.style.maxHeight='100%';
-    img.style.objectFit='contain';
+    img.style.cssText='height:2rem;max-width:10rem;width:auto;object-fit:contain;flex-shrink:0;';
     svg.replaceWith(img);
   }
   function scan(){
