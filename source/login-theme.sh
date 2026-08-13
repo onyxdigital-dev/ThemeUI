@@ -6,22 +6,6 @@ php -r "
 \$login   = '/usr/local/emhttp/webGui/include/.login.php';
 \$plug    = '/usr/local/emhttp/plugins/ThemeUI';
 
-if (!file_exists(\$login)) exit(0);
-
-\$html = file_get_contents(\$login);
-\$html = preg_replace('/<!--themeui-start-->.*?<!--themeui-end-->\n?/s', '', \$html);
-
-if (\$service === 'enabled' && \$theme !== 'default') {
-    \$css  = @file_get_contents(\"\$plug/themes/\$theme.css\") ?: '';
-    \$css .= \"\n\" . (@file_get_contents(\"\$plug/themes/login.css\") ?: '');
-    \$block = \"<!--themeui-start-->\n<style>\n\$css\n</style>\n<!--themeui-end-->\";
-    \$html  = str_replace('</head>', \"\$block\n</head>\", \$html);
-}
-
-file_put_contents(\$login, \$html);
-
-// Reapply the custom logo - /usr/local/emhttp is rebuilt from the boot image
-// every boot, so the live SVGs need to be rewritten each time too.
 \$logo_mode       = \$cfg['LOGO_MODE'] ?? 'none';
 \$logo_url        = \$cfg['LOGO_URL']  ?? '';
 \$logo_header     = '/usr/local/emhttp/webGui/images/UN-logotype-gradient.svg';
@@ -37,6 +21,54 @@ if (\$logo_mode === 'url' && \$logo_url) {
     \$logo_src = \$logo_url;
 } elseif (\$logo_mode === 'upload' && \$existing_upload) {
     \$logo_src = \"/plugins/ThemeUI/\$existing_upload\";
+}
+
+if (file_exists(\$login)) {
+    \$html = file_get_contents(\$login);
+    \$html = preg_replace('/<!--themeui-start-->.*?<!--themeui-end-->\n?/s', '', \$html);
+    \$block_content = '';
+
+    if (\$service === 'enabled' && \$theme !== 'default') {
+        \$css  = @file_get_contents(\"\$plug/themes/\$theme.css\") ?: '';
+        \$css .= \"\n\" . (@file_get_contents(\"\$plug/themes/login.css\") ?: '');
+        \$block_content .= \"<style>\n\$css\n</style>\n\";
+    }
+
+    if (\$service === 'enabled' && \$logo_src) {
+        \$json = json_encode(\$logo_src);
+        \$block_content .= \"<script>
+(function(){
+  var src = \$json;
+  function swap(svg){
+    if(!svg||svg.dataset.themeuiSwapped)return;
+    svg.dataset.themeuiSwapped='1';
+    var img=document.createElement('img');
+    img.src=src;
+    img.alt='Logo';
+    var cls=svg.getAttribute('class');
+    if(cls)img.setAttribute('class',cls);
+    img.style.maxHeight='100%';
+    img.style.objectFit='contain';
+    svg.replaceWith(img);
+  }
+  function scan(){
+    document.querySelectorAll('svg').forEach(function(svg){
+      if(!svg.dataset.themeuiSwapped&&svg.querySelector('[id*=\\\"unraid-header-logo-gradient\\\"]'))swap(svg);
+    });
+  }
+  scan();
+  new MutationObserver(scan).observe(document.documentElement,{childList:true,subtree:true});
+})();
+</script>
+\";
+    }
+
+    if (\$block_content) {
+        \$block = \"<!--themeui-start-->\n\$block_content<!--themeui-end-->\";
+        \$html  = str_replace('</head>', \"\$block\n</head>\", \$html);
+    }
+
+    file_put_contents(\$login, \$html);
 }
 
 if (file_exists(\$logo_header)) {

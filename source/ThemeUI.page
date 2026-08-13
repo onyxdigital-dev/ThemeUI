@@ -50,6 +50,35 @@ function themeui_logo_svg($src) {
     return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 222.36 39.04" class="xs:w-[16rem] h-auto max-h-[3rem] w-[14rem] shrink-0" aria-hidden="true" focusable="false"><image href="' . $src . '" x="0" y="0" width="222.36" height="39.04" preserveAspectRatio="xMidYMid meet"/></svg>';
 }
 
+function themeui_logo_swap_script($src) {
+    $json = json_encode($src);
+    return "<script>
+(function(){
+  var src = $json;
+  function swap(svg){
+    if(!svg||svg.dataset.themeuiSwapped)return;
+    svg.dataset.themeuiSwapped='1';
+    var img=document.createElement('img');
+    img.src=src;
+    img.alt='Logo';
+    var cls=svg.getAttribute('class');
+    if(cls)img.setAttribute('class',cls);
+    img.style.maxHeight='100%';
+    img.style.objectFit='contain';
+    svg.replaceWith(img);
+  }
+  function scan(){
+    document.querySelectorAll('svg').forEach(function(svg){
+      if(!svg.dataset.themeuiSwapped&&svg.querySelector('[id*=\"unraid-header-logo-gradient\"]'))swap(svg);
+    });
+  }
+  scan();
+  new MutationObserver(scan).observe(document.documentElement,{childList:true,subtree:true});
+})();
+</script>
+";
+}
+
 function themeui_apply_logo($mode, $src) {
     global $logo_header_file, $logo_anim_file, $logo_backup_dir;
     if (!file_exists($logo_header_file)) return;
@@ -124,11 +153,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $plug = "/usr/local/emhttp/plugins/ThemeUI";
             $html = file_get_contents($login_page);
             $html = preg_replace('/<!--themeui-start-->.*?<!--themeui-end-->\n?/s', '', $html);
+            $block_content = '';
             if ($service === 'enabled' && $theme !== 'default') {
                 $css  = @file_get_contents("$plug/themes/$theme.css") ?: '';
                 $css .= "\n" . (@file_get_contents("$plug/themes/login.css") ?: '');
-                $block = "<!--themeui-start-->\n<style>\n$css\n</style>\n<!--themeui-end-->";
-                $html = str_replace('</head>', "$block\n</head>", $html);
+                $block_content .= "<style>\n$css\n</style>\n";
+            }
+            if ($service === 'enabled' && $logo_src) {
+                $block_content .= themeui_logo_swap_script($logo_src);
+            }
+            if ($block_content) {
+                $block = "<!--themeui-start-->\n$block_content<!--themeui-end-->";
+                $html  = str_replace('</head>', "$block\n</head>", $html);
             }
             file_put_contents($login_page, $html);
             if (function_exists('opcache_reset')) {

@@ -143,5 +143,43 @@ document.addEventListener('DOMContentLoaded',function(){
         $ver2 = filemtime($override_file);
         echo "<link rel='stylesheet' type='text/css' href='/plugins/ThemeUI/custom-override.css?v=$ver2'>\n";
     }
+
+    $logo_mode = $settings['LOGO_MODE'] ?? 'none';
+    $logo_url  = $settings['LOGO_URL']  ?? '';
+    $logo_src  = '';
+    if ($logo_mode === 'url' && $logo_url) {
+        $logo_src = $logo_url;
+    } elseif ($logo_mode === 'upload') {
+        foreach (glob("/boot/config/plugins/themeui/custom-logo.*") as $f) {
+            $logo_src = "/plugins/ThemeUI/" . basename($f);
+        }
+    }
+    if ($logo_src) {
+        $logo_src_json = json_encode($logo_src);
+        echo "<script>
+(function(){
+  var src = $logo_src_json;
+  function swap(svg){
+    if(!svg||svg.dataset.themeuiSwapped)return;
+    svg.dataset.themeuiSwapped='1';
+    var img=document.createElement('img');
+    img.src=src;
+    img.alt='Logo';
+    var cls=svg.getAttribute('class');
+    if(cls)img.setAttribute('class',cls);
+    img.style.maxHeight='100%';
+    img.style.objectFit='contain';
+    svg.replaceWith(img);
+  }
+  function scan(){
+    document.querySelectorAll('svg').forEach(function(svg){
+      if(!svg.dataset.themeuiSwapped&&svg.querySelector('[id*=\"unraid-header-logo-gradient\"]'))swap(svg);
+    });
+  }
+  scan();
+  new MutationObserver(scan).observe(document.documentElement,{childList:true,subtree:true});
+})();
+</script>\n";
+    }
 }
 ?>
