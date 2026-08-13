@@ -146,6 +146,9 @@ document.addEventListener('DOMContentLoaded',function(){
 
     $logo_mode = $settings['LOGO_MODE'] ?? 'none';
     $logo_url  = $settings['LOGO_URL']  ?? '';
+    $logo_size = $settings['LOGO_SIZE'] ?? 'medium';
+    $logo_size_css = ["small"=>"height:1.5rem;max-width:6rem;", "medium"=>"height:2.5rem;max-width:10rem;", "large"=>"height:3.5rem;max-width:14rem;"];
+    $size_css  = $logo_size_css[$logo_size] ?? $logo_size_css['medium'];
     $logo_src  = '';
     if ($logo_mode === 'url' && $logo_url) {
         $logo_src = $logo_url;
@@ -165,7 +168,7 @@ document.addEventListener('DOMContentLoaded',function(){
     var img=document.createElement('img');
     img.src=src;
     img.alt='Logo';
-    img.style.cssText='height:2rem;max-width:10rem;width:auto;object-fit:contain;flex-shrink:0;';
+    img.style.cssText='$size_css width:auto;object-fit:contain;flex-shrink:0;';
     svg.replaceWith(img);
   }
   function scan(){

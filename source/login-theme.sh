@@ -8,6 +8,9 @@ php -r "
 
 \$logo_mode       = \$cfg['LOGO_MODE'] ?? 'none';
 \$logo_url        = \$cfg['LOGO_URL']  ?? '';
+\$logo_size       = \$cfg['LOGO_SIZE'] ?? 'medium';
+\$logo_size_css   = ['small'=>'height:1.5rem;max-width:6rem;', 'medium'=>'height:2.5rem;max-width:10rem;', 'large'=>'height:3.5rem;max-width:14rem;'];
+\$size_css        = \$logo_size_css[\$logo_size] ?? \$logo_size_css['medium'];
 \$logo_header     = '/usr/local/emhttp/webGui/images/UN-logotype-gradient.svg';
 \$logo_anim       = '/usr/local/emhttp/webGui/images/animated-logo.svg';
 \$logo_backup_dir = '/boot/config/plugins/themeui/logo-originals';
@@ -45,7 +48,7 @@ if (file_exists(\$login)) {
     var img=document.createElement('img');
     img.src=src;
     img.alt='Logo';
-    img.style.cssText='height:2rem;max-width:10rem;width:auto;object-fit:contain;flex-shrink:0;';
+    img.style.cssText='\$size_css width:auto;object-fit:contain;flex-shrink:0;';
     svg.replaceWith(img);
   }
   function scan(){

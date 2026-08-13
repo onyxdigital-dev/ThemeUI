@@ -38,6 +38,8 @@ $theme_meta = [
 ];
 
 $valid_logo_modes = ["none","url","upload"];
+$valid_logo_sizes = ["small","medium","large"];
+$logo_size_css = ["small"=>"height:1.5rem;max-width:6rem;", "medium"=>"height:2.5rem;max-width:10rem;", "large"=>"height:3.5rem;max-width:14rem;"];
 $logo_header_file = "/usr/local/emhttp/webGui/images/UN-logotype-gradient.svg";
 $logo_anim_file   = "/usr/local/emhttp/webGui/images/animated-logo.svg";
 $logo_backup_dir  = "/boot/config/plugins/themeui/logo-originals";
@@ -50,7 +52,7 @@ function themeui_logo_svg($src) {
     return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 222.36 39.04" class="xs:w-[16rem] h-auto max-h-[3rem] w-[14rem] shrink-0" aria-hidden="true" focusable="false"><image href="' . $src . '" x="0" y="0" width="222.36" height="39.04" preserveAspectRatio="xMidYMid meet"/></svg>';
 }
 
-function themeui_logo_swap_script($src) {
+function themeui_logo_swap_script($src, $size_css) {
     $json = json_encode($src);
     return "<script>
 (function(){
@@ -61,7 +63,7 @@ function themeui_logo_swap_script($src) {
     var img=document.createElement('img');
     img.src=src;
     img.alt='Logo';
-    img.style.cssText='height:2rem;max-width:10rem;width:auto;object-fit:contain;flex-shrink:0;';
+    img.style.cssText='$size_css width:auto;object-fit:contain;flex-shrink:0;';
     svg.replaceWith(img);
   }
   function scan(){
@@ -104,6 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $design  = in_array($_POST['DESIGN'] ?? '', $valid_designs) ? $_POST['DESIGN'] : 'default';
 
         $logo_mode = in_array($_POST['LOGO_MODE'] ?? '', $valid_logo_modes) ? $_POST['LOGO_MODE'] : 'none';
+        $logo_size = in_array($_POST['LOGO_SIZE'] ?? '', $valid_logo_sizes) ? $_POST['LOGO_SIZE'] : 'medium';
         $logo_url  = trim($_POST['logo_url'] ?? '');
 
         $existing_upload = null;
@@ -140,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         themeui_apply_logo($logo_mode, $logo_src);
 
-        file_put_contents($cfg_path, "SERVICE=\"$service\"\nTHEME=\"$theme\"\nDESIGN=\"$design\"\nLOGO_MODE=\"$logo_mode\"\nLOGO_URL=\"$logo_url\"\n");
+        file_put_contents($cfg_path, "SERVICE=\"$service\"\nTHEME=\"$theme\"\nDESIGN=\"$design\"\nLOGO_MODE=\"$logo_mode\"\nLOGO_URL=\"$logo_url\"\nLOGO_SIZE=\"$logo_size\"\n");
         if (isset($_POST['custom_css'])) {
             file_put_contents($override_path, $_POST['custom_css']);
             @copy($override_path, $webroot_override);
@@ -157,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $block_content .= "<style>\n$css\n</style>\n";
             }
             if ($service === 'enabled' && $logo_src) {
-                $block_content .= themeui_logo_swap_script($logo_src);
+                $block_content .= themeui_logo_swap_script($logo_src, $logo_size_css[$logo_size] ?? $logo_size_css['medium']);
             }
             if ($block_content) {
                 $block = "<!--themeui-start-->\n$block_content<!--themeui-end-->";
@@ -189,6 +192,7 @@ $design     = $settings['DESIGN']  ?? 'default';
 $custom_css = file_get_contents($override_path);
 $logo_mode  = $settings['LOGO_MODE'] ?? 'none';
 $logo_url   = $settings['LOGO_URL']  ?? '';
+$logo_size  = in_array($settings['LOGO_SIZE'] ?? '', $valid_logo_sizes) ? $settings['LOGO_SIZE'] : 'medium';
 
 $existing_upload = null;
 foreach (glob("$logo_upload_dir/custom-logo.*") as $f) { $existing_upload = basename($f); }
@@ -328,6 +332,19 @@ foreach (glob("$logo_upload_dir/custom-logo.*") as $f) { $existing_upload = base
         <?php endif; ?>
       </div>
 
+      <div id="tui-logo-size" style="display:<?= $logo_mode !== 'none' ? 'block' : 'none' ?>;margin-top:12px">
+        <div class="tui-pills">
+          <?php foreach (["small"=>"Small","medium"=>"Medium","large"=>"Large"] as $sz => $label): ?>
+          <label class="tui-pill<?= $logo_size === $sz ? ' sel' : '' ?>">
+            <input type="radio" name="LOGO_SIZE" value="<?= $sz ?>"
+              <?= $logo_size === $sz ? 'checked' : '' ?>
+              onchange="document.querySelectorAll('#tui-logo-size .tui-pill').forEach(function(p){p.classList.remove('sel')});this.closest('.tui-pill').classList.add('sel');tuiDirty()">
+            <?= $label ?>
+          </label>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
       <?php
         $logo_preview_src = '';
         if ($logo_mode === 'url' && $logo_url) $logo_preview_src = $logo_url;
@@ -364,5 +381,6 @@ function tuiDirty(){ document.getElementById('tui-apply').removeAttribute('disab
 function tuiLogoMode(mode){
   document.getElementById('tui-logo-url').style.display = mode === 'url' ? 'block' : 'none';
   document.getElementById('tui-logo-upload').style.display = mode === 'upload' ? 'block' : 'none';
+  document.getElementById('tui-logo-size').style.display = mode !== 'none' ? 'block' : 'none';
 }
 </script>
