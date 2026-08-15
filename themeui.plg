@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "ThemeUI">
 <!ENTITY author    "onyxdigital-dev">
-<!ENTITY version   "2026.08.13h">
+<!ENTITY version   "2026.08.13i">
 <!ENTITY launch    "Settings/ThemeUI">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Onyxdigital-dev/ThemeUI/master/themeui.plg">
 ]>
@@ -10,6 +10,9 @@
 
 <CHANGES>
 ## ThemeUI - Theme Switcher for Unraid 7.2+
+## 2026.08.13i
+- Fix custom logo breaking the boot-up loading animation - the file-overwrite fallback was replacing animated-logo.svg with a static copy of the custom logo, killing Unraid's spinner animation. That file is no longer touched (the DOM-swap already handles the visible logo everywhere); updating also restores animated-logo.svg from backup if a previous version already overwrote it
+
 ## 2026.08.13h
 - Bump logo Size presets larger: Small 2.5rem, Medium 3.5rem, Large 4.5rem (was 1.5/2.5/3.5rem)
 
@@ -90,6 +93,10 @@ for theme in catppuccin-mocha catppuccin-latte nord nord-light dracula dracula-l
 done
 
 curl -fsSL -o "$PLUGIN_DIR/icon.png" "$REPO_RAW/assets/logo.png" 2>/dev/null || true
+
+if [ -f /boot/config/plugins/themeui/logo-originals/animated-logo.svg ]; then
+    cp /boot/config/plugins/themeui/logo-originals/animated-logo.svg /usr/local/emhttp/webGui/images/animated-logo.svg
+fi
 
 mkdir -p /boot/config/plugins/themeui
 if [ -f /boot/config/plugins/ThemeUI/themeui.cfg ] &amp;&amp; [ ! -f /boot/config/plugins/themeui/themeui.cfg ]; then

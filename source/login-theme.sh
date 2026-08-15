@@ -12,7 +12,6 @@ php -r "
 \$logo_size_css   = ['small'=>'height:2.5rem;max-width:10rem;', 'medium'=>'height:3.5rem;max-width:14rem;', 'large'=>'height:4.5rem;max-width:18rem;'];
 \$size_css        = \$logo_size_css[\$logo_size] ?? \$logo_size_css['medium'];
 \$logo_header     = '/usr/local/emhttp/webGui/images/UN-logotype-gradient.svg';
-\$logo_anim       = '/usr/local/emhttp/webGui/images/animated-logo.svg';
 \$logo_backup_dir = '/boot/config/plugins/themeui/logo-originals';
 \$logo_upload_dir = '/boot/config/plugins/themeui';
 
@@ -74,18 +73,14 @@ if (file_exists(\$login)) {
 if (file_exists(\$logo_header)) {
     if (!is_dir(\$logo_backup_dir)) @mkdir(\$logo_backup_dir, 0755, true);
     \$backup_header = \"\$logo_backup_dir/UN-logotype-gradient.svg\";
-    \$backup_anim   = \"\$logo_backup_dir/animated-logo.svg\";
     if (!file_exists(\$backup_header)) @copy(\$logo_header, \$backup_header);
-    if (file_exists(\$logo_anim) && !file_exists(\$backup_anim)) @copy(\$logo_anim, \$backup_anim);
 
     if (\$logo_src) {
         \$safe = htmlspecialchars(\$logo_src, ENT_QUOTES);
         \$svg  = '<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 222.36 39.04\" class=\"xs:w-[16rem] h-auto max-h-[3rem] w-[14rem] shrink-0\" aria-hidden=\"true\" focusable=\"false\"><image href=\"' . \$safe . '\" x=\"0\" y=\"0\" width=\"222.36\" height=\"39.04\" preserveAspectRatio=\"xMidYMid meet\"/></svg>';
         @file_put_contents(\$logo_header, \$svg);
-        @file_put_contents(\$logo_anim, \$svg);
     } elseif (file_exists(\$backup_header)) {
         @copy(\$backup_header, \$logo_header);
-        if (file_exists(\$backup_anim)) @copy(\$backup_anim, \$logo_anim);
     }
 }
 "
